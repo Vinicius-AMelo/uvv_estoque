@@ -1,0 +1,43 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id        Int      @id @default(autoincrement())
+    email     String   @unique
+    password  String
+    name      String
+    estoque   Estoque? @relation(fields: [estoqueId], references: [id])
+    estoqueId Int?
+}
+
+model Estoque {
+    id               Int               @id @default(autoincrement())
+    name             String
+    description      String
+    product_code     Int
+    registroEntradas RegistroEntradas?
+    registroSaidas   RegistroSaidas?
+    User             User[]
+}
+
+model RegistroEntradas {
+    id        Int      @id @default(autoincrement())
+    name      String
+    createdAt DateTime @default(now())
+    estoque   Estoque  @relation(fields: [estoqueId], references: [id])
+    estoqueId Int      @unique
+}
+
+model RegistroSaidas {
+    id        Int      @id @default(autoincrement())
+    name      String
+    estoque   Estoque  @relation(fields: [estoqueId], references: [id])
+    createdAt DateTime @default(now())
+    estoqueId Int      @unique
+}
