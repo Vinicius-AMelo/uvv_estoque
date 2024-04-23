@@ -1,9 +1,9 @@
-import bcrypt from "bcrypt"
-import prisma from "../db.js"
+import bcrypt from "bcrypt";
+import prisma from "../db.js";
 
 export async function register(req, res) {
-	const { name, email, password } = req.body
-	const saltRounds = 12
+	const { name, email, password } = req.body;
+	const saltRounds = 12;
 
 	bcrypt.hash(password, saltRounds, async (error, hash) => {
 		const user = await prisma.user.create({
@@ -12,23 +12,23 @@ export async function register(req, res) {
 				email,
 				password: hash
 			}
-		})
+		});
 
-		res.send(user)
-	})
+		res.send(user);
+	});
 }
 
 export async function login(req, res) {
-	const { email, password } = req.body
+	const { email, password } = req.body;
 	const user = await prisma.user.findUnique({
 		where: {
 			email
 		}
-	})
+	});
 
 	bcrypt.compare(password, user.password, (err, result) => {
-		res.send(result)
-	})
+		res.send(result);
+	});
 }
 
 

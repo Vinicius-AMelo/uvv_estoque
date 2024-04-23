@@ -1,3 +1,36 @@
 {
-	"extends": "next/core-web-vitals"
+	"root": true,
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:@next/next/recommended"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 2021,
+		"sourceType": "module"
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
+	"plugins": ["react", "@next/next"],
+	"rules": {
+		"react/react-in-jsx-scope": "off",
+		"semi": 1,
+		"comma-dangle": 0,
+		// "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+		"no-unused-vars": [
+			"warn",
+			{ "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+		]
+	}
 }
