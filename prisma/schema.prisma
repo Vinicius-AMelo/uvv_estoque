@@ -8,36 +8,43 @@ datasource db {
 }
 
 model User {
-    id        Int      @id @default(autoincrement())
-    email     String   @unique
-    password  String
-    name      String
-    estoque   Estoque? @relation(fields: [estoqueId], references: [id])
-    estoqueId Int?
+    id               Int                @id @default(autoincrement())
+    email            String             @unique
+    password         String
+    name             String
+    registroEntradas RegistroEntradas[]
+    registroSaidas   RegistroSaidas[]
 }
 
 model Estoque {
-    id               Int               @id @default(autoincrement())
+    id               Int                @id @default(autoincrement())
     name             String
     description      String
     product_code     Int
-    registroEntradas RegistroEntradas?
-    registroSaidas   RegistroSaidas?
-    User             User[]
+    registroEntradas RegistroEntradas[]
+    registroSaidas   RegistroSaidas[]
 }
 
 model RegistroEntradas {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    estoque   Estoque  @relation(fields: [estoqueId], references: [id])
-    estoqueId Int      @unique
+    id           Int      @id @default(autoincrement())
+    name         String
+    description  String
+    product_code Int      @unique
+    createdAt    DateTime @default(now())
+    user         User     @relation(fields: [userId], references: [id])
+    userId       Int
+    estoque      Estoque? @relation(fields: [estoqueId], references: [id])
+    estoqueId    Int?
 }
 
 model RegistroSaidas {
-    id        Int      @id @default(autoincrement())
-    name      String
-    estoque   Estoque  @relation(fields: [estoqueId], references: [id])
-    createdAt DateTime @default(now())
-    estoqueId Int      @unique
+    id           Int      @id @default(autoincrement())
+    name         String
+    description  String
+    product_code Int      @unique
+    createdAt    DateTime @default(now())
+    user         User     @relation(fields: [userId], references: [id])
+    userId       Int
+    estoque      Estoque? @relation(fields: [estoqueId], references: [id])
+    estoqueId    Int?
 }
