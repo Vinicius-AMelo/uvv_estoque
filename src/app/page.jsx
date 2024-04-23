@@ -1,4 +1,4 @@
-import '../scss/pages/registerIn.scss';
+// import '../scss/pages/registerIn.scss';
 import Container from './components/container';
 import RecordsTable from './components/recordsTable';
 

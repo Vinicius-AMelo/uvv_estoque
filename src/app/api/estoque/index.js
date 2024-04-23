@@ -1,7 +1,5 @@
 import prisma from "../db.js";
 
-
-
 export async function getProducts(req, res) {
 	const { q } = req.query;
 
@@ -18,7 +16,7 @@ export async function getProducts(req, res) {
 		}));
 	} else {
 		const qInt = parseInt(q);
-		const products = await prisma.estoque.findMany({
+		const records = await prisma.estoque.findMany({
 			where: {
 				OR: [
 					{
@@ -36,7 +34,7 @@ export async function getProducts(req, res) {
 				],
 			}
 		});
-		res.send(products);
+		res.send(records);
 	}
 }
 
@@ -63,7 +61,7 @@ export async function createProduct(req, res) {
 		}
 	});
 
-	res.sendStatus(200);
+	res.sendStatus(201);
 }
 
 export async function removeProduct(req, res) {

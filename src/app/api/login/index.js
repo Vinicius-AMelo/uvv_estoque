@@ -14,7 +14,7 @@ export async function register(req, res) {
 			}
 		});
 
-		res.send(user);
+		res.sendStatus(201);
 	});
 }
 

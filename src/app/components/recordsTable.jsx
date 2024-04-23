@@ -1,25 +1,18 @@
-'use client';
+'use client'
 
-import { useQuery } from '@tanstack/react-query';
-import '../../scss/components/recordsTable.scss';
-import RecordItem from './recordItem';
-import axios from 'axios';
-import { useEffect } from 'react';
-const response = axios.get('http://localhost:3001/products');
-console.log('---------------');
-console.log(response.data);
+import { useQuery } from '@tanstack/react-query'
+import '../../scss/components/recordsTable.scss'
+import RecordItem from './recordItem'
+import axios from 'axios'
 
 export default function RecordsTable() {
-	// useEffect(() => {
-	// 	const response = axios.get('http://127.0.0.1:3001/products', {
-	// 		headers: {
-	// 			'Access-Control-Allow-Origin': '*',
-	// 		},
-	// 	});
-	// 	console.log('---------------');
-	// 	console.log(response.data);
-	// 	return response.data;
-	// }, []);
+	const query = useQuery({
+		queryKey: ['records'],
+		queryFn: async () => {
+			const response = await axios.get('http://localhost:3001/products')
+			return response.data
+		},
+	})
 
 	return (
 		<table className="records-table">
@@ -27,16 +20,17 @@ export default function RecordsTable() {
 				<tr>
 					<th>ID</th>
 					<th>Nome</th>
+					<th>Descrição</th>
 					<th>Registrado por</th>
 					<th>Data registro</th>
 					<th>Quantidade</th>
 				</tr>
 			</thead>
 			<tbody>
-				{/* {data.map((item, index) => {
-					<RecordItem key={item} data={index} />;
-				})} */}
+				{query.data?.map((item, index) => {
+					return <RecordItem key={index} record={item} />
+				})}
 			</tbody>
 		</table>
-	);
+	)
 }

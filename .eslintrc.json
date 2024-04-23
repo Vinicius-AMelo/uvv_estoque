@@ -21,7 +21,7 @@
 	"plugins": ["react", "@next/next"],
 	"rules": {
 		"react/react-in-jsx-scope": "off",
-		"semi": 1,
+		"semi": 0,
 		"comma-dangle": 0,
 		"react/prop-types": "0",
 		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
