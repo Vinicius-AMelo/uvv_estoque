@@ -1,0 +1,35 @@
+.navbar {
+	display: flex;
+	background-color: #FAFAFA;
+	color: #2c2663;
+	padding: 8px;
+	border-bottom: 1px solid #dddddd;
+
+	.navbar__logo {
+		padding-right: 16px;
+		margin-right: 16px;
+		border-right: 2px solid #ffd953;
+	}
+
+	.navbar__menu {
+		list-style: none;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+
+		.navbar__menu--item {
+			// width: 33.3%;
+
+			.navbar__menu--item-link {
+				display: inline-block;
+				padding: 8px;
+				width: max-content;
+				color: #2c2663;
+				font-weight: 600;
+				font-size: 14px;
+				text-transform: uppercase;
+			}
+		}
+	}
+}

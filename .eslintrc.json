@@ -5,11 +5,7 @@
 		"es6": true,
 		"node": true
 	},
-	"extends": [
-		"eslint:recommended",
-		"plugin:react/recommended",
-		"plugin:@next/next/recommended"
-	],
+	"extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@next/next/recommended"],
 	"parserOptions": {
 		"ecmaFeatures": {
 			"jsx": true
@@ -27,10 +23,8 @@
 		"react/react-in-jsx-scope": "off",
 		"semi": 1,
 		"comma-dangle": 0,
-		// "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-		"no-unused-vars": [
-			"warn",
-			{ "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
-		]
+		"react/prop-types": "0",
+		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+		"no-unused-vars": ["warn", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }]
 	}
 }
