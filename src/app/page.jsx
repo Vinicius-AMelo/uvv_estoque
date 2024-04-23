@@ -1,4 +1,4 @@
-import '../scss/pages/home.scss';
+import '../scss/pages/registerIn.scss';
 import Container from './components/container';
 
 export default function Home() {
