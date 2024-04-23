@@ -1,153 +1,36 @@
-{
-"yaml.schemas": {
-"file:///c%3A/Users/BOB/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-},
-"liquid.completion.operators": true,
-"liquid.completion.schema": true,
-"liquid.completion.sections": true,
-"liquid.engine": "shopify",
-"liquid.validate.schema": true,
-"liquid.format.rules": {
-"commentIndent": true,
-"indentSize": 4,
-"crlf": true,
-"preserveLine": 1,
-"enable": true,
-"liquid": {
-"delimiterPlacement": "force-multiline"
-},
-"markup": {
-"forceAttribute": 30,
-"commentNewline": true
-},
-"json": {
-"objectIndent": "indent",
-"arrayFormat": "indent",
-"braceAllman": true,
-"bracePadding": true
-}
-},
-"[liquid]": {
-"editor.formatOnSave": true,
-"editor.defaultFormatter": "esbenp.prettier-vscode"
-},
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-"workbench.iconTheme": "material-icon-theme",
-"editor.fontLigatures": true,
-"editor.fontFamily": "Fira Code",
-"editor.fontWeight": "600",
-"workbench.colorCustomizations": {
-"[Dracula]": {
-"editor.background": "#000000",
-"panel.background": "#000000",
-"sideBar.background": "#000000",
-"terminal.background": "#000000"
-}
-},
+## Getting Started
 
-"editor.semanticHighlighting.enabled": true,
-// "editor.tokenColorCustomizations": {
-// "[Dracula]": {
-// "functions": {
-// "foreground": "#3EC300"
-// },
-// "variables": "#FF0000"
-// }
-// },
+First, run the development server:
 
-"redhat.telemetry.enabled": true,
-"editor.linkedEditing": true,
-"workbench.colorTheme": "Dracula",
-// "editor.fontFamily": "'Droid Sans Mono', 'monospace', 'monospace'",
-"terminal.integrated.fontFamily": "monospace",
-"editor.bracketPairColorization.enabled": true,
-"editor.guides.bracketPairs": true,
-"editor.guides.bracketPairsHorizontal": false,
-"editor.guides.highlightActiveBracketPair": true,
-"editor.formatOnSave": true,
-"[css]": {
-"editor.defaultFormatter": "aeschli.vscode-css-formatter"
-},
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-"files.associations": {
-"_.json.liquid": "json",
-"_.yaml.liquid": "yaml",
-"_.md.liquid": "markdown",
-"_.js.liquid": "javascript",
-"_.css.liquid": "css",
-"_.scss.liquid": "scss",
-"\*.html": "liquid"
-},
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-"totalTypeScript.hideAllTips": false,
-"totalTypeScript.hideBasicTips": false,
-"liveServer.settings.donotShowInfoMsg": true,
-"editor.accessibilitySupport": "off",
-"totalTypeScript.hiddenTips": [
-"basic-types",
-"interface-declaration",
-"array-type",
-"union-type",
-"function-return-type",
-"typing-function-parameters",
-"variable-type-annotation",
-"any-type",
-"typeof",
-"ts-object-type",
-"optional-object-property",
-"literal-type",
-"in-operator-narrowing",
-"as-assertion"
-],
-"[scss]": {
-"editor.formatOnSave": true,
-"editor.defaultFormatter": "vscode.css-language-features"
-},
-"[scss.liquid]": {
-"editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter",
-"editor.formatOnSave": true
-},
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-"[javascript]": {
-"editor.defaultFormatter": "vscode.typescript-language-features",
-"editor.codeActionsOnSave": {
-"source.fixAll.eslint": "explicit"
-}
-},
-"[jsonc]": {
-"editor.defaultFormatter": "esbenp.prettier-vscode"
-},
-"editor.inlineSuggest.enabled": true,
-"github.copilot.advanced": {},
-"[go]": {
-"editor.defaultFormatter": "golang.go"
-},
-"gopls": {
-"ui.semanticTokens": true
-},
-"github.copilot.enable": {
-"\*": false,
-"plaintext": false,
-"markdown": false,
-"scminput": false,
-"go": false
-},
-"terminal.external.windowsExec": "\"C:\\Program Files\\Git\\bin\\bash.exe\"",
-"terminal.integrated.defaultProfile.windows": "Git Bash",
-"go.toolsManagement.autoUpdate": true,
-"[typescript]": {
-"editor.defaultFormatter": "esbenp.prettier-vscode"
-},
-"[html]": {
-"editor.defaultFormatter": "vscode.html-language-features"
-},
-"liveServer.settings.donotVerifyTags": true,
-"editor.largeFileOptimizations": false,
-"typescript.updateImportsOnFileMove.enabled": "always",
-"[json]": {
-"editor.defaultFormatter": "esbenp.prettier-vscode"
-},
-"[javascriptreact]": {
-"editor.defaultFormatter": "esbenp.prettier-vscode"
-}
-}
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+-   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+-   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
