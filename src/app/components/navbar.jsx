@@ -15,17 +15,17 @@ export default function Navbar() {
 			/>
 			<ul className="navbar__menu">
 				<li className="navbar__menu--item">
-					<Link className="navbar__menu--item-link" href="/login">
+					<Link className="navbar__menu--item-link" href="/">
 						registros
 					</Link>
 				</li>
 				<li className="navbar__menu--item">
-					<Link className="navbar__menu--item-link" href="/login">
+					<Link className="navbar__menu--item-link" href="/recordsin">
 						entrada no estoque
 					</Link>
 				</li>
 				<li className="navbar__menu--item">
-					<Link className="navbar__menu--item-link" href="/login">
+					<Link className="navbar__menu--item-link" href="/recordsout">
 						baixa no estoque
 					</Link>
 				</li>

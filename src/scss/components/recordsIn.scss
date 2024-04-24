@@ -1,0 +1,37 @@
+.form_container {
+	padding: 80px;
+
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+
+		.input__container {
+			display: flex;
+			flex-direction: column;
+
+			label {
+				font-size: 12px;
+				font-weight: 600;
+				text-transform: uppercase;
+				color: #2c2663;
+				margin-bottom: 2px;
+			}
+
+			textarea,
+			input {
+				padding: 8px;
+				border-radius: 4px;
+				border: 1px solid #cccccc;
+				width: 200px;
+				margin-bottom: 8px;
+				resize: none;
+
+				&:focus {
+					border: 2px solid #ffd953;
+					padding: 7px;
+				}
+			}
+		}
+	}
+}

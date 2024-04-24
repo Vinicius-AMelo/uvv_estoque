@@ -21,6 +21,7 @@ model Estoque {
     name             String
     description      String
     product_code     Int
+    quantity         Int                @default(0)
     registroEntradas RegistroEntradas[]
     registroSaidas   RegistroSaidas[]
 }
@@ -30,6 +31,7 @@ model RegistroEntradas {
     name         String
     description  String
     product_code Int      @unique
+    quantity     Int      @default(0)
     createdAt    DateTime @default(now())
     user         User     @relation(fields: [userId], references: [id])
     userId       Int
@@ -42,6 +44,7 @@ model RegistroSaidas {
     name         String
     description  String
     product_code Int      @unique
+    quantity     Int      @default(0)
     createdAt    DateTime @default(now())
     user         User     @relation(fields: [userId], references: [id])
     userId       Int

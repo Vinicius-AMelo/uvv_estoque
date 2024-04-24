@@ -7,7 +7,7 @@ export default function RecordItem({ record }) {
 			<td>{record.description}</td>
 			<td>{record.user.name}</td>
 			<td>{createdAt.toLocaleDateString('pt-BR')}</td>
-			<td>{record.user.id}</td>
+			<td>{record.quantity}</td>
 		</tr>
 	)
 }
