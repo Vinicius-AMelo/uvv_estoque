@@ -1,19 +1,41 @@
 table {
 	border-collapse: collapse;
 	width: 100%;
+	border: 1px;
+
 
 	tbody {
 		tr {
 			&:nth-child(odd) {
 				background: #eeeeee;
+
 			}
 		}
 	}
+
 
 	th,
 	td {
 		vertical-align: middle;
 		text-align: center;
-		border: 1px solid #000000;
+		border-bottom: 1px solid #A9ACBB;
+		height: 35px;
+		font-size: 16px;
+		font-weight: normal;
 	}
+
+}
+
+.header {
+	background-color: #ffffff;
+}
+
+.search {
+	border-radius: 10px;
+	border-style: outset;
+	border-color: #A9ACBB;
+	width: 216px;
+	height: 38px;
+	position: relative;
+	float: right;
 }

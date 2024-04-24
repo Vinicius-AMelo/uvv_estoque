@@ -1,0 +1,24 @@
+$fontSize: 20px;
+
+.forms {
+	display: grid;
+	position: relative;
+	font-size: $fontSize;
+
+	.productInput {
+		height: 40px;
+		width: 328px;
+
+	}
+
+	.codeInput {
+		height: 40px;
+		width: 328px;
+	}
+
+	.descriptionInput {
+		height: 194px;
+		width: 553px;
+	}
+
+}

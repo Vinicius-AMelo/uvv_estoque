@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import LoginContainer from '../components/loginContainer';
+import Link from 'next/link'
+import LoginContainer from '../components/loginContainer'
 
 export default function Register() {
 	return (
@@ -9,14 +9,15 @@ export default function Register() {
 					REGISTER
 				</label>
 				<form className="input" action="onSubmit">
-					<input className="nameInput" type="text" id="name" name="name" placeholder="  Name" />
-					<input className="emailInput" type="email" id="email" name="email" placeholder="  Email" />
+					<input className="nameInput" type="text" id="name" name="name" placeholder="  Name" required />
+					<input className="emailInput" type="email" id="email" name="email" placeholder="  Email" required />
 					<input
 						className="passwordInput"
 						type="password"
 						id="password"
 						name="password"
 						placeholder="  Password"
+						required
 					/>
 					<Link href={'/login'}>
 						<input className="submit" type="submit" value="Sign Up"></input>
@@ -24,5 +25,5 @@ export default function Register() {
 				</form>
 			</LoginContainer>
 		</>
-	);
+	)
 }
