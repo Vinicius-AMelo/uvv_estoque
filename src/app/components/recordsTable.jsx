@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import '../../scss/components/recordsTable.scss'
 import RecordItem from './recordItem'
 import axios from 'axios'
+import SearchBar from './searchBar'
 
 export default function RecordsTable() {
 	const query = useQuery({
@@ -15,22 +16,26 @@ export default function RecordsTable() {
 	})
 
 	return (
-		<table className="records-table">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Nome</th>
-					<th>Descrição</th>
-					<th>Registrado por</th>
-					<th>Data registro</th>
-					<th>Quantidade</th>
-				</tr>
-			</thead>
-			<tbody>
-				{query.data?.map((item, index) => {
-					return <RecordItem key={index} record={item} />
-				})}
-			</tbody>
-		</table>
+		<>
+			<SearchBar />
+
+			<table className="records-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nome</th>
+						<th>Descrição</th>
+						<th>Registrado por</th>
+						<th>Data registro</th>
+						<th>Quantidade</th>
+					</tr>
+				</thead>
+				<tbody>
+					{query.data?.map((item, index) => {
+						return <RecordItem key={index} record={item} />
+					})}
+				</tbody>
+			</table>
+		</>
 	)
 }
