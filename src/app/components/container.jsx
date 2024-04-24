@@ -1,5 +1,5 @@
-import '../../scss/components/container.scss';
-import Navbar from './navbar';
+import '../../scss/components/container.scss'
+import Navbar from './navbar'
 
 export default function Container({ children }) {
 	return (
@@ -9,5 +9,5 @@ export default function Container({ children }) {
 				<div className="background__container--content">{children}</div>
 			</div>
 		</div>
-	);
+	)
 }

@@ -39,13 +39,14 @@ export async function getProducts(req, res) {
 }
 
 export async function createProduct(req, res) {
-	const { name, description, product_code, id } = req.body;
+	const { name, description, product_code, quantity, id } = req.body;
 
 	await prisma.registroEntradas.create({
 		data: {
 			name,
 			description,
 			product_code,
+			quantity,
 			user: {
 				connect: {
 					id
@@ -55,7 +56,8 @@ export async function createProduct(req, res) {
 				create: {
 					name,
 					description,
-					product_code
+					product_code,
+					quantity
 				}
 			}
 		}
@@ -72,6 +74,7 @@ export async function removeProduct(req, res) {
 			name,
 			description,
 			product_code,
+			quantity,
 			user: {
 				connect: {
 					id
@@ -81,7 +84,8 @@ export async function removeProduct(req, res) {
 				create: {
 					name,
 					description,
-					product_code
+					product_code,
+					quantity
 				}
 			}
 		}
