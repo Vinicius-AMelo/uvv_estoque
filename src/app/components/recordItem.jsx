@@ -3,6 +3,7 @@ export default function RecordItem({ record }) {
 	return (
 		<tr>
 			<td>{record.id}</td>
+			<td>{record.product_code}</td>
 			<td>{record.name}</td>
 			<td>{record.description}</td>
 			<td>{record.user.name}</td>

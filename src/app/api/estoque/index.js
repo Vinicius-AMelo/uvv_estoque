@@ -16,11 +16,17 @@ export async function getProducts(req, res) {
 		}));
 	} else {
 		const qInt = parseInt(q);
-		const records = await prisma.estoque.findMany({
+		const records = await prisma.registroEntradas.findMany({
 			where: {
 				OR: [
 					{
 						name: {
+							contains: q.toLowerCase(),
+							mode: "insensitive"
+						},
+					},
+					{
+						description: {
 							contains: q.toLowerCase(),
 							mode: "insensitive"
 						},
@@ -32,6 +38,14 @@ export async function getProducts(req, res) {
 						id: Number.isInteger(qInt) ? qInt : 0,
 					},
 				],
+			},
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+					}
+				}
 			}
 		});
 		res.send(records);

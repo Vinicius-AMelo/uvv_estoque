@@ -5,24 +5,23 @@ import '../../scss/components/recordsTable.scss'
 import RecordItem from './recordItem'
 import axios from 'axios'
 import SearchBar from './searchBar'
+import { useEffect, useState } from 'react'
 
 export default function RecordsTable() {
-	const query = useQuery({
-		queryKey: ['records'],
-		queryFn: async () => {
-			const response = await axios.get('http://localhost:3001/products')
-			return response.data
-		},
-	})
+	const [formData, setFormData] = useState([])
+
+	function stateChange(data) {
+		setFormData(data)
+	}
 
 	return (
 		<>
-			<SearchBar />
-
+			<SearchBar stateChange={stateChange} />
 			<table className="records-table">
 				<thead>
 					<tr>
 						<th>ID</th>
+						<th>Patrimônio</th>
 						<th>Nome</th>
 						<th>Descrição</th>
 						<th>Registrado por</th>
@@ -31,9 +30,10 @@ export default function RecordsTable() {
 					</tr>
 				</thead>
 				<tbody>
-					{query.data?.map((item, index) => {
-						return <RecordItem key={index} record={item} />
-					})}
+					{formData.length > 0 &&
+						formData.map((item, index) => {
+							return <RecordItem key={index} record={item} />
+						})}
 				</tbody>
 			</table>
 		</>

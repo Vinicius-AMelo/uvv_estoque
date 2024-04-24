@@ -1,8 +1,12 @@
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-export default function SearchBar() {
+export default function SearchBar({ stateChange }) {
 	const [searchData, setSearchData] = useState({})
 	const [inputValue, setInputValue] = useState('')
+	const { register } = useForm()
 
 	function handleChange(event) {
 		setInputValue(event.target.value)
@@ -12,16 +16,21 @@ export default function SearchBar() {
 		enabled: false,
 		queryKey: ['search'],
 		queryFn: async () => {
-			const response = await axios.get('http://localhost:3001/products')
+			const response = await axios.get(`http://localhost:3001/products?q=${inputValue}`)
 			return response.data
 		},
 	})
 
 	useEffect(() => {
-		if (inputValue != '') {
-			query.refetch()
-		}
+		query.refetch()
 	}, [inputValue])
+
+	useEffect(() => {
+		if (query.data != [] && query.data != {} && query.data != undefined) {
+			setSearchData(query.data)
+			stateChange(query.data)
+		}
+	}, [query.data])
 
 	return (
 		<>
@@ -30,7 +39,7 @@ export default function SearchBar() {
 					className="search"
 					type="search"
 					placeholder="pesquisar"
-					onChange={handleChange}
+					{...register('search', { onChange: handleChange })}
 					value={inputValue}
 				/>
 			</div>
