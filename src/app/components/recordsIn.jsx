@@ -58,9 +58,9 @@ export default function RecordsIn() {
 					</div>
 					<button type="submit">ENVIAR</button>
 				</form>
-				<div className="logo">
-					<Image width="250" height="250" src={Logo} alt="UVV logo" className="img" />
-				</div>
+			</div>
+			<div className="logo">
+				<Image width="250" height="250" src={Logo} alt="UVV logo" className="img" />
 			</div>
 		</>
 	)
