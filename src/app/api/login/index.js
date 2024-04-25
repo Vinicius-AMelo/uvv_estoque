@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import prisma from "../db.js";
+import jwt from "jsonwebtoken"
 
 export async function register(req, res) {
 	const { name, email, password } = req.body;
@@ -27,7 +28,13 @@ export async function login(req, res) {
 	});
 
 	bcrypt.compare(password, user.password, (err, result) => {
-		res.send(result);
+		if (result) {
+			const token = jwt.sign({ id: user.id, name: user.name }, "shh", { expiresIn: '1h' });
+			const decoded = jwt.decode(token)
+			res.send(decoded)
+		} else {
+			res.send("Credenciais invalidas")
+		}
 	});
 }
 
