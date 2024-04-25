@@ -5,15 +5,19 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import Calendar from './Calendar'
-import Link from 'next/link'
 
 export default function SearchBar({ stateChange }) {
 	const [searchData, setSearchData] = useState({})
 	const [inputValue, setInputValue] = useState('')
+	const [inOut, setInOut] = useState('in')
 	const { register } = useForm()
-	const inOut = 'in'
+
 	function handleChange(event) {
 		setInputValue(event.target.value)
+	}
+
+	function handleClick(event) {
+		setInOut(event.target.dataset.value)
 	}
 
 	const query = useQuery({
@@ -27,7 +31,7 @@ export default function SearchBar({ stateChange }) {
 
 	useEffect(() => {
 		query.refetch()
-	}, [inputValue])
+	}, [inputValue, inOut])
 
 	useEffect(() => {
 		if (query.data != [] && query.data != {} && query.data != undefined) {
@@ -51,12 +55,20 @@ export default function SearchBar({ stateChange }) {
 				</div>
 				<div className="search__filters">
 					<Calendar />
-					<Link href="/" className="search__filters--inout-button">
-						entrada
-					</Link>
-					<Link href="/" className="search__filters--inout-button">
-						saída
-					</Link>
+					<input
+						type="button"
+						onClick={handleClick}
+						className="search__filters--inout-button"
+						value="entrada"
+						data-value="in"
+					/>
+					<input
+						type="button"
+						onClick={handleClick}
+						className="search__filters--inout-button"
+						value="saída"
+						data-value="out"
+					/>
 				</div>
 			</div>
 		</>

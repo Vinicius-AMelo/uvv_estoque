@@ -2,7 +2,6 @@
 	display: flex;
 	background-color: #FAFAFA;
 	color: #2c2663;
-	padding: 0px 8px;
 	border-bottom: 1px solid #dddddd;
 	height: 60px;
 
@@ -22,10 +21,11 @@
 		.navbar__menu--item {
 			height: calc(100% + 2px);
 			margin-bottom: -2px;
+			flex: 1;
 
 			.navbar__menu--item-link {
 				display: inline-block;
-				width: max-content;
+				width: 100%;
 				padding: 0px 16px;
 				color: #2c2663;
 				font-weight: 600;
@@ -34,6 +34,7 @@
 				height: 100%;
 				display: flex;
 				align-items: center;
+				justify-content: center;
 				text-align: center;
 
 				&.active {

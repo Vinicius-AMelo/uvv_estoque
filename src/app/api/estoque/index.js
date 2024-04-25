@@ -3,81 +3,122 @@ import prisma from "../db.js";
 export async function getInRecords(req, res) {
 	const { q } = req.query;
 
-	if (!q) {
-		res.send(await prisma.registroEntradas.findMany({
-			include: {
-				user: {
-					select: {
-						id: true,
-						name: true,
+	try {
+		if (!q) {
+			res.send(await prisma.registroEntradas.findMany({
+				include: {
+					user: {
+						select: {
+							id: true,
+							name: true,
+						}
 					}
 				}
-			}
-		}));
-	} else {
-		const qInt = parseInt(q);
-		const records = await prisma.registroEntradas.findMany({
-			where: {
-				OR: [
-					{
-						name: {
-							contains: q.toLowerCase(),
-							mode: "insensitive"
+			}));
+		} else {
+			const qInt = parseInt(q);
+			const records = await prisma.registroEntradas.findMany({
+				where: {
+					OR: [
+						{
+							name: {
+								contains: q.toLowerCase(),
+								mode: "insensitive"
+							},
 						},
-					},
-					{
-						description: {
-							contains: q.toLowerCase(),
-							mode: "insensitive"
+						{
+							description: {
+								contains: q.toLowerCase(),
+								mode: "insensitive"
+							},
 						},
-					},
-					{
-						product_code: Number.isInteger(qInt) ? qInt : 0,
-					},
-					{
-						id: Number.isInteger(qInt) ? qInt : 0,
-					},
-				],
-			},
-			include: {
-				user: {
-					select: {
-						id: true,
-						name: true,
+						{
+							product_code: Number.isInteger(qInt) ? qInt : 0,
+						},
+						{
+							id: Number.isInteger(qInt) ? qInt : 0,
+						},
+					],
+				},
+				include: {
+					user: {
+						select: {
+							id: true,
+							name: true,
+						}
 					}
 				}
-			}
-		});
-		res.send(records);
+			});
+			res.send(records);
+
+		}
+	} catch (error) {
+		res.send(error)
 	}
 }
 
 export async function createInRecord(req, res) {
 	const { name, description, product_code, quantity, id } = req.body;
 
-	await prisma.registroEntradas.create({
-		data: {
-			name,
-			description,
-			product_code,
-			quantity,
-			user: {
-				connect: {
-					id
-				}
-			},
-			estoque: {
-				create: {
-					name,
-					description,
-					product_code,
-					quantity
-				}
-			}
+	const existingProduct = await prisma.estoque.findFirst({
+		where: {
+			product_code: product_code
 		}
 	});
 
-	res.sendStatus(201);
+	if (existingProduct) {
+		if (existingProduct.quantity == 0) {
+			await prisma.estoque.update({
+				where: {
+					id: existingProduct.id
+				},
+				data: {
+					quantity: {
+						increment: 1
+					},
+					registroEntradas: {
+						create: {
+							name,
+							description,
+							product_code,
+							quantity,
+							user: {
+								connect: {
+									id
+								}
+							},
+						}
+					}
+				}
+			});
+			res.sendStatus(201);
+		} else {
+			res.send({ message: "Item já existe em estoque" })
+		}
+	} else {
+		await prisma.registroEntradas.create({
+			data: {
+				name,
+				description,
+				product_code,
+				quantity,
+				user: {
+					connect: {
+						id
+					}
+				},
+				estoque: {
+					create: {
+						name,
+						description,
+						product_code,
+						quantity
+					}
+				}
+			}
+		});
+		res.sendStatus(201);
+	}
 }
 
 export async function getOutRecords(req, res) {
@@ -133,25 +174,34 @@ export async function getOutRecords(req, res) {
 }
 
 export async function createOutRecord(req, res) {
-	const { name, description, product_code, id } = req.body;
+	const { name, description, product_code, quantity, request_code, id } = req.body;
 
-	await prisma.registroSaidas.create({
+	const existingProduct = await prisma.estoque.findFirst({
+		where: {
+			product_code: product_code
+		}
+	});
+
+	await prisma.estoque.update({
+		where: {
+			id: existingProduct.id
+		},
 		data: {
-			name,
-			description,
-			product_code,
-			quantity,
-			user: {
-				connect: {
-					id
-				}
+			quantity: {
+				decrement: 1
 			},
-			estoque: {
+			registroSaidas: {
 				create: {
 					name,
 					description,
 					product_code,
-					quantity
+					quantity,
+					request_code,
+					user: {
+						connect: {
+							id
+						}
+					},
 				}
 			}
 		}
