@@ -2,9 +2,11 @@ table {
 	border-collapse: collapse;
 	width: 100%;
 	border: 1px;
-
+	margin-top: 10px;
 
 	tbody {
+		margin-top: 15px;
+
 		tr {
 			&:nth-child(odd) {
 				background: #eeeeee;
@@ -13,9 +15,10 @@ table {
 		}
 	}
 
-
 	th,
 	td {
+		margin-top: 10px;
+		color: #bcbdc0;
 		vertical-align: middle;
 		text-align: center;
 		border-bottom: 1px solid #A9ACBB;
@@ -27,15 +30,37 @@ table {
 }
 
 .header {
+	font-size: 22;
+	font-weight: bold;
 	background-color: #ffffff;
+	vertical-align: middle;
+	height: 40px;
+	margin: 10px;
 }
 
 .search {
+	padding: 10px;
+	background-color: #e6e8ec;
 	border-radius: 10px;
-	border-style: outset;
-	border-color: #A9ACBB;
+	border-style: none;
+	vertical-align: middle;
 	width: 216px;
-	height: 38px;
+	height: 30px;
 	position: relative;
 	float: right;
+}
+
+.order {
+	margin-right: 5px;
+	background-color: #e6e8ec;
+	border-radius: 10px;
+	border-style: none;
+	width: 216px;
+	height: 30px;
+	position: relative;
+	float: right;
+}
+
+option {
+	text-align: end;
 }

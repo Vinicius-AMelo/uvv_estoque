@@ -73,6 +73,14 @@
 			top: 374px;
 			left: 269px;
 			margin: 10px;
+			color: #0026ff;
+			background-color: #ffd900;
+
+		}
+
+		.submit:focus {
+			color: #ffd900;
+			background-color: #0026ff;
 		}
 
 		.created {

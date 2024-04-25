@@ -6,6 +6,7 @@ import RecordItem from './recordItem'
 import axios from 'axios'
 import SearchBar from './searchBar'
 import { useEffect, useState } from 'react'
+import OrderBar from './orderBar'
 
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])
