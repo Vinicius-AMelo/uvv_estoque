@@ -14,7 +14,7 @@
 			margin-right: 20px;
 
 			input:only-child {
-				background-color: #E40066;
+				background-color: #0048e4;
 				border: none;
 				height: 34px;
 				padding: 4px 8px;
@@ -31,11 +31,13 @@
 					color: #ffffff;
 				}
 			}
+
+
 		}
 
 		.search__filters--inout-button {
 			width: max-content;
-			background-color: #E40066;
+			background-color: #0048e4;
 			border: none;
 			// height: 34px;
 			padding: 10px 8px;
@@ -48,6 +50,10 @@
 			display: inline-block;
 			// margin: 0px 8px;
 		}
+
+		.search__filters--inout-button.active {
+			background-color: #ffd900;
+		}
 	}
 
 
@@ -55,6 +61,8 @@
 	.search__bar {
 		border: 1px solid;
 		padding: 4px 8px;
+		background-color: #e3e5e9;
+		border-style: none;
 		border-radius: 100px;
 		width: max-content;
 		display: flex;

@@ -33,6 +33,10 @@ export default function RecordsIn() {
 	return (
 		<div className="form_container">
 			<form onSubmit={handleSubmit(onSubmit)}>
+				<div className="input__container--check">
+					<label>Produto possui patrimônio?</label>
+					<input type="checkbox" id="checkbox" />
+				</div>
 				<div className="input__container">
 					<label htmlFor="">Patrimônio </label>
 					<input type="text" id="product_code" {...register('product_code', { required: true })} />
@@ -49,7 +53,7 @@ export default function RecordsIn() {
 					<label htmlFor="">Descrição </label>
 					<textarea rows={4} id="description" {...register('description', { required: true })} />
 				</div>
-				<button type="submit">enviar</button>
+				<button type="submit">ENVIAR</button>
 			</form>
 		</div>
 	)

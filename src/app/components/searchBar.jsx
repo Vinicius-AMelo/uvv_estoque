@@ -42,7 +42,7 @@ export default function SearchBar({ stateChange }) {
 				<div className="search__bar">
 					<Image width={24} height={24} src="/search_icon.svg" />
 					<input
-						className="search"
+						className="search__bar"
 						type="search"
 						placeholder="pesquisar"
 						{...register('search', { onChange: handleChange })}

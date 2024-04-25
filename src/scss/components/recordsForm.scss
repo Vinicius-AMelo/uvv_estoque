@@ -6,6 +6,21 @@
 		flex-direction: column;
 		gap: 12px;
 
+		.input__container--check {
+			display: flex;
+			flex-direction: row;
+			gap: 12px;
+
+			label {
+				font-size: 12px;
+				font-weight: 600;
+				text-transform: uppercase;
+				color: #2c2663;
+				margin-bottom: 12px;
+			}
+		}
+
+
 		.input__container {
 			display: flex;
 			flex-direction: column;
@@ -41,6 +56,22 @@
 				margin-bottom: 8px;
 				resize: none;
 			}
+		}
+
+		button {
+			color: #ffffff;
+			background-color: #0026ff;
+			font-size: 16px;
+			width: 124px;
+			height: 52px;
+			border: 2px;
+			border-style: outset;
+			border-radius: 16px;
+			margin: 10px;
+		}
+
+		button:focus {
+			background-color: #ffd953;
 		}
 	}
 }
