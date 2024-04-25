@@ -1,0 +1,71 @@
+.search__container {
+	padding: 8px 0px;
+	display: flex;
+	justify-content: space-between;
+
+	.search__filters {
+		display: flex;
+		gap: 24px;
+		align-items: center;
+		width: 60%;
+		justify-content: flex-end;
+
+		.react-datepicker__input-container {
+			margin-right: 20px;
+
+			input:only-child {
+				background-color: #E40066;
+				border: none;
+				height: 34px;
+				padding: 4px 8px;
+				border-radius: 6px;
+				width: 100px;
+				position: relative;
+				cursor: pointer;
+				caret-color: transparent;
+				text-transform: uppercase;
+				font-size: 12px;
+
+				&::placeholder {
+					text-align: center;
+					color: #ffffff;
+				}
+			}
+		}
+
+		.search__filters--inout-button {
+			width: max-content;
+			background-color: #E40066;
+			border: none;
+			// height: 34px;
+			padding: 10px 8px;
+			border-radius: 6px;
+			color: #ffffff;
+			text-transform: uppercase;
+			font-size: 12px;
+			line-height: 14px;
+			vertical-align: middle;
+			display: inline-block;
+			// margin: 0px 8px;
+		}
+	}
+
+
+
+	.search__bar {
+		border: 1px solid;
+		padding: 4px 8px;
+		border-radius: 100px;
+		width: max-content;
+		display: flex;
+		height: 100%;
+
+		img {
+			margin-right: 8px;
+		}
+
+		input {
+			border: none;
+		}
+	}
+}

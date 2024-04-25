@@ -1,6 +1,6 @@
 import prisma from "../db.js";
 
-export async function getProducts(req, res) {
+export async function getInRecords(req, res) {
 	const { q } = req.query;
 
 	if (!q) {
@@ -52,7 +52,7 @@ export async function getProducts(req, res) {
 	}
 }
 
-export async function createProduct(req, res) {
+export async function createInRecord(req, res) {
 	const { name, description, product_code, quantity, id } = req.body;
 
 	await prisma.registroEntradas.create({
@@ -80,7 +80,59 @@ export async function createProduct(req, res) {
 	res.sendStatus(201);
 }
 
-export async function removeProduct(req, res) {
+export async function getOutRecords(req, res) {
+	const { q } = req.query;
+
+	if (!q) {
+		res.send(await prisma.registroSaidas.findMany({
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+					}
+				}
+			}
+		}));
+	} else {
+		const qInt = parseInt(q);
+		const records = await prisma.registroSaidas.findMany({
+			where: {
+				OR: [
+					{
+						name: {
+							contains: q.toLowerCase(),
+							mode: "insensitive"
+						},
+					},
+					{
+						description: {
+							contains: q.toLowerCase(),
+							mode: "insensitive"
+						},
+					},
+					{
+						product_code: Number.isInteger(qInt) ? qInt : 0,
+					},
+					{
+						id: Number.isInteger(qInt) ? qInt : 0,
+					},
+				],
+			},
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+					}
+				}
+			}
+		});
+		res.send(records);
+	}
+}
+
+export async function createOutRecord(req, res) {
 	const { name, description, product_code, id } = req.body;
 
 	await prisma.registroSaidas.create({

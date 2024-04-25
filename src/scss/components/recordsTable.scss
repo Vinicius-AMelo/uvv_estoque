@@ -3,16 +3,13 @@ table {
 	width: 100%;
 	border: 1px;
 
-
 	tbody {
 		tr {
 			&:nth-child(odd) {
 				background: #eeeeee;
-
 			}
 		}
 	}
-
 
 	th,
 	td {
@@ -23,19 +20,4 @@ table {
 		font-size: 16px;
 		font-weight: normal;
 	}
-
-}
-
-.header {
-	background-color: #ffffff;
-}
-
-.search {
-	border-radius: 10px;
-	border-style: outset;
-	border-color: #A9ACBB;
-	width: 216px;
-	height: 38px;
-	position: relative;
-	float: right;
 }

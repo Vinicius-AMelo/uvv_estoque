@@ -1,5 +1,6 @@
 export default function RecordItem({ record }) {
 	const createdAt = new Date(record.createdAt)
+	console.log(record)
 	return (
 		<tr>
 			<td>{record.id}</td>

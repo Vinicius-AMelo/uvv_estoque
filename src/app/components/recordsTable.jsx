@@ -14,6 +14,18 @@ export default function RecordsTable() {
 		setFormData(data)
 	}
 
+	const record = {
+		id: 15,
+		product_code: 14232,
+		name: 'Teste',
+		description: 'Produto Teste',
+		quantity: 3,
+		createdAt: '2024-04-23T11:36:01.554Z',
+		user: {
+			name: 'Usuário Teste',
+		},
+	}
+
 	return (
 		<>
 			<SearchBar stateChange={stateChange} />
@@ -34,6 +46,10 @@ export default function RecordsTable() {
 						formData.map((item, index) => {
 							return <RecordItem key={index} record={item} />
 						})}
+					<RecordItem key={55} record={record} />
+					<RecordItem key={56} record={record} />
+					<RecordItem key={57} record={record} />
+					<RecordItem key={58} record={record} />
 				</tbody>
 			</table>
 		</>

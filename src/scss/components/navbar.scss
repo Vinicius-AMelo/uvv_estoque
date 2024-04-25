@@ -2,13 +2,14 @@
 	display: flex;
 	background-color: #FAFAFA;
 	color: #2c2663;
-	padding: 8px;
+	padding: 0px 8px;
 	border-bottom: 1px solid #dddddd;
+	height: 60px;
 
 	.navbar__logo {
-		padding-right: 16px;
-		margin-right: 16px;
-		border-right: 2px solid #ffd953;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.navbar__menu {
@@ -19,16 +20,28 @@
 		justify-content: space-around;
 
 		.navbar__menu--item {
-			// width: 33.3%;
+			height: calc(100% + 2px);
+			margin-bottom: -2px;
 
 			.navbar__menu--item-link {
 				display: inline-block;
-				padding: 8px;
 				width: max-content;
+				padding: 0px 16px;
 				color: #2c2663;
 				font-weight: 600;
 				font-size: 14px;
 				text-transform: uppercase;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				text-align: center;
+
+				&.active {
+					background-color: #ffffff;
+					border: 1px solid #dddddd;
+					border-top: 2px solid #ffd953;
+					border-bottom: 3px solid #ffffff;
+				}
 			}
 		}
 	}

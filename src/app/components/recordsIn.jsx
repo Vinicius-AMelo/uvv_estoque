@@ -13,7 +13,7 @@ export default function RecordsIn() {
 		mutationFn: async (data) => {
 			console.log(data)
 			const { name, description, quantity, product_code } = data
-			const response = await axios.post('http://localhost:3001/products', {
+			const response = await axios.post('http://localhost:3001/records/in', {
 				name,
 				description,
 				quantity: parseInt(quantity),

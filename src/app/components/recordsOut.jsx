@@ -15,7 +15,7 @@ export default function RecordsForm() {
 		enabled: false,
 		queryKey: ['records'],
 		queryFn: async () => {
-			const response = await axios.get(`http://localhost:3001/products?q=${inputValue}`)
+			const response = await axios.get(`http://localhost:3001/records/in?q=${inputValue}`)
 			return response.data
 		},
 	})
