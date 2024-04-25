@@ -1,5 +1,7 @@
 .form_container {
 	padding: 80px;
+	width: 50%;
+	display: flex;
 
 	form {
 		display: flex;
@@ -16,6 +18,10 @@
 				font-weight: 600;
 				text-transform: uppercase;
 				color: #2c2663;
+				margin-bottom: 12px;
+			}
+
+			input {
 				margin-bottom: 12px;
 			}
 		}
@@ -61,17 +67,36 @@
 		button {
 			color: #ffffff;
 			background-color: #0026ff;
-			font-size: 16px;
-			width: 124px;
-			height: 52px;
-			border: 2px;
-			border-style: outset;
-			border-radius: 16px;
-			margin: 10px;
+			font-size: 12px;
+			width: max-content;
+			//height: 14px;
+			padding: 10px 8px;
+			border: 0px;
+			border-radius: 6px;
+
 		}
 
 		button:focus {
 			background-color: #ffd953;
 		}
+
+
+	}
+
+
+
+}
+
+.logo {
+	display: flex;
+	position: absolute;
+	top: 350px;
+	left: 750px;
+
+
+	.img {
+		position: absolute;
+
+
 	}
 }

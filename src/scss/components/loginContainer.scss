@@ -4,16 +4,15 @@
 .container {
 	width: 1366px;
 	height: 768px;
-	border: 3px solid;
 	border-radius: 24px;
-	border-style: outset;
 	padding: 50px;
 	margin: 20px;
 	justify-content: center;
 	display: flex;
 	position: relative;
 	left: 15%;
-	top: 50%;
+	top: 40%;
+	box-shadow: 1px 3px 10px #00000040;
 
 	.forms {
 
@@ -27,57 +26,79 @@
 			top: 100px;
 		}
 
-		.nameInput {
-			width: 364px;
-			height: 52px;
-			border: 2px;
-			border-style: outset;
-			border-radius: 16px;
-			margin: 10px;
-			position: absolute;
-			left: 159px;
-			top: 138px;
-		}
+		form {
+			display: flex;
 
-		.emailInput {
-			width: 364px;
-			height: 52px;
-			border: 2px;
-			border-style: outset;
-			border-radius: 16px;
-			margin: 10px;
-			position: absolute;
-			left: 159px;
-			top: 208px;
-		}
+			.nameInput {
+				padding: 8px;
+				border-radius: 4px;
+				border: 1px solid #cccccc;
+				width: 364px;
+				margin-bottom: 8px;
+				resize: none;
 
-		.passwordInput {
-			width: 364px;
-			height: 52px;
-			border: 2px;
-			border-style: outset;
-			border-radius: 16px;
-			margin: 10px;
-			position: absolute;
-			left: 159px;
-			top: 278px;
-		}
+				&:focus {
+					border: 2px solid #ffd953;
+					padding: 7px;
+				}
 
-		.submit {
-			color: #ffffff;
-			background-color: #0026ff;
-			font-size: 16px;
-			width: 124px;
-			height: 52px;
-			border: 2px;
-			border-style: outset;
-			border-radius: 16px;
-			margin: 10px;
-			position: absolute;
-			top: 374px;
-			left: 269px;
+				position: absolute;
+				left: 159px;
+				top: 138px;
+			}
+
+			.emailInput {
+				padding: 8px;
+				border-radius: 4px;
+				border: 1px solid #cccccc;
+				width: 364px;
+
+				resize: none;
+
+				&:focus {
+					border: 2px solid #ffd953;
+					padding: 7px;
+				}
+
+				position: absolute;
+				left: 159px;
+				top: 208px;
+			}
+
+			.passwordInput {
+				padding: 8px;
+				border-radius: 4px;
+				border: 1px solid #cccccc;
+				width: 364px;
+				margin-bottom: 8px;
+				resize: none;
+
+				&:focus {
+					border: 2px solid #ffd953;
+					padding: 7px;
+				}
+
+				position: absolute;
+				left: 159px;
+				top: 278px;
+			}
+
+			.submit {
+				color: #ffffff;
+				background-color: #0026ff;
+				font-size: 16px;
+				width: 124px;
+				height: 52px;
+				border: 2px;
+				border-style: outset;
+				border-radius: 16px;
+				margin: 10px;
+				position: absolute;
+				top: 374px;
+				left: 269px;
 
 
+			}
 		}
 
 		.submit:focus {
@@ -99,14 +120,13 @@
 		display: flex;
 
 		.background {
-			width: 682px;
-			height: 762px;
+			width: 685px;
+			height: 765px;
 			position: absolute;
 			left: 678px;
 			top: 0px;
 			border-top-right-radius: 24px;
 			border-bottom-right-radius: 24px;
-
 		}
 
 		.img {
