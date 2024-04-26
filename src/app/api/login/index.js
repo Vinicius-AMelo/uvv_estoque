@@ -24,18 +24,33 @@ export async function login(req, res) {
 	const user = await prisma.user.findUnique({
 		where: {
 			email
-		}
+		},
 	});
 
 	bcrypt.compare(password, user.password, (err, result) => {
-		if (result) {
-			const token = jwt.sign({ id: user.id, name: user.name }, "shh", { expiresIn: '1h' });
-			const decoded = jwt.decode(token)
-			res.send(decoded)
-		} else {
-			res.send("Credenciais invalidas")
-		}
+		if (err) return res.send({ message: "Ocorreu um problema", err })
+		if (!result) return res.send({ message: "Credenciais invalidas" })
+
+		const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, "uvvAuthLogin", { expiresIn: '1h' })
+		res.send({ token, user: { id: user.id, name: user.name, email: user.email } })
 	});
+}
+
+export async function validateToken(req, res, next) {
+	const token = req.headers.authorization
+	if (!token) return res.send({ message: "Token não enviado!" })
+
+	jwt.verify(token, "uvvAuthLogin", (err, decoded) => {
+		if (err) return res.send({ message: "Usuário não autenticado!" })
+		req.user = decoded;
+		next()
+	})
+
+}
+export async function auth(req, res) {
+	const { user } = req
+	if (!user) return res.send({ valid: false })
+	return res.send({ valid: true })
 }
 
 

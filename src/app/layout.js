@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.scss";
 import { ReactQueryClientProvider } from "./components/ReactQueryClienteProvider";
+import AuthChecker from "./components/AuthChecker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
 		<html lang="pt-br">
 			<body className={inter.className}>
 				<ReactQueryClientProvider>
-					{children}
+					<AuthChecker>
+						{children}
+					</AuthChecker>
 				</ReactQueryClientProvider>
 			</body>
 		</html>

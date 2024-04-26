@@ -1,17 +1,19 @@
 'use client'
 
+import axios from 'axios'
 import Link from 'next/link'
 import LoginContainer from '../components/loginContainer'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Login() {
-	const { register, handleSubmit } = useForm()
+	const { register, handleSubmit, reset } = useForm()
+	const router = useRouter()
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
-			console.log(data)
 			const { email, password } = data
 			const response = await axios.post('http://localhost:3001/login', {
 				email,
@@ -20,6 +22,14 @@ export default function Login() {
 			return response.data
 		},
 	})
+
+	useEffect(() => {
+		if (!mutation.data?.message && mutation.data != undefined) {
+			localStorage.setItem('uat_cs1', JSON.stringify({ token: mutation.data.token, token_time: new Date() }))
+			reset()
+			router.push('/')
+		}
+	}, [mutation.data])
 
 	function onSubmit(data) {
 		mutation.mutate(data)
