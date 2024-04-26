@@ -13,19 +13,11 @@ export default function Register() {
 		mutationFn: async (data) => {
 			console.log(data)
 			const { name, email, password } = data
-			const response = await axios.post(
-				'https://2e60-187-12-85-253.ngrok-free.app/register',
-				{
-					name,
-					email,
-					password,
-				},
-				{
-					headers: {
-						'ngrok-skip-browser-warning': '1',
-					},
-				}
-			)
+			const response = await axios.post('http://localhost:3001/register', {
+				name,
+				email,
+				password,
+			})
 			return response.data
 		},
 	})

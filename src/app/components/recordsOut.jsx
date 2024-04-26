@@ -17,11 +17,7 @@ export default function RecordsForm() {
 		enabled: false,
 		queryKey: ['records'],
 		queryFn: async () => {
-			const response = await axios.get(`https://2e60-187-12-85-253.ngrok-free.app/records/in?q=${inputValue}`, {
-				headers: {
-					'ngrok-skip-browser-warning': '1',
-				},
-			})
+			const response = await axios.get(`http://localhost:3001/records/in?q=${inputValue}`)
 			return response.data
 		},
 	})
@@ -29,22 +25,14 @@ export default function RecordsForm() {
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, request_code } = data
-			const response = await axios.post(
-				'https://2e60-187-12-85-253.ngrok-free.app/records/out',
-				{
-					name,
-					description,
-					quantity: parseInt(quantity),
-					product_code: parseInt(product_code),
-					request_code: parseInt(request_code),
-					id: 1,
-				},
-				{
-					headers: {
-						'ngrok-skip-browser-warning': '1',
-					},
-				}
-			)
+			const response = await axios.post('http://localhost:3001/records/out', {
+				name,
+				description,
+				quantity: parseInt(quantity),
+				product_code: parseInt(product_code),
+				request_code: parseInt(request_code),
+				id: 1,
+			})
 			return response.data
 		},
 		onSuccess: () => {

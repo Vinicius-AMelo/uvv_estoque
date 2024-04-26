@@ -13,10 +13,9 @@ export default function AuthChecker({ children }) {
 		enabled: false,
 		queryKey: ['auth', authToken],
 		queryFn: async () => {
-			const response = await axios.get(`https://2e60-187-12-85-253.ngrok-free.app/auth`, {
+			const response = await axios.get(`http://localhost:3001/auth`, {
 				headers: {
 					Authorization: `${authToken}`,
-					'ngrok-skip-browser-warning': '1',
 				},
 			})
 			return response.data
