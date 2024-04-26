@@ -28,10 +28,10 @@ export default function Login() {
 	return (
 		<>
 			<LoginContainer>
-				<label className="loginText" htmlFor="loginText">
-					LOGIN
-				</label>
 				<form className="input" onSubmit={handleSubmit(onSubmit)}>
+					<label className="loginText" htmlFor="loginText">
+						LOGIN
+					</label>
 					<input
 						className="emailInput"
 						type="email"

@@ -28,10 +28,10 @@ export default function Register() {
 	return (
 		<>
 			<LoginContainer>
-				<label className="loginText" htmlFor="loginText">
-					REGISTER
-				</label>
 				<form className="input" onSubmit={handleSubmit(onSubmit)}>
+					<label className="loginText" htmlFor="loginText">
+						REGISTER
+					</label>
 					<input
 						className="nameInput"
 						type="text"
