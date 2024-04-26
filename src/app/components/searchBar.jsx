@@ -24,7 +24,14 @@ export default function SearchBar({ stateChange }) {
 		enabled: false,
 		queryKey: ['search'],
 		queryFn: async () => {
-			const response = await axios.get(`http://localhost:3001/records/${inOut}?q=${inputValue}`)
+			const response = await axios.get(
+				`https://2e60-187-12-85-253.ngrok-free.app/records/${inOut}?q=${inputValue}`,
+				{
+					headers: {
+						'ngrok-skip-browser-warning': '1',
+					},
+				}
+			)
 			return response.data
 		},
 	})

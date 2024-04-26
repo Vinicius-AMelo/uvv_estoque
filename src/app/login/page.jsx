@@ -15,10 +15,18 @@ export default function Login() {
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { email, password } = data
-			const response = await axios.post('http://localhost:3001/login', {
-				email,
-				password,
-			})
+			const response = await axios.post(
+				'https://2e60-187-12-85-253.ngrok-free.app/login',
+				{
+					email,
+					password,
+				},
+				{
+					headers: {
+						'ngrok-skip-browser-warning': '1',
+					},
+				}
+			)
 			return response.data
 		},
 	})

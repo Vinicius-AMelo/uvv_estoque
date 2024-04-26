@@ -15,13 +15,21 @@ export default function RecordsIn() {
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, checkbox } = data
-			const response = await axios.post('http://localhost:3001/records/in', {
-				name,
-				description,
-				quantity: checkbox ? 1 : parseInt(quantity),
-				product_code: parseInt(product_code),
-				id: 1,
-			})
+			const response = await axios.post(
+				'https://2e60-187-12-85-253.ngrok-free.app/records/in',
+				{
+					name,
+					description,
+					quantity: checkbox ? 1 : parseInt(quantity),
+					product_code: parseInt(product_code),
+					id: 1,
+				},
+				{
+					headers: {
+						'ngrok-skip-browser-warning': '1',
+					},
+				}
+			)
 			return response.data
 		},
 	})
