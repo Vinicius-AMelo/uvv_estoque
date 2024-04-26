@@ -10,23 +10,69 @@
 		form {
 			display: flex;
 			flex-direction: column;
-			gap: 12px;
+			gap: 20px;
 
 			.input__container--check {
 				display: flex;
 				flex-direction: row;
 				gap: 12px;
+				width: 235px;
+				align-items: center;
 
 				label {
 					font-size: 12px;
 					font-weight: 600;
 					text-transform: uppercase;
 					color: #2c2663;
-					margin-bottom: 12px;
 				}
 
-				input {
-					margin-bottom: 12px;
+				.switch {
+					display: inline-block;
+					height: 20px;
+					position: relative;
+					width: 40px;
+				}
+
+				.switch input {
+					display: none;
+				}
+
+				.slider {
+					background-color: #aeaeae;
+					bottom: 0;
+					cursor: pointer;
+					left: 0;
+					position: absolute;
+					right: 0;
+					top: 0;
+					transition: .4s;
+				}
+
+				.slider:before {
+					content: "";
+					background-color: #fff;
+					position: absolute;
+					bottom: 3px;
+					left: 4px;
+					height: 14px;
+					width: 14px;
+					transition: .4s;
+				}
+
+				input:checked+.slider {
+					background-color: #2c2663;
+				}
+
+				input:checked+.slider:before {
+					transform: translateX(18px);
+				}
+
+				.slider.round {
+					border-radius: 100px;
+				}
+
+				.slider.round:before {
+					border-radius: 50%;
 				}
 			}
 
@@ -34,6 +80,7 @@
 			.input__container {
 				display: flex;
 				flex-direction: column;
+				width: 235px;
 
 				label {
 					font-size: 12px;
@@ -48,24 +95,20 @@
 					padding: 8px;
 					border-radius: 4px;
 					border: 1px solid #cccccc;
-					width: 200px;
-					margin-bottom: 8px;
+					width: 235px;
 					resize: none;
 
 					&:focus {
 						border: 2px solid #ffd953;
 						padding: 7px;
 					}
+
+					&:disabled {
+						background-color: #dddddd;
+					}
 				}
 
-				.disabled_input {
-					padding: 8px;
-					border-radius: 4px;
-					border: 1px solid #cccccc;
-					width: 200px;
-					margin-bottom: 8px;
-					resize: none;
-				}
+
 			}
 
 			button {
@@ -73,22 +116,12 @@
 				background-color: #0026ff;
 				font-size: 12px;
 				width: max-content;
-				//height: 14px;
 				padding: 10px 8px;
 				border: 0px;
 				border-radius: 6px;
-
+				cursor: pointer;
 			}
-
-			button:focus {
-				background-color: #ffd953;
-			}
-
-
 		}
-
-
-
 	}
 
 	.logo {

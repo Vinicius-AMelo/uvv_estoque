@@ -5,15 +5,15 @@ import '../../scss/components/recordsForm.scss'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import Logo from '../../../public/Logo.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 export default function RecordsIn() {
-	const { register, handleSubmit } = useForm()
+	const { register, reset, handleSubmit } = useForm()
+	const [checkboxValue, setcheckboxValue] = useState(true)
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
-			console.log(data)
 			const { name, description, quantity, product_code, checkbox } = data
 			const response = await axios.post('http://localhost:3001/records/in', {
 				name,
@@ -24,14 +24,22 @@ export default function RecordsIn() {
 			})
 			return response.data
 		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['search'] })
-		},
 	})
 
 	function onSubmit(data) {
 		mutation.mutate(data)
 	}
+
+	function handleChange(event) {
+		setcheckboxValue(event.target.checked)
+	}
+
+	useEffect(() => {
+		if (mutation.data != undefined) {
+			if (mutation.data == 'Created') reset()
+		}
+	}, [mutation.data])
+
 	return (
 		<>
 			<div className="content">
@@ -39,7 +47,15 @@ export default function RecordsIn() {
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className="input__container--check">
 							<label>Produto possui patrimônio?</label>
-							<input type="checkbox" id="checkbox" {...register('product_code')} />
+							<label className="switch" htmlFor="checkbox">
+								<input
+									type="checkbox"
+									id="checkbox"
+									{...register('checkbox', { onChange: handleChange })}
+									checked={checkboxValue}
+								/>
+								<div className="slider round"></div>
+							</label>
 						</div>
 						<div className="input__container">
 							<label htmlFor="">Patrimônio </label>
@@ -51,7 +67,12 @@ export default function RecordsIn() {
 						</div>
 						<div className="input__container">
 							<label htmlFor="">Quantidade </label>
-							<input type="number" id="quantity" {...register('quantity', { required: true })} />
+							<input
+								type="number"
+								id="quantity"
+								disabled={checkboxValue}
+								{...register('quantity', { required: !checkboxValue })}
+							/>
 						</div>
 						<div className="input__container">
 							<label htmlFor="">Descrição </label>

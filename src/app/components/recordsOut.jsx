@@ -47,12 +47,15 @@ export default function RecordsForm() {
 	}, [inputValue])
 
 	useEffect(() => {
-		if (query.data != [] && query.data != {} && query.data != undefined) {
-			setFormData(query.data)
-			console.log(query.data)
-			if (query.data?.[0]?.product_code) setValue('quantity', 1)
-			if (query.data?.[0]?.name) setValue('name', query.data[0].name)
-			if (query.data?.[0]?.description) setValue('description', query.data[0].description)
+		if (query.data != undefined && query.data != {} && query.data != []) {
+			if (query.data.length > 0) {
+				setFormData(query.data)
+				if (query.data?.[0]?.product_code) setValue('quantity', 1)
+				if (query.data?.[0]?.name) setValue('name', query.data[0].name)
+				if (query.data?.[0]?.description) setValue('description', query.data[0].description)
+			} else {
+				reset()
+			}
 		}
 	}, [query.data])
 
@@ -72,7 +75,7 @@ export default function RecordsForm() {
 				<div className="form_container">
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className="input__container">
-							<label htmlFor="">Patrimônio </label>
+							<label htmlFor="">Patrimônio ou ID </label>
 							<input
 								type="text"
 								id="product_code"
@@ -96,7 +99,7 @@ export default function RecordsForm() {
 							/>
 						</div>
 						<div className="input__container">
-							<label htmlFor="">Número chamado </label>
+							<label htmlFor="">Número do chamado </label>
 							<input type="number" id="request_code" {...register('request_code')} />
 						</div>
 						<div className="input__container">
