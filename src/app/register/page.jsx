@@ -33,21 +33,21 @@ export default function Register() {
 						REGISTER
 					</label>
 					<input
-						className="nameInput"
+						className="box__input"
 						type="text"
 						id="name"
 						placeholder="  Name"
 						{...register('name', { required: true })}
 					/>
 					<input
-						className="emailInput"
+						className="box__nput"
 						type="email"
 						id="email"
 						placeholder="  Email"
 						{...register('email', { required: true })}
 					/>
 					<input
-						className="passwordInput"
+						className="box__input"
 						type="password"
 						id="password"
 						placeholder="  Password"

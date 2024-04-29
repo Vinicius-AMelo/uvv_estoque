@@ -1,0 +1,46 @@
+.container-popup {
+	position: absolute;
+	left: 50%;
+	top: 40px;
+	transform: translate(-50%);
+	flex: 1;
+	background-color: #ffffff;
+	align-items: center;
+	box-shadow: 2px 2px 5px 2px #00000040;
+	border-radius: 4px;
+
+
+	.popup {
+		display: inline-block;
+		width: 100%;
+		padding: 0px 16px;
+		color: #2c2663;
+		font-weight: 600;
+		font-size: 14px;
+		text-transform: uppercase;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		height: 80px;
+
+	}
+
+	.time-bar {
+		background-color: green;
+		height: 4px;
+		animation: popup-animation 4s ease-in-out;
+
+	}
+}
+
+@keyframes popup-animation {
+	from {
+		width: 100%;
+
+	}
+
+	to {
+		width: 0%;
+	}
+}

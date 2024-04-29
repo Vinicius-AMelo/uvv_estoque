@@ -9,7 +9,12 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function Login() {
-	const { register, handleSubmit, reset } = useForm()
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm()
 	const router = useRouter()
 
 	const mutation = useMutation({
@@ -34,28 +39,35 @@ export default function Login() {
 	function onSubmit(data) {
 		mutation.mutate(data)
 	}
+	console.log(errors)
 
 	return (
 		<>
 			<LoginContainer>
-				<form className="input" onSubmit={handleSubmit(onSubmit)}>
+				<form className="form" onSubmit={handleSubmit(onSubmit)}>
 					<label className="loginText" htmlFor="loginText">
 						LOGIN
 					</label>
-					<input
-						className="emailInput"
-						type="email"
-						id="email"
-						placeholder="  Email"
-						{...register('email', { required: true })}
-					/>
-					<input
-						className="passwordInput"
-						type="password"
-						id="password"
-						placeholder="  Password"
-						{...register('password', { required: true })}
-					/>
+					<div className="box">
+						<input
+							className={`box__input ${errors.email && 'disable'}`}
+							type="email"
+							id="email"
+							placeholder="  Email"
+							{...register('email', { required: 'Campo não pode estar vazio' })}
+						/>
+						{errors.email && <p>{errors.email.message}</p>}
+					</div>
+					<div className="box">
+						<input
+							className={`box__input ${errors.password && 'disable'}`}
+							type="password"
+							id="password"
+							placeholder="  Password"
+							{...register('password', { required: 'Campo não pode estar vazio' })}
+						/>
+						{errors.password && <p>{errors.password.message}</p>}
+					</div>
 					<button className="submit" type="submit">
 						Entrar
 					</button>

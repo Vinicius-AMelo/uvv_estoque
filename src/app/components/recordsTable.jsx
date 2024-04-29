@@ -4,6 +4,7 @@ import { useState } from 'react'
 import '../../scss/components/recordsTable.scss'
 import RecordItem from './recordItem'
 import SearchBar from './searchBar'
+import Popup from './popup'
 
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])
@@ -18,6 +19,7 @@ export default function RecordsTable() {
 
 	return (
 		<>
+			<Popup mensage={'Cadastro realizado com sucesso'} color={'green'}></Popup>
 			<SearchBar stateChange={stateChange} inputChange={inputChange} />
 			<table className="records-table">
 				<thead>

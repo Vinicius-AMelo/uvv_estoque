@@ -7,6 +7,7 @@ import axios from 'axios'
 import Logo from '../../../public/Logo.png'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Popup from './popup'
 
 export default function RecordsIn() {
 	const { register, reset, handleSubmit } = useForm()
@@ -42,6 +43,7 @@ export default function RecordsIn() {
 
 	return (
 		<>
+			<Popup mensage={'Cadastro realizado com sucesso'} color={'green'}></Popup>
 			<div className="content">
 				<div className="form_container">
 					<form onSubmit={handleSubmit(onSubmit)}>
