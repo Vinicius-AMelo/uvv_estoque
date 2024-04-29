@@ -77,7 +77,7 @@
 
 				.submit {
 					color: #ffffff;
-					background-color: #0026ff;
+					background-color: #2c2663;
 					font-size: 16px;
 					width: 124px;
 					height: 52px;
@@ -87,6 +87,7 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
+					cursor: pointer;
 
 					.loading {
 						width: 15px;
@@ -101,7 +102,7 @@
 							content: "";
 							display: inline-block;
 							position: absolute;
-							background: #0026ff;
+							background: #2c2663;
 							width: 7px;
 							height: 3px;
 							top: 0px;
@@ -111,15 +112,12 @@
 
 				}
 
-				.submit:focus {
-					color: #ffd900;
-					background-color: #0026ff;
-				}
 
 				.created {
 					font-size: 12px;
+					font-weight: bold;
 					text-decoration: underline;
-					color: #0A6BFD;
+					color: #2c2663;
 
 				}
 			}
