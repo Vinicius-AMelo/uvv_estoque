@@ -4,9 +4,21 @@ import '../../scss/components/navbar.scss'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import jwt from 'jsonwebtoken'
+import { useEffect, useState } from 'react'
 
 export default function Navbar() {
 	const pathname = usePathname()
+	const [roleValue, setRoleValue] = useState('DEFAULT')
+
+	useEffect(() => {
+		const tokenStorage = localStorage.getItem('uat_cs1')
+		if (!tokenStorage) return
+		const { token } = JSON.parse(tokenStorage)
+		const { role } = jwt.decode(token, process.env.JWT_SECRET)
+		setRoleValue(role)
+	}, [roleValue])
+
 	return (
 		<nav className="navbar">
 			<div className="navbar__logo">
@@ -26,12 +38,18 @@ export default function Navbar() {
 					</Link>
 				</li>
 				<li className="navbar__menu--item">
-					<Link
-						className={`navbar__menu--item-link ${pathname === '/recordsin' ? 'active' : ''}`}
-						href="/recordsin"
-					>
-						entrada no estoque
-					</Link>
+					{roleValue == 'DEFAULT' && (
+						<span className={`navbar__menu--item-link disabled`}>entrada no estoque</span>
+					)}
+
+					{roleValue == 'SUPER' && (
+						<Link
+							className={`navbar__menu--item-link ${pathname === '/recordsin' ? 'active' : ''}`}
+							href="/recordsin"
+						>
+							entrada no estoque
+						</Link>
+					)}
 				</li>
 				<li className="navbar__menu--item">
 					<Link

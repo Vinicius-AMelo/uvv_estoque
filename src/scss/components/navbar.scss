@@ -43,6 +43,11 @@
 					border-top: 2px solid #ffd953;
 					border-bottom: 3px solid #ffffff;
 				}
+
+				&.disabled {
+					color: #dddddd;
+					cursor: not-allowed;
+				}
 			}
 		}
 	}

@@ -38,8 +38,8 @@ export async function login(req, res) {
 			if (err) return res.send({ message: "Ocorreu um problema", err })
 			if (!result) return res.send({ message: "Credenciais invalidas" })
 
-			const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, "uvvAuthLogin", { expiresIn: '1h' })
-			res.send({ token, user: { id: user.id, name: user.name, email: user.email } })
+			const token = jwt.sign({ id: user.id, name: user.name, email: user.email, role: user.role }, "uvvAuthLogin", { expiresIn: '1h' })
+			res.send({ token })
 		});
 	} catch (error) {
 		res.status(400).send({ message: "Falha na validação", error })
