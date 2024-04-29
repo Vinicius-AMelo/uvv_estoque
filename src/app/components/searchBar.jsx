@@ -59,14 +59,14 @@ export default function SearchBar({ stateChange, inputChange }) {
 					<input
 						type="button"
 						onClick={handleClick}
-						className="search__filters--inout-button"
+						className={`search__filters--inout-button ${inOut == 'in' && 'active'}`}
 						value="entrada"
 						data-value="in"
 					/>
 					<input
 						type="button"
 						onClick={handleClick}
-						className="search__filters--inout-button"
+						className={`search__filters--inout-button ${inOut == 'out' && 'active'}`}
 						value="saída"
 						data-value="out"
 					/>

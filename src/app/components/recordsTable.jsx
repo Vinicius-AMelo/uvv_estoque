@@ -19,7 +19,6 @@ export default function RecordsTable() {
 
 	return (
 		<>
-			<Popup mensage={'Cadastro realizado com sucesso'} color={'green'}></Popup>
 			<SearchBar stateChange={stateChange} inputChange={inputChange} />
 			<table className="records-table">
 				<thead>

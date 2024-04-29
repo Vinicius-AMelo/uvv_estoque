@@ -5,7 +5,7 @@ export default function Popup({ mensage, color }) {
 		<>
 			<div className="container-popup">
 				<p className="popup">{mensage}</p>
-				<div class="time-bar" style={{ backgroundColor: color }}></div>
+				<div className="time-bar" style={{ backgroundColor: color }}></div>
 			</div>
 		</>
 	)

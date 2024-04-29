@@ -12,17 +12,25 @@ import Popup from './popup'
 export default function RecordsIn() {
 	const { register, reset, handleSubmit } = useForm()
 	const [checkboxValue, setcheckboxValue] = useState(true)
+	const [token, setToken] = useState('')
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, checkbox } = data
-			const response = await axios.post('http://localhost:3001/records/in', {
-				name,
-				description,
-				quantity: checkbox ? 1 : parseInt(quantity),
-				product_code: parseInt(product_code),
-				id: 1,
-			})
+			const response = await axios.post(
+				'http://localhost:3001/records/in',
+				{
+					name,
+					description,
+					quantity: checkbox ? 1 : parseInt(quantity),
+					product_code: parseInt(product_code),
+				},
+				{
+					headers: {
+						Authorization: `${token}`,
+					},
+				}
+			)
 			return response.data
 		},
 	})
@@ -40,6 +48,15 @@ export default function RecordsIn() {
 			if (mutation.data == 'Created') reset()
 		}
 	}, [mutation.data])
+
+	useEffect(() => {
+		const tokenStorage = localStorage.getItem('uat_cs1')
+		console.log(tokenStorage)
+		if (!tokenStorage) return
+		const { token } = JSON.parse(tokenStorage)
+		setToken(token)
+		console.log(token)
+	}, [])
 
 	return (
 		<>

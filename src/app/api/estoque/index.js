@@ -1,4 +1,5 @@
 import prisma from "../db.js";
+import decodeToken from "../services/decodeToken.js";
 
 export async function getInRecords(req, res) {
 	try {
@@ -57,8 +58,9 @@ export async function getInRecords(req, res) {
 }
 
 export async function createInRecord(req, res) {
+	const { id } = decodeToken(req.headers.authorization)
 	try {
-		const { name, description, product_code, quantity, id } = req.body;
+		const { name, description, product_code, quantity } = req.body;
 
 		const existingProduct = await prisma.estoque.findFirst({
 			where: {
@@ -182,42 +184,40 @@ export async function getOutRecords(req, res) {
 }
 
 export async function createOutRecord(req, res) {
-	try {
-		const { name, description, product_code, quantity, request_code, id } = req.body;
+	const { id } = decodeToken(req.headers.authorization)
+	const { name, description, product_code, quantity, request_code } = req.body;
 
-		const existingProduct = await prisma.estoque.findFirst({
-			where: {
-				product_code: product_code
-			}
-		});
+	const existingProduct = await prisma.estoque.findFirst({
+		where: {
+			product_code: product_code
+		}
+	});
 
-		await prisma.estoque.update({
-			where: {
-				id: existingProduct.id
+	await prisma.estoque.update({
+		where: {
+			id: existingProduct.id
+		},
+		data: {
+			quantity: {
+				decrement: 1
 			},
-			data: {
-				quantity: {
-					decrement: 1
-				},
-				registroSaidas: {
-					create: {
-						name,
-						description,
-						product_code,
-						quantity,
-						request_code,
-						user: {
-							connect: {
-								id
-							}
-						},
-					}
+			registroSaidas: {
+				create: {
+					name,
+					description,
+					product_code,
+					quantity,
+					request_code,
+					user: {
+						connect: {
+							id
+						}
+					},
 				}
 			}
-		});
+		}
+	});
 
-		res.sendStatus(200);
-	} catch (error) {
-		res.status(400).send({ message: "Falha na autenticação", error })
-	}
+	res.sendStatus(200);
+
 }

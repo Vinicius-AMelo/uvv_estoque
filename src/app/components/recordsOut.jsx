@@ -12,6 +12,7 @@ export default function RecordsForm() {
 	const { register, handleSubmit, setValue, reset } = useForm()
 	const [inputValue, setInputValue] = useState('')
 	const [formData, setFormData] = useState({})
+	const [token, setToken] = useState('')
 
 	const query = useQuery({
 		enabled: false,
@@ -25,20 +26,39 @@ export default function RecordsForm() {
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, request_code } = data
-			const response = await axios.post('http://localhost:3001/records/out', {
-				name,
-				description,
-				quantity: parseInt(quantity),
-				product_code: parseInt(product_code),
-				request_code: parseInt(request_code),
-				id: 1,
-			})
+			const response = await axios.post(
+				'http://localhost:3001/records/out',
+				{
+					name,
+					description,
+					quantity: parseInt(quantity),
+					product_code: parseInt(product_code),
+					request_code: parseInt(request_code),
+				},
+				{
+					headers: {
+						Authorization: `${token}`,
+					},
+				}
+			)
 			return response.data
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['search'] })
+			setShowPopup(true)
+			setTimeout(() => {
+				setShowPopup(false)
+			}, 4000)
 		},
 	})
+
+	useEffect(() => {
+		const tokenStorage = localStorage.getItem('uat_cs1')
+		if (!tokenStorage) return
+		const { token } = JSON.parse(tokenStorage)
+		setToken(token)
+		console.log(token)
+	}, [])
 
 	useEffect(() => {
 		if (inputValue != '') {
