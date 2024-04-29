@@ -5,9 +5,15 @@ import LoginContainer from '../components/loginContainer'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 export default function Register() {
-	const { register, handleSubmit } = useForm()
+	const router = useRouter()
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm()
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
@@ -20,6 +26,9 @@ export default function Register() {
 			})
 			return response.data
 		},
+		onSuccess: () => {
+			router.push('/login')
+		},
 	})
 
 	function onSubmit(data) {
@@ -28,33 +37,43 @@ export default function Register() {
 	return (
 		<>
 			<LoginContainer>
-				<form className="input" onSubmit={handleSubmit(onSubmit)}>
+				<form className="form" onSubmit={handleSubmit(onSubmit)}>
 					<label className="loginText" htmlFor="loginText">
 						REGISTER
 					</label>
-					<input
-						className="box__input"
-						type="text"
-						id="name"
-						placeholder="  Name"
-						{...register('name', { required: true })}
-					/>
-					<input
-						className="box__nput"
-						type="email"
-						id="email"
-						placeholder="  Email"
-						{...register('email', { required: true })}
-					/>
-					<input
-						className="box__input"
-						type="password"
-						id="password"
-						placeholder="  Password"
-						{...register('password', { required: true })}
-					/>
+					<div className="box">
+						<input
+							className={`box__input ${errors.password && 'disable'}`}
+							type="text"
+							id="name"
+							placeholder="  Name"
+							{...register('name', { required: 'Campo não pode estar vazio' })}
+						/>
+						{errors.name && <p>{errors.name.message}</p>}
+					</div>
+					<div className="box">
+						<input
+							className={`box__input ${errors.password && 'disable'}`}
+							type="email"
+							id="email"
+							placeholder="  Email"
+							{...register('email', { required: 'Campo não pode estar vazio' })}
+						/>
+						{errors.email && <p>{errors.email.message}</p>}
+					</div>
+					<div className="box">
+						<input
+							className={`box__input ${errors.password && 'disable'}`}
+							type="password"
+							id="password"
+							placeholder="  Password"
+							{...register('password', { required: 'Campo não pode estar vazio' })}
+						/>
+						{errors.password && <p>{errors.password.message}</p>}
+					</div>
 					<button className="submit" type="submit">
-						Cadastrar
+						{!mutation.isPending && 'Cadastrar'}
+						{mutation.isPending && <span className="loading"></span>}
 					</button>
 				</form>
 			</LoginContainer>

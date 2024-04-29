@@ -5,7 +5,7 @@ import Link from 'next/link'
 import LoginContainer from '../components/loginContainer'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function Login() {
@@ -16,6 +16,8 @@ export default function Login() {
 		formState: { errors },
 	} = useForm()
 	const router = useRouter()
+
+	const [valueInvalid, setValueInvalid] = useState(false)
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
@@ -33,12 +35,19 @@ export default function Login() {
 			localStorage.setItem('uat_cs1', JSON.stringify({ token: mutation.data.token, token_time: new Date() }))
 			reset()
 			router.push('/')
+		} else if (mutation.data?.message) {
+			setValueInvalid(true)
 		}
 	}, [mutation.data])
 
 	function onSubmit(data) {
 		mutation.mutate(data)
 	}
+
+	function handleChange() {
+		setValueInvalid(false)
+	}
+
 	console.log(errors)
 
 	return (
@@ -64,12 +73,17 @@ export default function Login() {
 							type="password"
 							id="password"
 							placeholder="  Password"
-							{...register('password', { required: 'Campo não pode estar vazio' })}
+							{...register('password', {
+								required: 'Campo não pode estar vazio',
+								onChange: handleChange,
+							})}
 						/>
 						{errors.password && <p>{errors.password.message}</p>}
+						{mutation.data?.message && valueInvalid && <p>Credenciais invalidas</p>}
 					</div>
 					<button className="submit" type="submit">
-						Entrar
+						{!mutation.isPending && 'Entrar'}
+						{mutation.isPending && <span className="loading"></span>}
 					</button>
 					<p className="created" htmlFor="created">
 						<Link href="/register">Ainda não tem cadastro?</Link>
