@@ -7,12 +7,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Logo from '../../../public/Logo.png'
 import Image from 'next/image'
+import Popup from './popup'
 
 export default function RecordsForm() {
 	const { register, handleSubmit, setValue, reset } = useForm()
 	const [inputValue, setInputValue] = useState('')
 	const [formData, setFormData] = useState({})
 	const [token, setToken] = useState('')
+	const [showPopup, setShowPopup] = useState(false)
 
 	const query = useQuery({
 		enabled: false,
@@ -133,6 +135,7 @@ export default function RecordsForm() {
 					<Image width="250" height="250" src={Logo} alt="UVV logo" className="img" />
 				</div>
 			</div>
+			{showPopup && <Popup message="Sucesso! Novo registro salvo." color={'green'}></Popup>}
 		</>
 	)
 }

@@ -13,6 +13,7 @@ export default function RecordsIn() {
 	const { register, reset, handleSubmit } = useForm()
 	const [checkboxValue, setcheckboxValue] = useState(true)
 	const [token, setToken] = useState('')
+	const [showPopup, setShowPopup] = useState(false)
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
@@ -32,6 +33,12 @@ export default function RecordsIn() {
 				}
 			)
 			return response.data
+		},
+		onSuccess: () => {
+			setShowPopup(true)
+			setTimeout(() => {
+				setShowPopup(false)
+			}, 4000)
 		},
 	})
 
@@ -60,7 +67,6 @@ export default function RecordsIn() {
 
 	return (
 		<>
-			<Popup mensage={'Cadastro realizado com sucesso'} color={'green'}></Popup>
 			<div className="content">
 				<div className="form_container">
 					<form onSubmit={handleSubmit(onSubmit)}>
@@ -104,6 +110,7 @@ export default function RecordsIn() {
 					<Image width="250" height="250" src={Logo} alt="UVV logo" className="img" />
 				</div>
 			</div>
+			{showPopup && <Popup message="Sucesso! Novo registro salvo." color={'green'}></Popup>}
 		</>
 	)
 }
