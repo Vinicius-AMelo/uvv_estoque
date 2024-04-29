@@ -26,7 +26,7 @@ export async function login(req, res) {
 			email
 		},
 	});
-
+	console.log(user)
 	bcrypt.compare(password, user.password, (err, result) => {
 		if (err) return res.send({ message: "Ocorreu um problema", err })
 		if (!result) return res.send({ message: "Credenciais invalidas" })
