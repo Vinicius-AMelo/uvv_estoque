@@ -46,11 +46,11 @@ export default function RecordsForm() {
 			return response.data
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['search'] })
 			setShowPopup(true)
 			setTimeout(() => {
 				setShowPopup(false)
 			}, 4000)
+			queryClient.invalidateQueries({ queryKey: ['search'] })
 		},
 	})
 
