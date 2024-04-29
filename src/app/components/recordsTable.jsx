@@ -1,35 +1,24 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import '../../scss/components/recordsTable.scss'
 import RecordItem from './recordItem'
-import axios from 'axios'
 import SearchBar from './searchBar'
-import { useEffect, useState } from 'react'
-import OrderBar from './orderBar'
 
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])
+	const [inOut, setInOut] = useState('in')
 
 	function stateChange(data) {
 		setFormData(data)
 	}
-
-	const record = {
-		id: 15,
-		product_code: 14232,
-		name: 'Teste',
-		description: 'Produto Teste',
-		quantity: 3,
-		createdAt: '2024-04-23T11:36:01.554Z',
-		user: {
-			name: 'Usuário Teste',
-		},
+	function inputChange(data) {
+		setInOut(data)
 	}
 
 	return (
 		<>
-			<SearchBar stateChange={stateChange} />
+			<SearchBar stateChange={stateChange} inputChange={inputChange} />
 			<table className="records-table">
 				<thead>
 					<tr>
@@ -38,7 +27,8 @@ export default function RecordsTable() {
 						<th>Nome</th>
 						<th>Descrição</th>
 						<th>Registrado por</th>
-						<th>Data registro</th>
+						{inOut == 'in' && <th>Data entrada</th>}
+						{inOut == 'out' && <th>Data saída</th>}
 						<th>Quantidade</th>
 					</tr>
 				</thead>
@@ -47,10 +37,6 @@ export default function RecordsTable() {
 						formData.map((item, index) => {
 							return <RecordItem key={index} record={item} />
 						})}
-					<RecordItem key={55} record={record} />
-					<RecordItem key={56} record={record} />
-					<RecordItem key={57} record={record} />
-					<RecordItem key={58} record={record} />
 				</tbody>
 			</table>
 		</>

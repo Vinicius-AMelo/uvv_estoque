@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import Calendar from './Calendar'
 
-export default function SearchBar({ stateChange }) {
+export default function SearchBar({ stateChange, inputChange }) {
 	const [searchData, setSearchData] = useState({})
 	const [inputValue, setInputValue] = useState('')
 	const [inOut, setInOut] = useState('in')
@@ -31,6 +31,7 @@ export default function SearchBar({ stateChange }) {
 
 	useEffect(() => {
 		query.refetch()
+		inputChange(inOut)
 	}, [inputValue, inOut])
 
 	useEffect(() => {
