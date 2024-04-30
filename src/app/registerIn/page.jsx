@@ -1,5 +1,4 @@
 import Container from '../components/container'
-import '../../scss/pages/registerIn.scss'
 
 export default function RegisterIn() {
 	return (
