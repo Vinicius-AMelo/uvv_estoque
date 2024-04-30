@@ -1,6 +1,6 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import '../../scss/components/recordsForm.scss'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
@@ -10,21 +10,33 @@ import Image from 'next/image'
 import Popup from './popup'
 
 export default function RecordsIn() {
-	const { register, reset, handleSubmit } = useForm()
+	const { register, reset, handleSubmit, setValue } = useForm()
 	const [checkboxValue, setcheckboxValue] = useState(true)
 	const [token, setToken] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
+	const [options, setOptions] = useState([])
+	const [selected, setSelected] = useState(false)
+	const nameCount = {}
+
+	const query = useQuery({
+		queryKey: ['searchIn'],
+		queryFn: async () => {
+			const response = await axios.get(`http://localhost:3001/records/stock?code=0`)
+			return response.data
+		},
+	})
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
-			const { name, description, quantity, product_code, checkbox } = data
+			const { name, description, quantity, product_code, product_id, checkbox } = data
 			const response = await axios.post(
 				'http://localhost:3001/records/in',
 				{
 					name,
 					description,
 					quantity: checkbox ? 1 : parseInt(quantity),
-					product_code: parseInt(product_code),
+					product_code: parseInt(product_code) || 0,
+					product_id: parseInt(product_id) || null,
 				},
 				{
 					headers: {
@@ -35,12 +47,38 @@ export default function RecordsIn() {
 			return response.data
 		},
 		onSuccess: () => {
-			setShowPopup(true)
+			setShowPopup({ message: 'Sucesso! Novo registro salvo.', color: 'green' })
 			setTimeout(() => {
 				setShowPopup(false)
 			}, 4000)
+			query.refetch()
 		},
 	})
+
+	useEffect(() => {
+		if (mutation.data != undefined) {
+			if (mutation.data == 'Created') reset()
+			if (mutation.data.message) {
+				setShowPopup({ message: 'Patrimônio já em estoque', color: 'red' })
+				setTimeout(() => {
+					setShowPopup(false)
+				}, 4000)
+			}
+		}
+	}, [mutation.data])
+
+	useEffect(() => {
+		const tokenStorage = localStorage.getItem('uat_cs1')
+		if (!tokenStorage) return
+		const { token } = JSON.parse(tokenStorage)
+		setToken(token)
+	}, [])
+
+	useEffect(() => {
+		if (query.data != [] && query.data != {} && query.data != undefined) {
+			setOptions(query.data)
+		}
+	}, [query.data])
 
 	function onSubmit(data) {
 		mutation.mutate(data)
@@ -50,20 +88,17 @@ export default function RecordsIn() {
 		setcheckboxValue(event.target.checked)
 	}
 
-	useEffect(() => {
-		if (mutation.data != undefined) {
-			if (mutation.data == 'Created') reset()
-		}
-	}, [mutation.data])
+	function handleClick(data) {
+		setSelected(true)
+		setValue('product_code', '-')
+		setValue('description', data.description)
+		setValue('name', data.name)
+		setValue('product_id', data.id)
+	}
 
-	useEffect(() => {
-		const tokenStorage = localStorage.getItem('uat_cs1')
-		console.log(tokenStorage)
-		if (!tokenStorage) return
-		const { token } = JSON.parse(tokenStorage)
-		setToken(token)
-		console.log(token)
-	}, [])
+	function handleInput() {
+		if (selected) reset()
+	}
 
 	return (
 		<>
@@ -83,15 +118,42 @@ export default function RecordsIn() {
 							</label>
 						</div>
 						<div className="input__container">
-							<label htmlFor="">Patrimônio </label>
-							<input type="text" id="product_code" {...register('product_code', { required: true })} />
+							<label htmlFor="">Patrimônio {checkboxValue && <b style={{ color: 'red' }}>*</b>}</label>
+							<input
+								type="text"
+								id="product_code"
+								disabled={!checkboxValue}
+								{...register('product_code', { required: checkboxValue })}
+							/>
 						</div>
 						<div className="input__container">
-							<label htmlFor="">Modelo </label>
-							<input type="text" id="name" {...register('name', { required: true })} />
+							<label htmlFor="">
+								Modelo <b style={{ color: 'red' }}>*</b>
+							</label>
+							<input
+								type="text"
+								id="name"
+								autoComplete="off"
+								onInput={handleInput}
+								{...register('name', { required: true })}
+							/>
+							{!checkboxValue && (
+								<ul className="options">
+									{options.map((item, index) => {
+										let displayName = item.name
+										nameCount[item.name] = true
+										if (nameCount[item.name]) displayName = `${item.name} - ${item.description}`
+										return (
+											<li key={index} className="options__item" onClick={() => handleClick(item)}>
+												{displayName}
+											</li>
+										)
+									})}
+								</ul>
+							)}
 						</div>
 						<div className="input__container">
-							<label htmlFor="">Quantidade </label>
+							<label htmlFor="">Quantidade {!checkboxValue && <b style={{ color: 'red' }}>*</b>}</label>
 							<input
 								type="number"
 								id="quantity"
@@ -100,9 +162,12 @@ export default function RecordsIn() {
 							/>
 						</div>
 						<div className="input__container">
-							<label htmlFor="">Descrição </label>
+							<label htmlFor="">
+								Descrição <b style={{ color: 'red' }}>*</b>
+							</label>
 							<textarea rows={4} id="description" {...register('description', { required: true })} />
 						</div>
+						<input type="hidden" id="product_id" {...register('product_id')} />
 						<button type="submit">ENVIAR</button>
 					</form>
 				</div>
@@ -110,7 +175,7 @@ export default function RecordsIn() {
 					<Image width="250" height="250" src={Logo} alt="UVV logo" className="img" />
 				</div>
 			</div>
-			{showPopup && <Popup message="Sucesso! Novo registro salvo." color={'green'}></Popup>}
+			{showPopup && <Popup message={showPopup.message} color={showPopup.color}></Popup>}
 		</>
 	)
 }

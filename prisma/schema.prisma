@@ -21,7 +21,7 @@ model Estoque {
     id               Int                @id @default(autoincrement())
     name             String
     description      String
-    product_code     Int                @unique
+    product_code     Int                @default(0)
     quantity         Int                @default(0)
     registroEntradas RegistroEntradas[]
     registroSaidas   RegistroSaidas[]
@@ -31,7 +31,7 @@ model RegistroEntradas {
     id           Int      @id @default(autoincrement())
     name         String
     description  String
-    product_code Int
+    product_code Int      @default(0)
     quantity     Int      @default(0)
     createdAt    DateTime @default(now())
     user         User     @relation(fields: [userId], references: [id])
@@ -44,7 +44,7 @@ model RegistroSaidas {
     id           Int      @id @default(autoincrement())
     name         String
     description  String
-    product_code Int
+    product_code Int      @default(0)
     quantity     Int      @default(0)
     request_code Int?
     createdAt    DateTime @default(now())

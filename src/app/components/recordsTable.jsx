@@ -23,11 +23,11 @@ export default function RecordsTable() {
 			<table className="records-table">
 				<thead>
 					<tr>
-						<th>ID</th>
+						{inOut == 'stock' && <th>ID</th>}
 						<th>Patrimônio</th>
 						<th>Nome</th>
 						<th>Descrição</th>
-						<th>Registrado por</th>
+						{inOut != 'stock' && <th>Registrado por</th>}
 						{inOut == 'in' && <th>Data entrada</th>}
 						{inOut == 'out' && <th>Data saída</th>}
 						<th>Quantidade</th>
@@ -36,7 +36,7 @@ export default function RecordsTable() {
 				<tbody>
 					{formData.length > 0 &&
 						formData.map((item, index) => {
-							return <RecordItem key={index} record={item} />
+							return <RecordItem key={index} record={item} inOut={inOut} />
 						})}
 				</tbody>
 			</table>

@@ -37,7 +37,9 @@ table {
 		height: 50px;
 		font-size: $font-size;
 		font-weight: normal;
-
+		max-width: 80px;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 }

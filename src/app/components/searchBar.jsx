@@ -9,7 +9,7 @@ import Calendar from './Calendar'
 export default function SearchBar({ stateChange, inputChange }) {
 	const [searchData, setSearchData] = useState({})
 	const [inputValue, setInputValue] = useState('')
-	const [inOut, setInOut] = useState('in')
+	const [inOut, setInOut] = useState('stock')
 	const { register } = useForm()
 
 	function handleChange(event) {
@@ -22,7 +22,7 @@ export default function SearchBar({ stateChange, inputChange }) {
 
 	const query = useQuery({
 		enabled: false,
-		queryKey: ['search'],
+		queryKey: ['searchBar'],
 		queryFn: async () => {
 			const response = await axios.get(`http://localhost:3001/records/${inOut}?q=${inputValue}`)
 			return response.data
@@ -55,7 +55,7 @@ export default function SearchBar({ stateChange, inputChange }) {
 					/>
 				</div>
 				<div className="search__filters">
-					<Calendar />
+					{/* <Calendar /> */}
 					<input
 						type="button"
 						onClick={handleClick}
@@ -69,6 +69,13 @@ export default function SearchBar({ stateChange, inputChange }) {
 						className={`search__filters--inout-button ${inOut == 'out' && 'active'}`}
 						value="saída"
 						data-value="out"
+					/>
+					<input
+						type="button"
+						onClick={handleClick}
+						className={`search__filters--inout-button ${inOut == 'stock' && 'active'}`}
+						value="estoque"
+						data-value="stock"
 					/>
 				</div>
 			</div>
