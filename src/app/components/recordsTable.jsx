@@ -4,7 +4,6 @@ import { useState } from 'react'
 import '../../scss/components/recordsTable.scss'
 import RecordItem from './recordItem'
 import SearchBar from './searchBar'
-import Popup from './popup'
 
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])

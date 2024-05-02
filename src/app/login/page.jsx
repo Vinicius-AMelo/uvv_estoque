@@ -22,15 +22,17 @@ export default function Login() {
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { email, password } = data
-			const response = await axios.post('http://10.1.1.19:3001/login', {
+			const response = await axios.post('http://localhost:3001/login', {
 				email,
 				password,
 			})
+			return response.data
 		},
 	})
 
 	useEffect(() => {
 		if (!mutation.data?.message && mutation.data != undefined) {
+			console.log(6)
 			localStorage.setItem('uat_cs1', JSON.stringify({ token: mutation.data.token, token_time: new Date() }))
 			reset()
 			router.push('/')
@@ -46,8 +48,6 @@ export default function Login() {
 	function handleChange() {
 		setValueInvalid(false)
 	}
-
-	console.log(errors)
 
 	return (
 		<>
