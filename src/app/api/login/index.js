@@ -21,7 +21,7 @@ export async function register(req, res) {
 			res.sendStatus(201);
 		});
 	} catch (error) {
-		res.status(400).send({ message: "Falha na autenticação", error })
+		res.send({ message: "Falha na autenticação", error })
 	}
 }
 
@@ -34,6 +34,8 @@ export async function login(req, res) {
 			},
 		});
 
+		if (!user) return res.send({ message: "Credenciais invalidas" })
+
 		bcrypt.compare(password, user.password, (err, result) => {
 			if (err) return res.send({ message: "Ocorreu um problema", err })
 			if (!result) return res.send({ message: "Credenciais invalidas" })
@@ -42,7 +44,7 @@ export async function login(req, res) {
 			res.send({ token })
 		});
 	} catch (error) {
-		res.status(400).send({ message: "Falha na validação", error })
+		res.send({ message: "Falha na validação", error: error.message })
 	}
 }
 
@@ -57,7 +59,7 @@ export async function validateToken(req, res, next) {
 			next()
 		})
 	} catch (error) {
-		res.status(400).send({ message: "Falha na validação", error })
+		res.send({ message: "Falha na validação", error })
 	}
 }
 export async function auth(req, res) {
@@ -66,7 +68,7 @@ export async function auth(req, res) {
 		if (!user) return res.send({ valid: false })
 		return res.send({ valid: true })
 	} catch (error) {
-		res.status(400).send({ message: "Falha na autenticação", error })
+		res.send({ message: "Falha na autenticação", error })
 	}
 }
 

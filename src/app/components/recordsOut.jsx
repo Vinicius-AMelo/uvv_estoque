@@ -27,22 +27,24 @@ export default function RecordsForm() {
 		enabled: false,
 		queryKey: ['searchOut'],
 		queryFn: async () => {
-			const response = await axios.get(`http://10.1.1.19:3001/records/stock?code=${inputValue}`)
+			const response = await axios.get(`http://localhost:3001/records/stock?code=${inputValue}`)
 			return response.data
 		},
 	})
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
-			const { name, description, quantity, product_code, request_code } = data
+			console.log(data)
+			const { name, description, quantity, product_code, request_code, product_id } = data
 			const response = await axios.post(
-				'http://10.1.1.19:3001/records/out',
+				'http://localhost:3001/records/out',
 				{
 					name,
 					description,
 					quantity: parseInt(quantity),
 					product_code: parseInt(product_code),
 					request_code: parseInt(request_code),
+					product_id: parseInt(product_id),
 				},
 				{
 					headers: {

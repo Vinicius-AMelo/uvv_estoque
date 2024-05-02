@@ -26,18 +26,13 @@ export default function Login() {
 				email,
 				password,
 			})
-			console.log('--------------')
-			console.log(data)
-			console.log('--------------')
-			console.log(response)
-			console.log('--------------')
-			console.log(response.data)
 			return response.data
 		},
 	})
 
 	useEffect(() => {
 		if (!mutation.data?.message && mutation.data != undefined) {
+			console.log(6)
 			localStorage.setItem('uat_cs1', JSON.stringify({ token: mutation.data.token, token_time: new Date() }))
 			reset()
 			router.push('/')
@@ -53,8 +48,6 @@ export default function Login() {
 	function handleChange() {
 		setValueInvalid(false)
 	}
-
-	console.log(mutation.data.message)
 
 	return (
 		<>

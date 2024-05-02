@@ -15,7 +15,7 @@ export async function getInRecords(req, res) {
 					}
 				},
 				orderBy: {
-					createdAt: "desc"
+					description: "desc"
 				}
 			}));
 		} else {
@@ -52,7 +52,7 @@ export async function getInRecords(req, res) {
 					}
 				},
 				orderBy: {
-					createdAt: "desc"
+					description: "desc"
 				}
 			});
 			res.send(records);
@@ -128,7 +128,7 @@ export async function createInRecord(req, res) {
 			res.sendStatus(201);
 		}
 	} catch (error) {
-		res.status(400).send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
+		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
 	}
 }
 
@@ -190,7 +190,7 @@ export async function getOutRecords(req, res) {
 			res.send(records);
 		}
 	} catch (error) {
-		res.status(400).send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
+		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
 	}
 
 }
@@ -199,40 +199,71 @@ export async function createOutRecord(req, res) {
 	try {
 		const { id } = decodeToken(req.headers.authorization)
 		const { name, description, product_code, product_id, quantity, request_code } = req.body;
+
+		if (product_id == undefined) return res.send({ message: "ID inválido" })
+
 		const existingProduct = await prisma.estoque.findFirst({
 			where: {
 				id: product_id
 			}
 		});
 
-		await prisma.estoque.update({
-			where: {
-				id: existingProduct.id
-			},
-			data: {
-				quantity: {
-					decrement: quantity
-				},
-				registroSaidas: {
-					create: {
-						name,
-						description,
-						product_code,
-						quantity,
-						request_code,
-						user: {
-							connect: {
-								id
-							}
-						},
+		// if (!existingProduct) return res.send({ message: "Produto não encontrado" })
+		if (!existingProduct) {
+			await prisma.registroSaidas.create({
+
+				data: {
+					name,
+					description,
+					product_code,
+					quantity: 1,
+					request_code,
+					user: {
+						connect: {
+							id
+						}
+					},
+					estoque: {
+						create: {
+							name,
+							description,
+							product_code,
+							quantity: 0
+						}
 					}
 				}
-			}
-		});
+			});
+		} else {
+			await prisma.estoque.update({
+				where: {
+					id: existingProduct.id
+				},
+				data: {
+					quantity: 0,
+					registroSaidas: {
+						create: {
+							name,
+							description,
+							product_code,
+							quantity,
+							request_code,
+							user: {
+								connect: {
+									id
+								}
+							},
+						}
+					}
+				}
+			});
+		}
+
+
+
 
 		res.sendStatus(200);
 	} catch (error) {
-		res.status(400).send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
+		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
 	}
 }
 
@@ -263,6 +294,6 @@ export async function getStock(req, res) {
 
 		}
 	} catch (error) {
-		res.status(400).send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
+		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
 	}
 }
