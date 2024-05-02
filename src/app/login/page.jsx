@@ -22,10 +22,17 @@ export default function Login() {
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { email, password } = data
-			const response = await axios.post('http://10.1.1.19:3001/login', {
+			const response = await axios.post('http://localhost:3001/login', {
 				email,
 				password,
 			})
+			console.log('--------------')
+			console.log(data)
+			console.log('--------------')
+			console.log(response)
+			console.log('--------------')
+			console.log(response.data)
+			return response.data
 		},
 	})
 
@@ -47,7 +54,7 @@ export default function Login() {
 		setValueInvalid(false)
 	}
 
-	console.log(errors)
+	console.log(mutation.data.message)
 
 	return (
 		<>

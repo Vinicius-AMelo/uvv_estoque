@@ -79,7 +79,6 @@ export default function RecordsForm() {
 				if (query.data[0].product_code == 0) {
 					setMaxValue(query.data[0].quantity)
 					setValue('quantity', null)
-					console.log(errors.quantity)
 				}
 				if (query.data[0].name) setValue('name', query.data[0].name)
 				if (query.data[0].description) setValue('description', query.data[0].description)
