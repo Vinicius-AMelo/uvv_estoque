@@ -21,7 +21,7 @@ export default function RecordsIn() {
 	const query = useQuery({
 		queryKey: ['searchIn'],
 		queryFn: async () => {
-			const response = await axios.get(`http://localhost:3001/records/stock?code=0`)
+			const response = await axios.get(`http://10.1.1.19:3001/records/stock?code=0`)
 			return response.data
 		},
 	})
@@ -30,7 +30,7 @@ export default function RecordsIn() {
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, product_id, checkbox } = data
 			const response = await axios.post(
-				'http://localhost:3001/records/in',
+				'http://10.1.1.19:3001/records/in',
 				{
 					name,
 					description,

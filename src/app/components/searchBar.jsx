@@ -24,7 +24,7 @@ export default function SearchBar({ stateChange, inputChange }) {
 		enabled: false,
 		queryKey: ['searchBar'],
 		queryFn: async () => {
-			const response = await axios.get(`http://localhost:3001/records/${inOut}?q=${inputValue}`)
+			const response = await axios.get(`http://10.1.1.19:3001/records/${inOut}?q=${inputValue}`)
 			return response.data
 		},
 	})

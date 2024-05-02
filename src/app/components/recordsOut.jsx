@@ -27,7 +27,7 @@ export default function RecordsForm() {
 		enabled: false,
 		queryKey: ['searchOut'],
 		queryFn: async () => {
-			const response = await axios.get(`http://localhost:3001/records/stock?code=${inputValue}`)
+			const response = await axios.get(`http://10.1.1.19:3001/records/stock?code=${inputValue}`)
 			return response.data
 		},
 	})
@@ -36,7 +36,7 @@ export default function RecordsForm() {
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, request_code } = data
 			const response = await axios.post(
-				'http://localhost:3001/records/out',
+				'http://10.1.1.19:3001/records/out',
 				{
 					name,
 					description,

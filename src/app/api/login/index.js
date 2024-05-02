@@ -3,7 +3,6 @@ import prisma from "../db.js";
 import jwt from "jsonwebtoken"
 
 export async function register(req, res) {
-	console.log("a")
 	try {
 		const { name, email, password } = req.body;
 		const role = req.body?.role || "DEFAULT"
@@ -27,7 +26,6 @@ export async function register(req, res) {
 }
 
 export async function login(req, res) {
-	console.log("z")
 	try {
 		const { email, password } = req.body;
 		const user = await prisma.user.findUnique({
