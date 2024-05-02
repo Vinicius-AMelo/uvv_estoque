@@ -26,6 +26,12 @@ export default function Login() {
 				email,
 				password,
 			})
+			console.log('--------------')
+			console.log(data)
+			console.log('--------------')
+			console.log(response)
+			console.log('--------------')
+			console.log(response.data)
 			return response.data
 		},
 	})
