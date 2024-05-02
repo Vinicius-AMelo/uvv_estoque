@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
-		"start": "next build && next start -p 3000",
+		"start": "next build && next start -p 8080",
 		"lint": "next lint",
 		"server": "nodemon src/app/api/index.js"
 	},
