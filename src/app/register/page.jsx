@@ -18,7 +18,7 @@ export default function Register() {
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { name, email, password } = data
-			const response = await axios.post('http://localhost:3001/register', {
+			const response = await axios.post('http://10.1.1.19:3001/register', {
 				name,
 				email,
 				password,

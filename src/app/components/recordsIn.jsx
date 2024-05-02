@@ -21,7 +21,7 @@ export default function RecordsIn() {
 	const query = useQuery({
 		queryKey: ['searchIn'],
 		queryFn: async () => {
-			const response = await axios.get(`http://localhost:3001/records/stock?code=0`)
+			const response = await axios.get(`http://10.1.1.19:3001/records/stock?code=0`)
 			return response.data
 		},
 	})
@@ -30,7 +30,7 @@ export default function RecordsIn() {
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, product_id, checkbox } = data
 			const response = await axios.post(
-				'http://localhost:3001/records/in',
+				'http://10.1.1.19:3001/records/in',
 				{
 					name,
 					description,
@@ -137,7 +137,7 @@ export default function RecordsIn() {
 					request_code: 0,
 					product_id: 30912099,
 				}
-				const response = await axios.post('http://localhost:3001/records/out', obj, {
+				const response = await axios.post('http://10.1.1.19:3001/records/out', obj, {
 					headers: {
 						Authorization: `${token}`,
 					},
@@ -152,7 +152,7 @@ export default function RecordsIn() {
 					request_code: 0,
 					product_id: 30912099,
 				}
-				const response = await axios.post('http://localhost:3001/records/out', obj, {
+				const response = await axios.post('http://10.1.1.19:3001/records/out', obj, {
 					headers: {
 						Authorization: `${token}`,
 					},
@@ -169,7 +169,7 @@ export default function RecordsIn() {
 			// 		quantity: 1,
 			// 		product_id: null,
 			// 	}
-			// 	const response = await axios.post('http://localhost:3001/records/in', obj, {
+			// 	const response = await axios.post('http://10.1.1.19:3001/records/in', obj, {
 			// 		headers: {
 			// 			Authorization: `${token}`,
 			// 		},
@@ -183,7 +183,7 @@ export default function RecordsIn() {
 			// 		quantity: 1,
 			// 		product_id: null,
 			// 	}
-			// 	const response = await axios.post('http://localhost:3001/records/in', obj, {
+			// 	const response = await axios.post('http://10.1.1.19:3001/records/in', obj, {
 			// 		headers: {
 			// 			Authorization: `${token}`,
 			// 		},
