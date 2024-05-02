@@ -13,7 +13,7 @@ export default function AuthChecker({ children }) {
 		enabled: false,
 		queryKey: ['auth', authToken],
 		queryFn: async () => {
-			const response = await axios.get(`http://localhost:3001/auth`, {
+			const response = await axios.get(`http://10.1.1.19:3001/auth`, {
 				headers: {
 					Authorization: `${authToken}`,
 				},
