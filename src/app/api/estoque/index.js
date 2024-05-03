@@ -20,29 +20,35 @@ export async function getInRecords(req, res) {
 			}));
 		} else {
 			const qInt = parseInt(q);
+			const where = {}
+			if (Number.isInteger(qInt)) {
+				where.OR = [
+					{
+						product_code: qInt,
+					},
+					{
+						id: qInt,
+					},
+				]
+			} else {
+				where.OR = [
+					{
+						name: {
+							contains: q,
+							mode: "insensitive"
+						},
+					},
+					{
+						description: {
+							contains: q,
+							mode: "insensitive",
+						},
+					},
+				]
+			}
+
 			const records = await prisma.registroEntradas.findMany({
-				where: {
-					OR: [
-						{
-							name: {
-								contains: q.toLowerCase(),
-								mode: "insensitive"
-							},
-						},
-						{
-							description: {
-								contains: q.toLowerCase(),
-								mode: "insensitive"
-							},
-						},
-						{
-							product_code: Number.isInteger(qInt) ? qInt : 0,
-						},
-						{
-							id: Number.isInteger(qInt) ? qInt : 0,
-						},
-					],
-				},
+				where,
 				include: {
 					user: {
 						select: {
@@ -152,29 +158,35 @@ export async function getOutRecords(req, res) {
 			}));
 		} else {
 			const qInt = parseInt(q);
+			const where = {}
+			if (Number.isInteger(qInt)) {
+				where.OR = [
+					{
+						product_code: qInt,
+					},
+					{
+						id: qInt,
+					},
+				]
+			} else {
+				where.OR = [
+					{
+						name: {
+							contains: q,
+							mode: "insensitive"
+						},
+					},
+					{
+						description: {
+							contains: q,
+							mode: "insensitive",
+						},
+					},
+				]
+			}
+
 			const records = await prisma.registroSaidas.findMany({
-				where: {
-					OR: [
-						{
-							name: {
-								contains: q.toLowerCase(),
-								mode: "insensitive"
-							},
-						},
-						{
-							description: {
-								contains: q.toLowerCase(),
-								mode: "insensitive"
-							},
-						},
-						{
-							product_code: Number.isInteger(qInt) ? qInt : 0,
-						},
-						{
-							id: Number.isInteger(qInt) ? qInt : 0,
-						},
-					],
-				},
+				where,
 				include: {
 					user: {
 						select: {
@@ -271,7 +283,7 @@ export async function getStock(req, res) {
 		if (q) {
 			const qInt = parseInt(q);
 			const where = {}
-			if(Number.isInteger(qInt)) {
+			if (Number.isInteger(qInt)) {
 				where.OR = [
 					{
 						product_code: qInt,
