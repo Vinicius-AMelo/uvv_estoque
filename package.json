@@ -4,9 +4,9 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "next dev -p 8080",
+		"dev": "next dev -p 80",
 		"build": "next build",
-		"start": "next build && next start -p 8080",
+		"start": "next build && next start -p 80",
 		"lint": "next lint",
 		"server": "nodemon src/app/api/index.js"
 	},
