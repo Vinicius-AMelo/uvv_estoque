@@ -15,7 +15,7 @@ export async function getInRecords(req, res) {
 					}
 				},
 				orderBy: {
-					description: "desc"
+					createdAt: "desc"
 				}
 			}));
 		} else {
@@ -58,7 +58,7 @@ export async function getInRecords(req, res) {
 					}
 				},
 				orderBy: {
-					description: "desc"
+					createdAt: "desc"
 				}
 			});
 			res.send(records);
@@ -220,55 +220,31 @@ export async function createOutRecord(req, res) {
 			}
 		});
 
-		// if (!existingProduct) return res.send({ message: "Produto não encontrado" })
-		if (!existingProduct) {
-			console.log(existingProduct)
-			await prisma.registroSaidas.create({
-				data: {
-					name,
-					description,
-					product_code,
-					quantity: 1,
-					request_code,
-					user: {
-						connect: {
-							id
-						}
-					},
-					estoque: {
-						create: {
-							name,
-							description,
-							product_code,
-							quantity: 0
-						}
+		if (!existingProduct) return res.send({ message: "Produto não encontrado" })
+		
+		await prisma.estoque.update({
+			where: {
+				id: existingProduct.id
+			},
+			data: {
+				quantity: 0,
+				registroSaidas: {
+					create: {
+						name,
+						description,
+						product_code,
+						quantity,
+						request_code,
+						user: {
+							connect: {
+								id
+							}
+						},
 					}
 				}
-			});
-		} else {
-			// await prisma.estoque.update({
-			// 	where: {
-			// 		id: existingProduct.id
-			// 	},
-			// 	data: {
-			// 		quantity: 0,
-			// 		registroSaidas: {
-			// 			create: {
-			// 				name,
-			// 				description,
-			// 				product_code,
-			// 				quantity,
-			// 				request_code,
-			// 				user: {
-			// 					connect: {
-			// 						id
-			// 					}
-			// 				},
-			// 			}
-			// 		}
-			// 	}
-			// });
-		}
+			}
+		});
+		
 
 		res.sendStatus(200);
 	} catch (error) {
@@ -312,7 +288,7 @@ export async function getStock(req, res) {
 			const records = await prisma.estoque.findMany({
 				where,
 				orderBy: {
-					name: "asc"
+					id: "desc"
 				}
 			});
 
@@ -331,7 +307,7 @@ export async function getStock(req, res) {
 					]
 				},
 				orderBy: {
-					name: "asc"
+					id: "desc"
 				}
 			});
 			res.send(records);
