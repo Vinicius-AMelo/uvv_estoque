@@ -1,4 +1,83 @@
-$font-size: 14px;
+.records-table {
+	width: 100%;
+
+	.records-table__head {
+		.records-table__head--header {
+			display: flex;
+			align-items: center;
+
+			.records-table__head--header-item {
+				font-weight: 600;
+				color: #A9ACBB;
+				border-bottom: 1px solid #A9ACBB80;
+			}
+		}
+	}
+
+	.records-table__content {
+		list-style: none;
+		max-height: 600px;
+		overflow: auto;
+
+
+		&::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background-color: #ffd953;
+			border-radius: 100px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #2c2663;
+			border-radius: 5px;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background: #2c2663de;
+		}
+
+		.records-table__content--body {
+			display: flex;
+			align-items: center;
+
+			.records-table__content--body-item {}
+
+		}
+	}
+
+	.records-table__content--body-item,
+	.records-table__head--header-item {
+		flex: 3;
+		text-align: center;
+		font-size: 14px;
+		border-bottom: 1px solid #A9ACBB40;
+		height: 60px;
+		padding: 10px 0px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&.record-id {
+			flex: 1;
+		}
+
+		&.record-quantity {
+			flex: 1;
+		}
+
+		&.record-product_code {
+			flex: 1;
+		}
+
+		&.record-date {
+			flex: 2;
+		}
+
+
+	}
+}
 
 table {
 	border-collapse: collapse;
@@ -20,7 +99,7 @@ table {
 	thead {
 		border-bottom: 1px solid #bdbfc5;
 		height: 50px;
-		font-size: $font-size;
+		font-size: 14px;
 	}
 
 
@@ -35,7 +114,7 @@ table {
 		text-align: center;
 		border-bottom: 1px solid #EEEEEE;
 		height: 50px;
-		font-size: $font-size;
+		font-size: 14px;
 		font-weight: normal;
 		max-width: 80px;
 		overflow: hidden;

@@ -257,7 +257,7 @@ export async function createOutRecord(req, res) {
 			// 	}
 			// });
 		}
-		
+
 		res.sendStatus(200);
 	} catch (error) {
 		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
@@ -267,10 +267,40 @@ export async function createOutRecord(req, res) {
 
 export async function getStock(req, res) {
 	try {
-		const { code } = req.query;
-		if (!code) {
-			res.send(await prisma.estoque.findMany());
-		} else {
+
+		const { code, q } = req.query;
+		if (q) {
+			const qInt = parseInt(q);
+			console.log(q)
+			const records = await prisma.estoque.findMany({
+				where: {
+					OR: [
+						{
+							name: {
+								contains: q.toLowerCase(),
+								mode: "insensitive"
+							},
+						},
+						{
+							description: {
+								contains: q.toLowerCase(),
+								mode: "insensitive"
+							},
+						},
+						{
+							product_code: Number.isInteger(qInt) ? qInt : 0,
+						},
+						{
+							id: Number.isInteger(qInt) ? qInt : 0,
+						},
+					],
+				},
+				orderBy: {
+					name: "asc"
+				}
+			});
+			res.send(records);
+		} else if (code) {
 			const codeInt = parseInt(code);
 			const records = await prisma.estoque.findMany({
 				where: {
@@ -289,6 +319,8 @@ export async function getStock(req, res) {
 			});
 			res.send(records);
 
+		} else {
+			res.send(await prisma.estoque.findMany());
 		}
 	} catch (error) {
 		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })

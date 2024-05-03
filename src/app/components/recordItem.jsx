@@ -1,14 +1,20 @@
 export default function RecordItem({ record, inOut }) {
 	const createdAt = new Date(record.createdAt)
 	return (
-		<tr>
-			{inOut == 'stock' && <td>{record.id}</td>}
-			<td>{record.product_code > 0 ? record.product_code : '-'}</td>
-			<td>{record.name}</td>
-			<td>{record.description}</td>
-			{record.user && <td>{record.user.name}</td>}
-			{record.createdAt && <td>{createdAt.toLocaleDateString('pt-BR')}</td>}
-			<td>{record.quantity}</td>
-		</tr>
+		<li className="records-table__content--body">
+			{inOut == 'stock' && <span className="records-table__content--body-item record-id">{record.id}</span>}
+			<span className="records-table__content--body-item record-product_code">
+				{record.product_code > 0 ? record.product_code : '-'}
+			</span>
+			<span className="records-table__content--body-item record-name">{record.name}</span>
+			<span className="records-table__content--body-item record-description">{record.description}</span>
+			{record.user && <span className="records-table__content--body-item record-user">{record.user.name}</span>}
+			{record.createdAt && (
+				<span className="records-table__content--body-item record-date">
+					{createdAt.toLocaleDateString('pt-BR')}
+				</span>
+			)}
+			<span className="records-table__content--body-item record-quantity">{record.quantity}</span>
+		</li>
 	)
 }

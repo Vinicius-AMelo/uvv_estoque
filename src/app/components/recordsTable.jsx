@@ -19,26 +19,32 @@ export default function RecordsTable() {
 	return (
 		<>
 			<SearchBar stateChange={stateChange} inputChange={inputChange} />
-			<table className="records-table">
-				<thead>
-					<tr>
-						{inOut == 'stock' && <th>ID</th>}
-						<th>Patrimônio</th>
-						<th>Nome</th>
-						<th>Descrição</th>
-						{inOut != 'stock' && <th>Registrado por</th>}
-						{inOut == 'in' && <th>Data entrada</th>}
-						{inOut == 'out' && <th>Data saída</th>}
-						<th>Quantidade</th>
-					</tr>
-				</thead>
-				<tbody>
+			<div className="records-table">
+				<div className="records-table__head">
+					<div className="records-table__head--header">
+						{inOut == 'stock' && <span className="records-table__head--header-item record-id">ID</span>}
+						<span className="records-table__head--header-item record-product_code">Patrimônio</span>
+						<span className="records-table__head--header-item record-name">Nome</span>
+						<span className="records-table__head--header-item record-description">Descrição</span>
+						{inOut != 'stock' && (
+							<span className="records-table__head--header-item record-user">Registrado por</span>
+						)}
+						{inOut == 'in' && (
+							<span className="records-table__head--header-item record-date">Data entrada</span>
+						)}
+						{inOut == 'out' && (
+							<span className="records-table__head--header-item record-date">Data saída</span>
+						)}
+						<span className="records-table__head--header-item record-quantity">Quantidade</span>
+					</div>
+				</div>
+				<ul className="records-table__content">
 					{formData.length > 0 &&
 						formData.map((item, index) => {
 							return <RecordItem key={index} record={item} inOut={inOut} />
 						})}
-				</tbody>
-			</table>
+				</ul>
+			</div>
 		</>
 	)
 }
