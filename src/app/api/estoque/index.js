@@ -267,38 +267,43 @@ export async function createOutRecord(req, res) {
 
 export async function getStock(req, res) {
 	try {
-
 		const { code, q } = req.query;
 		if (q) {
 			const qInt = parseInt(q);
-			console.log(q)
+			const where = {}
+			if(Number.isInteger(qInt)) {
+				where.OR = [
+					{
+						product_code: qInt,
+					},
+					{
+						id: qInt,
+					},
+				]
+			} else {
+				where.OR = [
+					{
+						name: {
+							contains: q,
+							mode: "insensitive"
+						},
+					},
+					{
+						description: {
+							contains: q,
+							mode: "insensitive",
+						},
+					},
+				]
+			}
+
 			const records = await prisma.estoque.findMany({
-				where: {
-					OR: [
-						{
-							name: {
-								contains: q.toLowerCase(),
-								mode: "insensitive"
-							},
-						},
-						{
-							description: {
-								contains: q.toLowerCase(),
-								mode: "insensitive"
-							},
-						},
-						{
-							product_code: Number.isInteger(qInt) ? qInt : 0,
-						},
-						{
-							id: Number.isInteger(qInt) ? qInt : 0,
-						},
-					],
-				},
+				where,
 				orderBy: {
 					name: "asc"
 				}
 			});
+
 			res.send(records);
 		} else if (code) {
 			const codeInt = parseInt(code);
@@ -306,10 +311,10 @@ export async function getStock(req, res) {
 				where: {
 					OR: [
 						{
-							product_code: Number.isInteger(codeInt) ? codeInt : 0,
+							product_code: codeInt,
 						},
 						{
-							id: Number.isInteger(codeInt) ? codeInt : 0,
+							id: codeInt,
 						}
 					]
 				},
@@ -318,11 +323,10 @@ export async function getStock(req, res) {
 				}
 			});
 			res.send(records);
-
 		} else {
 			res.send(await prisma.estoque.findMany());
 		}
 	} catch (error) {
-		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
+		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') });
 	}
 }
