@@ -220,31 +220,58 @@ export async function createOutRecord(req, res) {
 			}
 		});
 
-		if (!existingProduct) return res.send({ message: "Produto não encontrado" })
-		
-		await prisma.estoque.update({
-			where: {
-				id: existingProduct.id
-			},
-			data: {
-				quantity: 0,
-				registroSaidas: {
-					create: {
-						name,
-						description,
-						product_code,
-						quantity,
-						request_code,
-						user: {
-							connect: {
-								id
-							}
-						},
+
+		// if (!existingProduct) return res.send({ message: "Produto não encontrado" })
+		if (!existingProduct) {
+			await prisma.registroSaidas.create({
+				data: {
+					name,
+					description,
+					product_code,
+					quantity: 1,
+					request_code,
+					user: {
+						connect: {
+							id
+						}
+					},
+					estoque: {
+						create: {
+							name,
+							description,
+							product_code,
+							quantity: 0
+						}
 					}
 				}
-			}
-		});
-		
+			})
+		} else {
+			await prisma.estoque.update({
+				where: {
+					id: existingProduct.id
+				},
+				data: {
+					quantity: 0,
+					registroSaidas: {
+						create: {
+							name,
+							description,
+							product_code,
+							quantity,
+							request_code,
+							user: {
+								connect: {
+									id
+								}
+							},
+						}
+					}
+				}
+			});
+		}
+
+
+
 
 		res.sendStatus(200);
 	} catch (error) {

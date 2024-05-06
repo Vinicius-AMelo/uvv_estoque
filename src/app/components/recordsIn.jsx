@@ -97,7 +97,11 @@ export default function RecordsIn() {
 	}
 
 	function handleInput() {
-		if (selected) reset()
+		if (selected) {
+			setSelected(false)
+			reset()
+			reset({ product_id: '' })
+		}
 	}
 
 	return (

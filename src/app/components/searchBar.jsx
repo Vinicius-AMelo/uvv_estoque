@@ -4,10 +4,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
-import Calendar from './Calendar'
+// import Calendar from './Calendar'
 
 export default function SearchBar({ stateChange, inputChange }) {
-	const [searchData, setSearchData] = useState({})
+	// const [searchData, setSearchData] = useState({})
 	const [inputValue, setInputValue] = useState('')
 	const [inOut, setInOut] = useState('stock')
 	const { register } = useForm()
@@ -36,7 +36,7 @@ export default function SearchBar({ stateChange, inputChange }) {
 
 	useEffect(() => {
 		if (query.data != [] && query.data != {} && query.data != undefined) {
-			setSearchData(query.data)
+			// setSearchData(query.data)
 			stateChange(query.data)
 		}
 	}, [query.data])
