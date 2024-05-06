@@ -8,6 +8,8 @@ import SearchBar from './searchBar'
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])
 	const [inOut, setInOut] = useState('in')
+	const [total, setTotal] = useState(0)
+	let somaQuantidade = 0
 
 	function stateChange(data) {
 		setFormData(data)
@@ -41,9 +43,20 @@ export default function RecordsTable() {
 				<ul className="records-table__content">
 					{formData.length > 0 &&
 						formData.map((item, index) => {
+							somaQuantidade += item.quantity
 							return <RecordItem key={index} record={item} inOut={inOut} />
 						})}
 				</ul>
+				<div className="records-table__footer">
+					{/* {inOut == 'stock' && ( */}
+					<div className="records-table__footer--quantity">
+						<b>Itens filtrados:</b> {formData.length}
+					</div>
+					<div className="records-table__footer--quantity-total">
+						<b>Quantidade total dos itens filtrados:</b> {somaQuantidade}
+					</div>
+					{/* )} */}
+				</div>
 			</div>
 		</>
 	)

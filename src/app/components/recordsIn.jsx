@@ -97,7 +97,11 @@ export default function RecordsIn() {
 	}
 
 	function handleInput() {
-		if (selected) reset()
+		if (selected) {
+			setSelected(false)
+			reset()
+			reset({ product_id: '' })
+		}
 	}
 
 	return (
@@ -137,7 +141,7 @@ export default function RecordsIn() {
 								onInput={handleInput}
 								{...register('name', { required: true })}
 							/>
-							{!checkboxValue && (
+							{/* {!checkboxValue && (
 								<ul className="options">
 									{options.map((item, index) => {
 										let displayName = item.name
@@ -150,7 +154,7 @@ export default function RecordsIn() {
 										)
 									})}
 								</ul>
-							)}
+							)} */}
 						</div>
 						<div className="input__container">
 							<label htmlFor="">Quantidade {!checkboxValue && <b style={{ color: 'red' }}>*</b>}</label>

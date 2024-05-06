@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import LoginContainer from '../components/loginContainer'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'

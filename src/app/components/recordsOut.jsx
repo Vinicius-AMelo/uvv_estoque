@@ -59,7 +59,6 @@ export default function RecordsForm() {
 			setTimeout(() => {
 				setShowPopup(false)
 			}, 4000)
-			queryClient.invalidateQueries({ queryKey: ['searchBar'] })
 		},
 	})
 

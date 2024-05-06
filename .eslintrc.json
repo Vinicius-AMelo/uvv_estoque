@@ -23,7 +23,7 @@
 		"react/react-in-jsx-scope": "off",
 		"semi": 0,
 		"comma-dangle": 0,
-		"react/prop-types": "0",
+		"react/prop-types": 0,
 		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
 		"no-unused-vars": ["warn", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }]
 	}

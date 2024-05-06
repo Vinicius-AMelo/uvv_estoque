@@ -9,7 +9,7 @@ export async function register(req, res) {
 		const saltRounds = 12;
 
 		bcrypt.hash(password, saltRounds, async (error, hash) => {
-			const user = await prisma.user.create({
+			await prisma.user.create({
 				data: {
 					name,
 					email,

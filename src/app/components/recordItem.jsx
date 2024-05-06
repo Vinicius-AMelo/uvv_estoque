@@ -6,7 +6,7 @@ export default function RecordItem({ record, inOut }) {
 			<span className="records-table__content--body-item record-product_code">
 				{record.product_code > 0 ? record.product_code : '-'}
 			</span>
-			<span className="records-table__content--body-item record-name">{record.name}</span>
+			<span className="records-table__content--body-item record-name">{record.name.toLowerCase()}</span>
 			<span className="records-table__content--body-item record-description">{record.description}</span>
 			{record.user && <span className="records-table__content--body-item record-user">{record.user.name}</span>}
 			{record.createdAt && (
