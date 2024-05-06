@@ -207,6 +207,51 @@ export async function getOutRecords(req, res) {
 
 }
 
+// export async function createOutRecord(req, res) {
+// 	try {
+// 		const { id } = decodeToken(req.headers.authorization)
+// 		const { name, description, product_code, product_id, quantity, request_code } = req.body;
+
+// 		if (product_id == undefined) return res.send({ message: "ID inválido" })
+
+// 		const existingProduct = await prisma.estoque.findFirst({
+// 			where: {
+// 				id: product_id
+// 			}
+// 		});
+
+// 		if (!existingProduct) return res.send({ message: "Produto não encontrado" })
+		
+// 		await prisma.estoque.update({
+// 			where: {
+// 				id: existingProduct.id
+// 			},
+// 			data: {
+// 				quantity: 0,
+// 				registroSaidas: {
+// 					create: {
+// 						name,
+// 						description,
+// 						product_code,
+// 						quantity,
+// 						request_code,
+// 						user: {
+// 							connect: {
+// 								id
+// 							}
+// 						},
+// 					}
+// 				}
+// 			}
+// 		});
+		
+
+// 		res.sendStatus(200);
+// 	} catch (error) {
+// 		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') })
+// 	}
+// }
+
 export async function createOutRecord(req, res) {
 	try {
 		const { id } = decodeToken(req.headers.authorization)
@@ -220,31 +265,54 @@ export async function createOutRecord(req, res) {
 			}
 		});
 
-		if (!existingProduct) return res.send({ message: "Produto não encontrado" })
-		
-		await prisma.estoque.update({
-			where: {
-				id: existingProduct.id
-			},
-			data: {
-				quantity: 0,
-				registroSaidas: {
-					create: {
-						name,
-						description,
-						product_code,
-						quantity,
-						request_code,
-						user: {
-							connect: {
-								id
-							}
-						},
+		// if (!existingProduct) return res.send({ message: "Produto não encontrado" })
+		if (!existingProduct) {
+			await prisma.registroSaidas.create({
+				data: {
+					name,
+					description,
+					product_code: 0,
+					quantity,
+					request_code,
+					user: {
+						connect: {
+							id
+						}
+					},
+					estoque: {
+						create: {
+							name,
+							description,
+							product_code:0,
+							quantity: 0
+						}
 					}
 				}
-			}
-		});
-		
+			});
+		}
+		// await prisma.estoque.update({
+		// 	where: {
+		// 		id: existingProduct.id
+		// 	},
+		// 	data: {
+		// 		quantity: 0,
+		// 		registroSaidas: {
+		// 			create: {
+		// 				name,
+		// 				description,
+		// 				product_code,
+		// 				quantity,
+		// 				request_code,
+		// 				user: {
+		// 					connect: {
+		// 						id
+		// 					}
+		// 				},
+		// 			}
+		// 		}
+		// 	}
+		// });
+
 
 		res.sendStatus(200);
 	} catch (error) {
@@ -255,10 +323,22 @@ export async function createOutRecord(req, res) {
 
 export async function getStock(req, res) {
 	try {
-		const { code, q } = req.query;
+		const { code, q, type } = req.query;
+		const where = {
+			quantity: {
+				gt: 0
+			},
+		}
+
+		if (type) {
+			where.name = {
+				equals: type,
+				mode: "insensitive",
+			}
+		}
+
 		if (q) {
 			const qInt = parseInt(q);
-			const where = {}
 			if (Number.isInteger(qInt)) {
 				where.OR = [
 					{
@@ -295,24 +375,28 @@ export async function getStock(req, res) {
 			res.send(records);
 		} else if (code) {
 			const codeInt = parseInt(code);
-			const records = await prisma.estoque.findMany({
-				where: {
-					OR: [
-						{
-							product_code: codeInt,
-						},
-						{
-							id: codeInt,
-						}
-					]
+			where.OR = [
+				{
+					product_code: codeInt,
 				},
+				{
+					id: codeInt,
+				}
+			]
+			const records = await prisma.estoque.findMany({
+				where,
 				orderBy: {
 					id: "desc"
 				}
 			});
 			res.send(records);
 		} else {
-			res.send(await prisma.estoque.findMany());
+			res.send(await prisma.estoque.findMany({
+				where,
+				orderBy: {
+					id: "desc"
+				}
+			}));
 		}
 	} catch (error) {
 		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') });
