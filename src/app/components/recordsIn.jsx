@@ -14,9 +14,9 @@ export default function RecordsIn() {
 	const [checkboxValue, setcheckboxValue] = useState(true)
 	const [token, setToken] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
-	const [options, setOptions] = useState([])
+	const [_options, setOptions] = useState([])
 	const [selected, setSelected] = useState(false)
-	const nameCount = {}
+	const _nameCount = {}
 
 	const query = useQuery({
 		queryKey: ['searchIn'],
@@ -88,7 +88,7 @@ export default function RecordsIn() {
 		setcheckboxValue(event.target.checked)
 	}
 
-	function handleClick(data) {
+	function _handleClick(data) {
 		setSelected(true)
 		setValue('product_code', '-')
 		setValue('description', data.description)
@@ -112,58 +112,23 @@ export default function RecordsIn() {
 						<div className="input__container--check">
 							<label>Produto possui patrimônio?</label>
 							<label className="switch" htmlFor="checkbox">
-								<input
-									type="checkbox"
-									id="checkbox"
-									{...register('checkbox', { onChange: handleChange })}
-									checked={checkboxValue}
-								/>
+								<input type="checkbox" id="checkbox" {...register('checkbox', { onChange: handleChange })} checked={checkboxValue} />
 								<div className="slider round"></div>
 							</label>
 						</div>
 						<div className="input__container">
 							<label htmlFor="">Patrimônio {checkboxValue && <b style={{ color: 'red' }}>*</b>}</label>
-							<input
-								type="text"
-								id="product_code"
-								disabled={!checkboxValue}
-								{...register('product_code', { required: checkboxValue })}
-							/>
+							<input type="text" id="product_code" disabled={!checkboxValue} {...register('product_code', { required: checkboxValue })} />
 						</div>
 						<div className="input__container">
 							<label htmlFor="">
 								Modelo <b style={{ color: 'red' }}>*</b>
 							</label>
-							<input
-								type="text"
-								id="name"
-								autoComplete="off"
-								onInput={handleInput}
-								{...register('name', { required: true })}
-							/>
-							{/* {!checkboxValue && (
-								<ul className="options">
-									{options.map((item, index) => {
-										let displayName = item.name
-										nameCount[item.name] = true
-										if (nameCount[item.name]) displayName = `${item.name} - ${item.description}`
-										return (
-											<li key={index} className="options__item" onClick={() => handleClick(item)}>
-												{displayName}
-											</li>
-										)
-									})}
-								</ul>
-							)} */}
+							<input type="text" id="name" autoComplete="off" onInput={handleInput} {...register('name', { required: true })} />
 						</div>
 						<div className="input__container">
 							<label htmlFor="">Quantidade {!checkboxValue && <b style={{ color: 'red' }}>*</b>}</label>
-							<input
-								type="number"
-								id="quantity"
-								disabled={checkboxValue}
-								{...register('quantity', { required: !checkboxValue })}
-							/>
+							<input type="number" id="quantity" disabled={checkboxValue} {...register('quantity', { required: !checkboxValue })} />
 						</div>
 						<div className="input__container">
 							<label htmlFor="">

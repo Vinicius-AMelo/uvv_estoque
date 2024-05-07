@@ -8,7 +8,6 @@ import SearchBar from './searchBar'
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])
 	const [inOut, setInOut] = useState('in')
-	const [total, setTotal] = useState(0)
 	let somaQuantidade = 0
 
 	function stateChange(data) {

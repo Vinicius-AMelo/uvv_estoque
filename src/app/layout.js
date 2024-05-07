@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import { ReactQueryClientProvider } from "./components/ReactQueryClienteProvider";
 import AuthChecker from "./components/AuthChecker";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
 			<body className={inter.className}>
 				<ReactQueryClientProvider>
 					<AuthChecker>
-						{children}
+						<Suspense fallback={<div>Carregando...</div>}>
+							{children}
+						</Suspense>
 					</AuthChecker>
 				</ReactQueryClientProvider>
 			</body>

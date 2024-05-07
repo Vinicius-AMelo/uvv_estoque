@@ -1,17 +1,16 @@
 import '../../scss/components/searchBar.scss'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import Calendar from './Calendar'
 
 export default function SearchBar({ stateChange, inputChange }) {
-	// const [searchData, setSearchData] = useState({})
 	const [inputValue, setInputValue] = useState('')
 	const [typeValue, setTypeValue] = useState('')
 	const [inOut, setInOut] = useState('stock')
-	const [nameCount, setNameCount] = useState({})
+	const [nameCount, _setNameCount] = useState({})
 	const [selectType, setSelectType] = useState(false)
 	const [date, setDate] = useState({ startDate: '', endDate: '' })
 	const { register } = useForm()
