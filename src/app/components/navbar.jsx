@@ -22,14 +22,7 @@ export default function Navbar() {
 	return (
 		<nav className="navbar">
 			<div className="navbar__logo">
-				<Image
-					className="navbar__logo--image"
-					width={150}
-					height={43.5}
-					src="/logouvv.svg"
-					priority="true"
-					alt="Logo UVV"
-				/>
+				<Image className="navbar__logo--image" width={150} height={43.5} src="/logouvv.svg" priority="true" alt="Logo UVV" />
 			</div>
 			<ul className="navbar__menu">
 				<li className="navbar__menu--item">
@@ -38,24 +31,16 @@ export default function Navbar() {
 					</Link>
 				</li>
 				<li className="navbar__menu--item">
-					{roleValue == 'DEFAULT' && (
-						<span className={`navbar__menu--item-link disabled`}>entrada no estoque</span>
-					)}
+					{roleValue == 'DEFAULT' && <span className={`navbar__menu--item-link disabled`}>entrada no estoque</span>}
 
 					{roleValue == 'SUPER' && (
-						<Link
-							className={`navbar__menu--item-link ${pathname === '/recordsin' ? 'active' : ''}`}
-							href="/recordsin"
-						>
+						<Link className={`navbar__menu--item-link ${pathname === '/recordsin' ? 'active' : ''}`} href="/recordsin">
 							entrada no estoque
 						</Link>
 					)}
 				</li>
 				<li className="navbar__menu--item">
-					<Link
-						className={`navbar__menu--item-link ${pathname === '/recordsout' ? 'active' : ''}`}
-						href="/recordsout"
-					>
+					<Link className={`navbar__menu--item-link ${pathname === '/recordsout' ? 'active' : ''}`} href="/recordsout">
 						baixa no estoque
 					</Link>
 				</li>

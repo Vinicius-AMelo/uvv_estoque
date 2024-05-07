@@ -8,7 +8,7 @@ import axios from 'axios'
 import Logo from '../../../public/Logo.png'
 import Image from 'next/image'
 import Popup from './popup'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 
 export default function RecordsForm() {
 	const {
@@ -23,12 +23,13 @@ export default function RecordsForm() {
 	const [token, setToken] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
 	const [maxValue, setMaxValue] = useState(1)
-
+	const router = useRouter()
 	const searchParams = useSearchParams()
+	const pathname = usePathname()
 	const id = searchParams.get('id')
 
 	const query = useQuery({
-		enabled: id != null,
+		enabled: false,
 		queryKey: ['searchOut'],
 		queryFn: async () => {
 			const response = await axios.get(`http://10.1.1.19:3001/records/stock?${id == null ? 'code=' + inputValue : 'id=' + id}`)
@@ -75,8 +76,9 @@ export default function RecordsForm() {
 
 	useEffect(() => {
 		if (inputValue != '') query.refetch()
+		else if (id != null) setInputValue(id)
 		else reset()
-	}, [inputValue])
+	}, [inputValue, id])
 
 	useEffect(() => {
 		if (query.data != undefined && query.data != {} && query.data != []) {
@@ -97,7 +99,11 @@ export default function RecordsForm() {
 	}, [query.data])
 
 	function handleChange(event) {
-		setInputValue(event.target.value)
+		if (id != null) {
+			router.push(pathname)
+			reset()
+			setInputValue('')
+		} else setInputValue(event.target.value)
 	}
 
 	function onSubmit(data) {

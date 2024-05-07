@@ -1,5 +1,6 @@
 import Link from 'next/link'
-
+// import openBoxIcon from '/open-box-icon.png'
+import Image from 'next/image'
 export default function RecordItem({ record, inOut }) {
 	const createdAt = new Date(record.createdAt)
 	return (
@@ -10,8 +11,14 @@ export default function RecordItem({ record, inOut }) {
 			<span className="records-table__content--body-item record-description">{record.description}</span>
 			{record.user && <span className="records-table__content--body-item record-user">{record.user.name}</span>}
 			{record.createdAt && <span className="records-table__content--body-item record-date">{createdAt.toLocaleDateString('pt-BR')}</span>}
-			<span className="records-table__content--body-item record-quantity">{record.quantity}</span>
-			{inOut == 'stock' && <Link href={`/recordsout?id=${record.id}`}>Dar baixa</Link>}
+			<span className="records-table__content--body-item record-quantity">
+				{record.quantity}{' '}
+				{inOut == 'stock' && (
+					<Link href={`/recordsout?id=${record.id}`}>
+						<Image className="recordsout_icon" width={24} height={24} alt="Dar baixa" src="/open-box-icon.svg" />
+					</Link>
+				)}
+			</span>
 		</li>
 	)
 }

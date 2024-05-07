@@ -28,15 +28,9 @@ export default function RecordsTable() {
 						<span className="records-table__head--header-item record-product_code">Patrimônio</span>
 						<span className="records-table__head--header-item record-name">Nome</span>
 						<span className="records-table__head--header-item record-description">Descrição</span>
-						{inOut != 'stock' && (
-							<span className="records-table__head--header-item record-user">Registrado por</span>
-						)}
-						{inOut == 'in' && (
-							<span className="records-table__head--header-item record-date">Data entrada</span>
-						)}
-						{inOut == 'out' && (
-							<span className="records-table__head--header-item record-date">Data saída</span>
-						)}
+						{inOut != 'stock' && <span className="records-table__head--header-item record-user">Registrado por</span>}
+						{inOut == 'in' && <span className="records-table__head--header-item record-date">Data entrada</span>}
+						{inOut == 'out' && <span className="records-table__head--header-item record-date">Data saída</span>}
 						<span className="records-table__head--header-item record-quantity">Quantidade</span>
 					</div>
 				</div>

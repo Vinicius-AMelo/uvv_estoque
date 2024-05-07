@@ -344,7 +344,8 @@ export async function getStock(req, res) {
 				}
 			]
 		} else if (id) {
-			where.id = id
+			const idInt = parseInt(id)
+			where.id = idInt
 		}
 
 		res.send(await prisma.estoque.findMany({
