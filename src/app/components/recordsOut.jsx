@@ -8,6 +8,7 @@ import axios from 'axios'
 import Logo from '../../../public/Logo.png'
 import Image from 'next/image'
 import Popup from './popup'
+import { useSearchParams } from 'next/navigation'
 
 export default function RecordsForm() {
 	const {
@@ -23,11 +24,14 @@ export default function RecordsForm() {
 	const [showPopup, setShowPopup] = useState(false)
 	const [maxValue, setMaxValue] = useState(1)
 
+	const searchParams = useSearchParams()
+	const id = searchParams.get('id')
+
 	const query = useQuery({
-		enabled: false,
+		enabled: id != null,
 		queryKey: ['searchOut'],
 		queryFn: async () => {
-			const response = await axios.get(`http://10.1.1.19:3001/records/stock?code=${inputValue}`)
+			const response = await axios.get(`http://10.1.1.19:3001/records/stock?${id == null ? 'code=' + inputValue : 'id=' + id}`)
 			return response.data
 		},
 	})

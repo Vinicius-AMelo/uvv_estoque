@@ -292,7 +292,7 @@ export async function createOutRecord(req, res) {
 
 export async function getStock(req, res) {
 	try {
-		const { code, q, type } = req.query;
+		const { code, q, type, id } = req.query;
 		const where = {
 			quantity: {
 				gt: 0
@@ -333,15 +333,6 @@ export async function getStock(req, res) {
 					},
 				]
 			}
-
-			const records = await prisma.estoque.findMany({
-				where,
-				orderBy: {
-					id: "desc"
-				}
-			});
-
-			res.send(records);
 		} else if (code) {
 			const codeInt = parseInt(code);
 			where.OR = [
@@ -352,21 +343,16 @@ export async function getStock(req, res) {
 					id: codeInt,
 				}
 			]
-			const records = await prisma.estoque.findMany({
-				where,
-				orderBy: {
-					id: "desc"
-				}
-			});
-			res.send(records);
-		} else {
-			res.send(await prisma.estoque.findMany({
-				where,
-				orderBy: {
-					id: "desc"
-				}
-			}));
+		} else if (id) {
+			where.id = id
 		}
+
+		res.send(await prisma.estoque.findMany({
+			where,
+			orderBy: {
+				id: "desc"
+			}
+		}));
 	} catch (error) {
 		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') });
 	}
