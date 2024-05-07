@@ -3,9 +3,21 @@ import decodeToken from "../services/decodeToken.js";
 
 export async function getInRecords(req, res) {
 	try {
-		const { q } = req.query;
+		const { q, min_date, max_date } = req.query
+		const where = {}
+
+		if (max_date && min_date) {
+			const startDate = new Date(min_date).toISOString()
+			const endDate = new Date(max_date).toISOString()
+			where.createdAt = {
+				gte: startDate,
+				lte: endDate
+			}
+		}
+
 		if (!q) {
 			res.send(await prisma.registroEntradas.findMany({
+				where,
 				include: {
 					user: {
 						select: {
@@ -20,7 +32,6 @@ export async function getInRecords(req, res) {
 			}));
 		} else {
 			const qInt = parseInt(q);
-			const where = {}
 			if (Number.isInteger(qInt)) {
 				where.OR = [
 					{
@@ -61,6 +72,7 @@ export async function getInRecords(req, res) {
 					createdAt: "desc"
 				}
 			});
+
 			res.send(records);
 
 		}
@@ -140,10 +152,21 @@ export async function createInRecord(req, res) {
 
 export async function getOutRecords(req, res) {
 	try {
-		const { q } = req.query;
+		const { q, max_date, min_date } = req.query;
+		const where = {}
+
+		if (max_date && min_date) {
+			const startDate = new Date(min_date).toISOString()
+			const endDate = new Date(max_date).toISOString()
+			where.createdAt = {
+				gte: startDate,
+				lte: endDate
+			}
+		}
 
 		if (!q) {
 			res.send(await prisma.registroSaidas.findMany({
+				where,
 				include: {
 					user: {
 						select: {
@@ -158,7 +181,7 @@ export async function getOutRecords(req, res) {
 			}));
 		} else {
 			const qInt = parseInt(q);
-			const where = {}
+
 			if (Number.isInteger(qInt)) {
 				where.OR = [
 					{
@@ -184,7 +207,6 @@ export async function getOutRecords(req, res) {
 					},
 				]
 			}
-
 			const records = await prisma.registroSaidas.findMany({
 				where,
 				include: {
@@ -199,6 +221,7 @@ export async function getOutRecords(req, res) {
 					createdAt: "desc"
 				}
 			});
+
 			res.send(records);
 		}
 	} catch (error) {
@@ -255,7 +278,7 @@ export async function createOutRecord(req, res) {
 
 export async function getStock(req, res) {
 	try {
-		const { code, q, type } = req.query;
+		const { code, q, type, min_date, max_date } = req.query;
 		const where = {
 			quantity: {
 				gt: 0

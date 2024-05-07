@@ -1,7 +1,7 @@
 import '../../scss/components/searchBar.scss'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import Calendar from './Calendar'
@@ -13,6 +13,7 @@ export default function SearchBar({ stateChange, inputChange }) {
 	const [inOut, setInOut] = useState('stock')
 	const [nameCount, setNameCount] = useState({})
 	const [selectType, setSelectType] = useState(false)
+	const [date, setDate] = useState({ startDate: '', endDate: '' })
 	const { register } = useForm()
 
 	function handleChange(event) {
@@ -21,6 +22,15 @@ export default function SearchBar({ stateChange, inputChange }) {
 
 	function handleClick(event) {
 		setInOut(event.target.dataset.value)
+	}
+
+	function handleDate(date) {
+		if (date.startDate && date.endDate) {
+			const startDate = `${date.startDate}T00:00:00Z`
+			const endDate = `${date.endDate}T23:59:59Z`
+
+			setDate({ startDate: startDate, endDate: endDate })
+		}
 	}
 
 	function handleType(item) {
@@ -34,7 +44,9 @@ export default function SearchBar({ stateChange, inputChange }) {
 		enabled: false,
 		queryKey: ['searchBar'],
 		queryFn: async () => {
-			const response = await axios.get(`http://10.1.1.19:3001/records/${inOut}?q=${inputValue}&type=${typeValue}`)
+			const response = await axios.get(
+				`http://10.1.1.19:3001/records/${inOut}?q=${inputValue}&type=${typeValue}&min_date=${date.startDate}&max_date=${date.endDate}`
+			)
 			return response.data
 		},
 	})
@@ -42,7 +54,7 @@ export default function SearchBar({ stateChange, inputChange }) {
 	useEffect(() => {
 		query.refetch()
 		inputChange(inOut)
-	}, [inputValue, typeValue, inOut])
+	}, [inputValue, typeValue, inOut, date])
 
 	useEffect(() => {
 		if (query.data != [] && query.data != {} && query.data != undefined) {
@@ -69,7 +81,7 @@ export default function SearchBar({ stateChange, inputChange }) {
 				</div>
 				<div className="search__filters">
 					<div>
-						<Calendar />
+						<Calendar handleDate={handleDate} />
 						<div className="input_container">
 							{/* {typeValue != '' && <input type="text" />} */}
 							<button

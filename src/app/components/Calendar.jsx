@@ -1,8 +1,8 @@
 import 'react-datepicker/dist/react-datepicker.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 
-export default function Calendar() {
+export default function Calendar({ handleDate }) {
 	const [startDate, setStartDate] = useState(null)
 	const [endDate, setEndDate] = useState(null)
 
@@ -12,6 +12,15 @@ export default function Calendar() {
 		setEndDate(end)
 	}
 
+	useEffect(() => {
+		if (startDate && endDate) {
+			const startISODate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}`
+			const endISODate = `${endDate.getFullYear()}-${(endDate.getMonth() + 1).toString().padStart(2, '0')}-${endDate.getDate().toString().padStart(2, '0')}`
+
+			handleDate({ startDate: startISODate, endDate: endISODate })
+		}
+	}, [startDate, endDate])
+
 	return (
 		<ReactDatePicker
 			selected={startDate}
@@ -19,10 +28,8 @@ export default function Calendar() {
 			startDate={startDate}
 			endDate={endDate}
 			selectsRange
-			locale="pt-BR"
 			placeholderText="filtrar data"
 			isClearable={true}
-			clea
 		/>
 	)
 }
