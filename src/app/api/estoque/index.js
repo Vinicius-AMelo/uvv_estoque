@@ -3,7 +3,7 @@ import decodeToken from "../services/decodeToken.js";
 
 export async function getInRecords(req, res) {
 	try {
-		const { q, min_date, max_date } = req.query
+		const { q, min_date, max_date, type } = req.query
 		const where = {}
 
 		if (max_date && min_date) {
@@ -12,6 +12,13 @@ export async function getInRecords(req, res) {
 			where.createdAt = {
 				gte: startDate,
 				lte: endDate
+			}
+		}
+
+		if (type) {
+			where.name = {
+				equals: type,
+				mode: "insensitive",
 			}
 		}
 
@@ -152,7 +159,7 @@ export async function createInRecord(req, res) {
 
 export async function getOutRecords(req, res) {
 	try {
-		const { q, max_date, min_date } = req.query;
+		const { q, max_date, min_date, type } = req.query;
 		const where = {}
 
 		if (max_date && min_date) {
@@ -161,6 +168,13 @@ export async function getOutRecords(req, res) {
 			where.createdAt = {
 				gte: startDate,
 				lte: endDate
+			}
+		}
+
+		if (type) {
+			where.name = {
+				equals: type,
+				mode: "insensitive",
 			}
 		}
 
@@ -278,7 +292,7 @@ export async function createOutRecord(req, res) {
 
 export async function getStock(req, res) {
 	try {
-		const { code, q, type, min_date, max_date } = req.query;
+		const { code, q, type } = req.query;
 		const where = {
 			quantity: {
 				gt: 0
