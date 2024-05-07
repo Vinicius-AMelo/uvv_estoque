@@ -18,6 +18,8 @@ export default function Calendar({ handleDate }) {
 			const endISODate = `${endDate.getFullYear()}-${(endDate.getMonth() + 1).toString().padStart(2, '0')}-${endDate.getDate().toString().padStart(2, '0')}`
 
 			handleDate({ startDate: startISODate, endDate: endISODate })
+		} else if (startDate || endDate == null) {
+			handleDate({ startDate: '', endDate: '' })
 		}
 	}, [startDate, endDate])
 

@@ -28,8 +28,9 @@ export default function SearchBar({ stateChange, inputChange }) {
 		if (date.startDate && date.endDate) {
 			const startDate = `${date.startDate}T00:00:00Z`
 			const endDate = `${date.endDate}T23:59:59Z`
-
 			setDate({ startDate: startDate, endDate: endDate })
+		} else {
+			setDate({ startDate: '', endDate: '' })
 		}
 	}
 
@@ -81,7 +82,7 @@ export default function SearchBar({ stateChange, inputChange }) {
 				</div>
 				<div className="search__filters">
 					<div>
-						<Calendar handleDate={handleDate} />
+						{inOut != 'stock' && <Calendar handleDate={handleDate} />}
 						<div className="input_container">
 							{/* {typeValue != '' && <input type="text" />} */}
 							<button
