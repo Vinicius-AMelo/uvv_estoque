@@ -4,17 +4,25 @@ import { useState } from 'react'
 import '../../scss/components/recordsTable.scss'
 import RecordItem from './recordItem'
 import SearchBar from './searchBar'
+import RequestPopup from './requestPopup'
 
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])
 	const [inOut, setInOut] = useState('in')
+	const [valueRequestPopup, setValueRequestPopup] = useState(null)
 	let somaQuantidade = 0
 
 	function stateChange(data) {
 		setFormData(data)
 	}
+
 	function inputChange(data) {
 		setInOut(data)
+	}
+
+	function showRequestPopup(data) {
+		if (data == null) return setValueRequestPopup(data)
+		setValueRequestPopup(parseInt(data))
 	}
 
 	return (
@@ -37,20 +45,23 @@ export default function RecordsTable() {
 					{formData.length > 0 &&
 						formData.map((item, index) => {
 							somaQuantidade += item.quantity
-							return <RecordItem key={index} record={item} inOut={inOut} />
+							return <RecordItem key={index} record={item} inOut={inOut} showRequestPopup={showRequestPopup} />
 						})}
 				</ul>
 				<div className="records-table__footer">
-					{/* {inOut == 'stock' && ( */}
-					<div className="records-table__footer--quantity">
-						<b>Itens filtrados:</b> {formData.length}
-					</div>
-					<div className="records-table__footer--quantity-total">
-						<b>Quantidade total dos itens filtrados:</b> {somaQuantidade}
-					</div>
-					{/* )} */}
+					{inOut == 'stock' && (
+						<>
+							<div className="records-table__footer--quantity">
+								<b>Itens filtrados:</b> {formData.length}
+							</div>
+							<div className="records-table__footer--quantity-total">
+								<b>Quantidade total dos itens filtrados:</b> {somaQuantidade}
+							</div>
+						</>
+					)}
 				</div>
 			</div>
+			{inOut == 'stock' && valueRequestPopup != null && <RequestPopup recordId={valueRequestPopup} showRequestPopup={showRequestPopup} />}
 		</>
 	)
 }

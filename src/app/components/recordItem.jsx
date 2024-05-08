@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-export default function RecordItem({ record, inOut }) {
+export default function RecordItem({ record, inOut, showRequestPopup }) {
 	const [roleValue, setRoleValue] = useState('DEFAULT')
 	const createdAt = new Date(record.createdAt)
 
@@ -15,7 +15,9 @@ export default function RecordItem({ record, inOut }) {
 		setRoleValue(role)
 	}, [roleValue])
 
-	const handleClick = () => {}
+	function handleClick(event) {
+		showRequestPopup(event.target.value)
+	}
 
 	return (
 		<li className="records-table__content--body">
@@ -33,9 +35,9 @@ export default function RecordItem({ record, inOut }) {
 							<Image className="recordsout_icon" width={24} height={24} alt="Dar baixa" src="/open-box-icon.svg" />
 						</Link>
 					) : (
-						<a onClick={handleClick}>
-							<Image className="recordsout_icon" width={24} height={24} alt="Dar baixa" src="/open-box-icon.svg" />
-						</a>
+						<button onClick={handleClick} value={record.id}>
+							<Image className="recordsout_icon" width={24} height={24} alt="Enviar solicitação" src="/open-box-icon.svg" />
+						</button>
 					))}
 			</span>
 		</li>
