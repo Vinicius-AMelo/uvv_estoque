@@ -360,13 +360,15 @@ export async function getStock(req, res) {
 	}
 }
 
-export function postRequest(req, res) {
+export async function postRequest(req, res) {
 	const { record } = req.body
 
 	if (!record) return res.send({ message: "Registro inválido!" })
 
 	try {
-		mailsender(record)
+		await mailsender(record)
+		// console.log(mailsender(record))
+		res.sendStatus(200)
 	} catch (error) {
 		res.send({ message: error.message.replace(/\s+/g, ' ') })
 	}

@@ -1,4 +1,11 @@
 import nodemailer from "nodemailer"
+import sharp from "sharp"
+
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const transporter = nodemailer.createTransport({
 	host: "smtp-mail.outlook.com",
@@ -9,6 +16,7 @@ const transporter = nodemailer.createTransport({
 		pass: process.env.SENDER_PASSWORD,
 	},
 })
+
 
 export default async function mailsender(record) {
 
@@ -76,7 +84,7 @@ export default async function mailsender(record) {
 				<table>
 					<tr>
 						<th colspan="2">
-							<img src="./logo_vertical.png" alt="" />
+							<img src="cid:logo" alt="" />
 						</th>
 					</tr>
 					<tr style="height: 30px"></tr>
@@ -90,19 +98,19 @@ export default async function mailsender(record) {
 					<table class="description__table">
 						<tr>
 							<td><strong>Categoria:</strong></td>
-							<td>Nome do Equipamento</td>
+							<td>${record.name}</td>
 						</tr>
 						<tr>
 							<td><strong>Modelo:</strong></td>
-							<td>Nome do Equipamento</td>
+							<td>${record.description}</td>
 						</tr>
 						<tr>
 							<td><strong>Quantidade: </strong></td>
-							<td>dd/mm/aaaa</td>
+							<td>${record.quantity}</td>
 						</tr>
 						<tr>
 							<td><strong>Solicitante:</strong></td>
-							<td>Nome do Responsável</td>
+							<td>Vinícius</td>
 						</tr>
 
 						<tr style="height: 30px;"></tr>
@@ -113,7 +121,9 @@ export default async function mailsender(record) {
 							</td>
 						</tr>
 						<tr>
-							<td rowspan="4" colspan="2" style="height: 80px;"></td>
+							<td rowspan="4" colspan="2" style="height: 80px;">
+								Substituição de monitor defeituoso no LAB 4
+							</td>
 						</tr>
 					</table>
 					</tr>
@@ -123,14 +133,23 @@ export default async function mailsender(record) {
 	`
 
 	try {
+		console.log(`${__dirname + "\\assets\\logo_vertical.png"}`)
 		await transporter.sendMail({
 			from: '<uvvsender@hotmail.com>',
 			to: "cyroback@gmail.com",
 			subject: "Retirada de equipamento",
 			// text: "Hello world?",
 			html,
+			attachments: [{
+				filename: 'logo_vertical.png',
+				path: `${__dirname + "\\assets\\logo_vertical.png"}`,
+				cid: 'logo' //same cid value as in the html img src
+			}]
 		});
+		console.log("sended")
 	} catch (error) {
 		console.log(error)
 	}
+
+	// return html
 }

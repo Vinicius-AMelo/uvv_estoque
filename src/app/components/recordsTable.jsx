@@ -33,8 +33,8 @@ export default function RecordsTable() {
 					<div className="records-table__head--header">
 						{inOut == 'stock' && <span className="records-table__head--header-item record-id">ID</span>}
 						<span className="records-table__head--header-item record-product_code">Patrimônio</span>
-						<span className="records-table__head--header-item record-name">Nome</span>
-						<span className="records-table__head--header-item record-description">Descrição</span>
+						<span className="records-table__head--header-item record-name">Categoria</span>
+						<span className="records-table__head--header-item record-description">Modelo</span>
 						{inOut != 'stock' && <span className="records-table__head--header-item record-user">Registrado por</span>}
 						{inOut == 'in' && <span className="records-table__head--header-item record-date">Data entrada</span>}
 						{inOut == 'out' && <span className="records-table__head--header-item record-date">Data saída</span>}

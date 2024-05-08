@@ -15,13 +15,11 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 		formState: { errors },
 	} = useForm()
 	const [formData, setFormData] = useState({})
-	const [token, setToken] = useState('')
-
 	const [maxValue, setMaxValue] = useState(1)
 
 	const query = useQuery({
-		// enabled: false,
-		queryKey: ['searchOut'],
+		enabled: false,
+		queryKey: ['searchPopup'],
 		queryFn: async () => {
 			const response = await axios.get(`http://10.1.1.19:3001/records/stock?id= + ${recordId}`)
 			return response.data
@@ -30,11 +28,9 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
-			console.log(data)
 			const { name, description, quantity, product_code, request_code, product_id } = data
-			const response = await axios.post(
-				'http://10.1.1.19:3001/request',
-				{
+			const response = await axios.post('http://localhost:3001/request', {
+				record: {
 					name,
 					description,
 					quantity: parseInt(quantity),
@@ -42,17 +38,21 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 					request_code: parseInt(request_code),
 					product_id: parseInt(product_id),
 				},
-				{
-					headers: {
-						Authorization: `${token}`,
-					},
-				}
-			)
+			})
 			return response.data
+		},
+		onSuccess: () => {
+			reset()
+			showRequestPopup(null)
 		},
 	})
 
 	useEffect(() => {
+		query.refetch()
+	}, [])
+
+	useEffect(() => {
+		console.log('dasdadas')
 		if (query.data != undefined && query.data != {} && query.data != []) {
 			if (query.data.length > 0) {
 				if (query.data[0].product_code == 0) {
@@ -61,6 +61,7 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 				}
 				if (query.data[0].name) setValue('name', query.data[0].name)
 				if (query.data[0].description) setValue('description', query.data[0].description)
+				if (query.data[0].id) setValue('product_id', query.data[0].id)
 				if (query.data[0].id) setValue('product_code', query.data[0].id)
 				if (query.data[0].product_code != 0) setValue('quantity', 1)
 				setFormData(query.data[0])
@@ -71,7 +72,10 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 	}, [query.data])
 
 	function onSubmit(data) {
-		// mutation.mutate(data)
+		mutation.mutate(data)
+	}
+
+	function handleClosePopup() {
 		reset()
 		showRequestPopup(null)
 	}
@@ -120,7 +124,7 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 							<input type="hidden" id="product_id" {...register('product_id')} />
 							<div className="buttons">
 								<button type="submit">ENVIAR</button>
-								<button type="button" className="cancel__button">
+								<button type="button" className="cancel__button" onClick={handleClosePopup}>
 									CANCELAR
 								</button>
 							</div>
@@ -128,7 +132,7 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 					</div>
 				</div>
 			</div>
-			<div className="overlay"></div>
+			<div className="overlay" onClick={handleClosePopup}></div>
 		</>
 	)
 }
