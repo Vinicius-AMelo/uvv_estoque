@@ -1,5 +1,6 @@
 import prisma from "../db.js";
 import decodeToken from "../services/decodeToken.js";
+import mailsender from "../services/mailSender.js";
 
 export async function getInRecords(req, res) {
 	try {
@@ -356,5 +357,17 @@ export async function getStock(req, res) {
 		}));
 	} catch (error) {
 		res.send({ message: "Erro", error: error.message.replace(/\s+/g, ' ') });
+	}
+}
+
+export function postRequest(req, res) {
+	const { record } = req.body
+
+	if (!record) return res.send({ message: "Registro inválido!" })
+
+	try {
+		mailsender(record)
+	} catch (error) {
+		res.send({ message: error.message.replace(/\s+/g, ' ') })
 	}
 }

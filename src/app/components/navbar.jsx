@@ -40,9 +40,13 @@ export default function Navbar() {
 					)}
 				</li>
 				<li className="navbar__menu--item">
-					<Link className={`navbar__menu--item-link ${pathname === '/recordsout' ? 'active' : ''}`} href="/recordsout">
-						baixa no estoque
-					</Link>
+					{roleValue == 'DEFAULT' && <span className={`navbar__menu--item-link disabled`}>entrada no estoque</span>}
+
+					{roleValue == 'SUPER' && (
+						<Link className={`navbar__menu--item-link ${pathname === '/recordsout' ? 'active' : ''}`} href="/recordsout">
+							baixa no estoque
+						</Link>
+					)}
 				</li>
 			</ul>
 		</nav>
