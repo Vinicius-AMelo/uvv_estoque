@@ -10,7 +10,7 @@
 			box-sizing: border-box;
 			outline: none;
 			text-decoration: none;
-			font-family: 'Roboto', sans-serif;
+			font-family: "Roboto", sans-serif;
 			font-style: normal;
 			color: inherit;
 		}
@@ -20,7 +20,7 @@
 		}
 
 		table {
-			border-collapse: collapse;
+			/* border-collapse: collapse; */
 			width: 600px;
 			margin: auto;
 		}
@@ -34,11 +34,6 @@
 			color: black;
 		}
 
-		img {
-			width: 100%;
-			height: auto;
-		}
-
 		h1 {
 			text-align: center;
 			/* color: #2c2663; */
@@ -47,15 +42,42 @@
 		}
 
 		.content {
-			border: 1px solid #dddddd;
+			/* border: 1px solid #dddddd; */
 		}
 
 
 		.description__table th,
 		.description__table td {
-			border: 1px solid #dddddd;
-		
+			/* border: 1px solid #dddddd; */
 			padding: 8px;
+		}
+
+		.description__table tr:nth-child(odd) {
+			background-color: #FAFAFA;
+		}
+
+		.logo_container {
+			height: 80px;
+			background-color: #FAFAFA;
+		}
+
+		.logo_container img {
+			width: auto;
+			height: 100%;
+		}
+
+		a {
+			margin: auto;
+			background-color: #2c2663;
+			padding: 16px 16px;
+			text-align: center;
+			color: #ffffff !important;
+			border-radius: 4px;
+			display: inline-block;
+		}
+
+		.button_out {
+			text-align: center;
 		}
 	</style>
 </head>
@@ -63,7 +85,7 @@
 <body>
 	<table>
 		<tr>
-			<th colspan="2">
+			<th colspan="2" class="logo_container">
 				<img src="./logo_vertical.png" alt="" />
 			</th>
 		</tr>
@@ -75,37 +97,48 @@
 		</tr>
 		<tr style="height: 30px"></tr>
 
-		<table class="description__table">
+		<tr>
+			<td>
+				<table class="description__table">
 
-			<tr class= "content" >
-				<td><strong>Categoria:</strong></td>
-				<td>Nome do Equipamento</td>
-			</tr>
-			<tr class= "content" >
-				<td><strong>Modelo:</strong></td>
-				<td>Nome do Equipamento</td>
-			</tr>
-			<tr class= "content" >
-				<td><strong>Quantidade: </strong></td>
-				<td>dd/mm/aaaa</td>
-			</tr>
-			<tr class= "content" >
-				<td><strong>Solicitante:</strong></td>
-				<td>Nome do Responsável</td>
-			</tr>
+					<tr class="content">
+						<td><strong>Categoria:</strong></td>
+						<td>Monitor</td>
+					</tr>
+					<tr class="content">
+						<td><strong>Modelo:</strong></td>
+						<td>PHILLIPS 22 EL LED -- AF20105</td>
+					</tr>
+					<tr class="content">
+						<td><strong>Quantidade: </strong></td>
+						<td>1</td>
+					</tr>
+					<tr class="content">
+						<td><strong>Solicitante:</strong></td>
+						<td>Vinicius</td>
+					</tr>
 
-			<tr style="height: 30px;"></tr>
-			
-			<tr style="text-align: center">
-				<td colspan="2">
-					<strong>Motivo:</strong>
-				</td>
-			</tr>
-			<tr class= "content" >
-				<td rowspan="4" colspan="2" style="height: 80px;"></td>
-			</tr>
+					<tr style="height: 15px;"></tr>
+					<tr style="height: 15px;"></tr>
 
-		</table>
+					<tr style="text-align: center">
+						<td colspan="2">
+							<strong>Motivo:</strong>
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="4" colspan="2" style="height: 80px;">
+							Substituição de monitor defeituoso no LAB 4
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr class="button_out">
+			<td>
+				<a href=http://estoquedti/recordsout?id=${record.id}>Realizar baixa</a>
+			</td>
 		</tr>
 	</table>
 </body>

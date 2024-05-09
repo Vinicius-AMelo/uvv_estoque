@@ -362,12 +362,12 @@ export async function getStock(req, res) {
 
 export async function postRequest(req, res) {
 	const { record } = req.body
+	const { name } = decodeToken(req.headers.authorization)
 
 	if (!record) return res.send({ message: "Registro inválido!" })
 
 	try {
-		await mailsender(record)
-		// console.log(mailsender(record))
+		await mailsender(record, name)
 		res.sendStatus(200)
 	} catch (error) {
 		res.send({ message: error.message.replace(/\s+/g, ' ') })

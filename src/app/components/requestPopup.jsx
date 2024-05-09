@@ -16,6 +16,7 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 	} = useForm()
 	const [formData, setFormData] = useState({})
 	const [maxValue, setMaxValue] = useState(1)
+	const [token, setToken] = useState('')
 
 	const query = useQuery({
 		enabled: false,
@@ -29,16 +30,24 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 	const mutation = useMutation({
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, request_code, product_id } = data
-			const response = await axios.post('http://localhost:3001/request', {
-				record: {
-					name,
-					description,
-					quantity: parseInt(quantity),
-					product_code: parseInt(product_code),
-					request_code: parseInt(request_code),
-					product_id: parseInt(product_id),
+			const response = await axios.post(
+				'http://localhost:3001/request',
+				{
+					record: {
+						name,
+						description,
+						quantity: parseInt(quantity),
+						product_code: parseInt(product_code),
+						request_code: parseInt(request_code),
+						product_id: parseInt(product_id),
+					},
 				},
-			})
+				{
+					headers: {
+						Authorization: `${token}`,
+					},
+				}
+			)
 			return response.data
 		},
 		onSuccess: () => {
@@ -46,6 +55,13 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 			showRequestPopup(null)
 		},
 	})
+
+	useEffect(() => {
+		const tokenStorage = localStorage.getItem('uat_cs1')
+		if (!tokenStorage) return
+		const { token } = JSON.parse(tokenStorage)
+		setToken(token)
+	}, [])
 
 	useEffect(() => {
 		query.refetch()

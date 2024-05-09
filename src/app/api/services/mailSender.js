@@ -18,11 +18,12 @@ const transporter = nodemailer.createTransport({
 })
 
 
-export default async function mailsender(record) {
+export default async function mailsender(record, user) {
 
 	const html = `
 	<!doctype html>
 		<html>
+
 			<head>
 				<title>Solicitação de Retirada de Equipamento</title>
 				<style>
@@ -42,7 +43,7 @@ export default async function mailsender(record) {
 					}
 
 					table {
-						border-collapse: collapse;
+						/* border-collapse: collapse; */
 						width: 600px;
 						margin: auto;
 					}
@@ -56,11 +57,6 @@ export default async function mailsender(record) {
 						color: black;
 					}
 
-					img {
-						width: 100%;
-						height: auto;
-					}
-
 					h1 {
 						text-align: center;
 						/* color: #2c2663; */
@@ -68,14 +64,43 @@ export default async function mailsender(record) {
 						font-size: 26px;
 					}
 
-					.description__table {
-						border: 1px solid #dddddd;
+					.content {
+						/* border: 1px solid #dddddd; */
 					}
+
 
 					.description__table th,
 					.description__table td {
-						border: 1px solid #ddd;
+						/* border: 1px solid #dddddd; */
 						padding: 8px;
+					}
+
+					.description__table tr:nth-child(odd) {
+						background-color: #FAFAFA;
+					}
+
+					.logo_container {
+						height: 80px;
+						background-color: #FAFAFA;
+					}
+
+					.logo_container img {
+						width: auto;
+						height: 100%;
+					}
+
+					a {
+						margin: auto;
+						background-color: #2c2663;
+						padding: 16px 16px;
+						text-align: center;
+						color: #ffffff !important;
+						border-radius: 4px;
+						display: inline-block;
+					}
+			
+					.button_out {
+						text-align: center;
 					}
 				</style>
 			</head>
@@ -83,7 +108,7 @@ export default async function mailsender(record) {
 			<body>
 				<table>
 					<tr>
-						<th colspan="2">
+						<th colspan="2" class="logo_container">
 							<img src="cid:logo" alt="" />
 						</th>
 					</tr>
@@ -95,40 +120,52 @@ export default async function mailsender(record) {
 					</tr>
 					<tr style="height: 30px"></tr>
 
-					<table class="description__table">
-						<tr>
-							<td><strong>Categoria:</strong></td>
-							<td>${record.name}</td>
-						</tr>
-						<tr>
-							<td><strong>Modelo:</strong></td>
-							<td>${record.description}</td>
-						</tr>
-						<tr>
-							<td><strong>Quantidade: </strong></td>
-							<td>${record.quantity}</td>
-						</tr>
-						<tr>
-							<td><strong>Solicitante:</strong></td>
-							<td>Vinícius</td>
-						</tr>
+					<tr>
+						<td>
+							<table class="description__table">
 
-						<tr style="height: 30px;"></tr>
+								<tr class="content">
+									<td><strong>Categoria:</strong></td>
+									<td>${record.name}</td>
+								</tr>
+								<tr class="content">
+									<td><strong>Modelo:</strong></td>
+									<td>${record.description}</td>
+								</tr>
+								<tr class="content">
+									<td><strong>Quantidade: </strong></td>
+									<td>${record.quantity}</td>
+								</tr>
+								<tr class="content">
+									<td><strong>Solicitante:</strong></td>
+									<td>${user}</td>
+								</tr>
 
-						<tr style="text-align: center">
-							<td colspan="2">
-								<strong>Motivo:</strong>
-							</td>
-						</tr>
-						<tr>
-							<td rowspan="4" colspan="2" style="height: 80px;">
-								Substituição de monitor defeituoso no LAB 4
-							</td>
-						</tr>
-					</table>
+								<tr style="height: 15px;"></tr>
+								<tr style="height: 15px;"></tr>
+
+								<tr style="text-align: center">
+									<td colspan="2">
+										<strong>Motivo:</strong>
+									</td>
+								</tr>
+								<tr>
+									<td rowspan="4" colspan="2" style="height: 80px;">
+										Substituição de monitor defeituoso no LAB 4
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+					<tr class="button_out">
+						<td>
+							<a href=http://estoquedti/recordsout?id=${record.product_id}>Realizar baixa</a>
+						</td>
 					</tr>
 				</table>
 			</body>
+
 		</html>
 	`
 
