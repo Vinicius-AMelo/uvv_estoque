@@ -9,7 +9,7 @@ export default function DetailsPopup({ showDetailsPopup, record }) {
 	console.log(record)
 	return (
 		<>
-			<div className="popup__container">
+			<div className="popup-details__container">
 				<div>
 					<span>Número do chamado:</span>
 					<span>{record.request}</span>
