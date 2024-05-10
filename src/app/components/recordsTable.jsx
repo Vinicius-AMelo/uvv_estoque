@@ -5,11 +5,13 @@ import '../../scss/components/recordsTable.scss'
 import RecordItem from './recordItem'
 import SearchBar from './searchBar'
 import RequestPopup from './requestPopup'
+import DetailsPopup from './detailsPopup'
 
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])
 	const [inOut, setInOut] = useState('in')
 	const [valueRequestPopup, setValueRequestPopup] = useState(null)
+	const [valueDetailsPopup, setValueDetailsPopup] = useState(null)
 	let somaQuantidade = 0
 
 	function stateChange(data) {
@@ -23,6 +25,11 @@ export default function RecordsTable() {
 	function showRequestPopup(data) {
 		if (data == null) return setValueRequestPopup(data)
 		setValueRequestPopup(parseInt(data))
+	}
+
+	function showDetailsPopup(data) {
+		if (data == null) return setValueDetailsPopup(data)
+		setValueDetailsPopup(data)
 	}
 
 	return (
@@ -45,7 +52,9 @@ export default function RecordsTable() {
 					{formData.length > 0 &&
 						formData.map((item, index) => {
 							somaQuantidade += item.quantity
-							return <RecordItem key={index} record={item} inOut={inOut} showRequestPopup={showRequestPopup} />
+							return (
+								<RecordItem key={index} record={item} inOut={inOut} showRequestPopup={showRequestPopup} showDetailsPopup={showDetailsPopup} />
+							)
 						})}
 				</ul>
 				<div className="records-table__footer">
@@ -62,6 +71,7 @@ export default function RecordsTable() {
 				</div>
 			</div>
 			{inOut == 'stock' && valueRequestPopup != null && <RequestPopup recordId={valueRequestPopup} showRequestPopup={showRequestPopup} />}
+			{inOut == 'out' && valueDetailsPopup != null && <DetailsPopup record={valueDetailsPopup} showDetailsPopup={showDetailsPopup} />}
 		</>
 	)
 }

@@ -32,7 +32,6 @@ export default function Login() {
 
 	useEffect(() => {
 		if (!mutation.data?.message && mutation.data != undefined) {
-			console.log(6)
 			localStorage.setItem('uat_cs1', JSON.stringify({ token: mutation.data.token, token_time: new Date() }))
 			reset()
 			router.push('/')

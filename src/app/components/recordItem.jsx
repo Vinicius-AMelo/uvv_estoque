@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-export default function RecordItem({ record, inOut, showRequestPopup }) {
+export default function RecordItem({ record, inOut, showRequestPopup, showDetailsPopup }) {
 	const [roleValue, setRoleValue] = useState('DEFAULT')
 	const createdAt = new Date(record.createdAt)
 
@@ -17,6 +17,10 @@ export default function RecordItem({ record, inOut, showRequestPopup }) {
 
 	function handleClick(event) {
 		showRequestPopup(event.target.value)
+	}
+
+	function handleDetailsPopup(event) {
+		showDetailsPopup({ request: event.target.dataset.request, reason: 'dasdasdadadqasdada' })
 	}
 
 	return (
@@ -39,6 +43,12 @@ export default function RecordItem({ record, inOut, showRequestPopup }) {
 							<Image className="recordsout_icon" width={24} height={24} alt="Enviar solicitação" src="/open-box-icon.svg" />
 						</button>
 					))}
+
+				{inOut == 'out' && (
+					<button onClick={handleDetailsPopup} data-request={record.request_code}>
+						<Image className="recordsout_icon details" width={24} height={24} alt="Enviar solicitação" src="/details-icon.svg" />
+					</button>
+				)}
 			</span>
 		</li>
 	)

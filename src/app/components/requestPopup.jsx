@@ -29,7 +29,6 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
-			console.log(data)
 			const { name, description, quantity, product_code, request_code, product_id, out_reason } = data
 			const response = await axios.post(
 				'http://localhost:3001/request',
@@ -70,7 +69,6 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 	}, [])
 
 	useEffect(() => {
-		console.log('dasdadas')
 		if (query.data != undefined && query.data != {} && query.data != []) {
 			if (query.data.length > 0) {
 				if (query.data[0].product_code == 0) {

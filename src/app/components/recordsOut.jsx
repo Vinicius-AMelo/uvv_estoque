@@ -39,7 +39,6 @@ export default function RecordsForm() {
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
-			console.log(data)
 			const { name, description, quantity, product_code, request_code, product_id } = data
 			const response = await axios.post(
 				'http://10.1.1.19:3001/records/out',
