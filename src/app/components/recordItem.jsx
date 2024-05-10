@@ -45,8 +45,8 @@ export default function RecordItem({ record, inOut, showRequestPopup, showDetail
 					))}
 
 				{inOut == 'out' && (
-					<button onClick={handleDetailsPopup} data-request={record.request_code} data-reason={record.out_reason}>
-						<Image className="recordsout_icon details" width={24} height={24} alt="Enviar solicitação" src="/details-icon.svg" />
+					<button className="details" onClick={handleDetailsPopup} data-request={record.request_code} data-reason={record.out_reason}>
+						<Image className="recordsout_icon " width={24} height={24} alt="Enviar solicitação" src="/details-icon.svg" />
 					</button>
 				)}
 			</span>

@@ -83,8 +83,11 @@
 				img {
 					pointer-events: none;
 				}
-			}
 
+				&.details {
+					right: 2px;
+				}
+			}
 		}
 
 		&.record-product_code {
