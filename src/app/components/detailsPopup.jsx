@@ -11,12 +11,12 @@ export default function DetailsPopup({ showDetailsPopup, record }) {
 		<>
 			<div className="popup-details__container">
 				<div>
-					<span>Número do chamado:</span>
-					<span>{record.request}</span>
+					<span className="header">Número do chamado: </span>
+					<span className="content-call">{record.request}</span>
 				</div>
 				<div>
-					<span>Motivo da solicitação:</span>
-					<span>{record.reason}</span>
+					<span className="header">Motivo da solicitação: </span>
+					<span className="content-reason">{record.reason}</span>
 				</div>
 			</div>
 			<div className="overlay" onClick={handleClosePopup}></div>
