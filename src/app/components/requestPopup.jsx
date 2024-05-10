@@ -31,7 +31,7 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 		mutationFn: async (data) => {
 			const { name, description, quantity, product_code, request_code, product_id, out_reason } = data
 			const response = await axios.post(
-				'http://localhost:3001/request',
+				'http://10.1.1.19:3001/request',
 				{
 					record: {
 						name,

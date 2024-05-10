@@ -11,17 +11,19 @@ import Popup from './popup'
 
 export default function RecordsIn() {
 	const { register, reset, handleSubmit, setValue } = useForm()
-	const [checkboxValue, setcheckboxValue] = useState(true)
+	const [checkboxValue, setCheckboxValue] = useState(true)
+	const [formData, setFormData] = useState(null)
+	const [inputValue, setInputValue] = useState('')
 	const [token, setToken] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
-	const [_options, setOptions] = useState([])
 	const [selected, setSelected] = useState(false)
 	const _nameCount = {}
 
 	const query = useQuery({
+		enabled: false,
 		queryKey: ['searchIn'],
 		queryFn: async () => {
-			const response = await axios.get(`http://10.1.1.19:3001/records/stock?code=0`)
+			const response = await axios.get(`http://10.1.1.19:3001/records/stock?${checkboxValue ? 'product_code=' + inputValue : 'id=' + inputValue}`)
 			return response.data
 		},
 	})
@@ -75,8 +77,12 @@ export default function RecordsIn() {
 	}, [])
 
 	useEffect(() => {
-		if (query.data != [] && query.data != {} && query.data != undefined) {
-			setOptions(query.data)
+		if (query.data != undefined && query.data != {} && query.data != []) {
+			if (query.data.length > 0) {
+				setFormData(query.data[0])
+			} else {
+				reset()
+			}
 		}
 	}, [query.data])
 
@@ -85,16 +91,22 @@ export default function RecordsIn() {
 	}
 
 	function handleChange(event) {
-		setcheckboxValue(event.target.checked)
+		setCheckboxValue(event.target.checked)
 	}
 
-	function _handleClick(data) {
-		setSelected(true)
-		setValue('product_code', '-')
-		setValue('description', data.description)
-		setValue('name', data.name)
-		setValue('product_id', data.id)
-	}
+	useEffect(() => {
+		if (inputValue != '') query.refetch()
+		else reset()
+	}, [inputValue])
+
+	useEffect(() => {
+		if (formData != null) {
+			setValue('description', formData.description)
+			setValue('name', formData.name)
+			setValue('product_id', formData.id)
+			if (checkboxValue) setValue('quantity', 1)
+		}
+	}, [formData])
 
 	function handleInput() {
 		if (selected) {
@@ -102,6 +114,10 @@ export default function RecordsIn() {
 			reset()
 			reset({ product_id: '' })
 		}
+	}
+
+	function handleInputValue(event) {
+		setInputValue(event.target.value)
 	}
 
 	return (
@@ -117,14 +133,28 @@ export default function RecordsIn() {
 							</label>
 						</div>
 						<div className="input__container">
-							<label htmlFor="">Patrimônio {checkboxValue && <b style={{ color: 'red' }}>*</b>}</label>
-							<input type="text" id="product_code" disabled={!checkboxValue} {...register('product_code', { required: checkboxValue })} />
+							<label htmlFor="">
+								{checkboxValue ? 'Patrimônio' : 'ID'} <b style={{ color: 'red' }}>*</b>
+							</label>
+							<input
+								type="text"
+								id="product_code"
+								value={inputValue}
+								{...register('product_code', { required: checkboxValue, onChange: handleInputValue })}
+							/>
 						</div>
 						<div className="input__container">
 							<label htmlFor="">
 								Categoria <b style={{ color: 'red' }}>*</b>
 							</label>
-							<input type="text" id="name" autoComplete="off" onInput={handleInput} {...register('name', { required: true })} />
+							<input
+								type="text"
+								id="name"
+								autoComplete="off"
+								onInput={handleInput}
+								disabled={formData != null}
+								{...register('name', { required: true })}
+							/>
 						</div>
 						<div className="input__container">
 							<label htmlFor="">Quantidade {!checkboxValue && <b style={{ color: 'red' }}>*</b>}</label>
@@ -134,7 +164,7 @@ export default function RecordsIn() {
 							<label htmlFor="">
 								Modelo <b style={{ color: 'red' }}>*</b>
 							</label>
-							<textarea rows={4} id="description" {...register('description', { required: true })} />
+							<textarea rows={4} id="description" disabled={formData != null} {...register('description', { required: true })} />
 						</div>
 						<input type="hidden" id="product_id" {...register('product_id')} />
 						<button type="submit">ENVIAR</button>
