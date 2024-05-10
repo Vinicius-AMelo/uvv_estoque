@@ -20,7 +20,7 @@ export default function RecordItem({ record, inOut, showRequestPopup, showDetail
 	}
 
 	function handleDetailsPopup(event) {
-		showDetailsPopup({ request: event.target.dataset.request, reason: 'dasdasdadadqasdada' })
+		showDetailsPopup({ request: event.target.dataset.request, reason: event.target.dataset.reason })
 	}
 
 	return (
@@ -45,7 +45,7 @@ export default function RecordItem({ record, inOut, showRequestPopup, showDetail
 					))}
 
 				{inOut == 'out' && (
-					<button onClick={handleDetailsPopup} data-request={record.request_code}>
+					<button onClick={handleDetailsPopup} data-request={record.request_code} data-reason={record.out_reason}>
 						<Image className="recordsout_icon details" width={24} height={24} alt="Enviar solicitação" src="/details-icon.svg" />
 					</button>
 				)}

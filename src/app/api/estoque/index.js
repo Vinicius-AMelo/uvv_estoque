@@ -294,7 +294,7 @@ export async function createOutRecord(req, res) {
 
 export async function getStock(req, res) {
 	try {
-		const { code, q, type, id } = req.query;
+		const { code, q, type, id, product_code } = req.query;
 		const where = {
 			quantity: {
 				gt: 0
@@ -348,6 +348,9 @@ export async function getStock(req, res) {
 		} else if (id) {
 			const idInt = parseInt(id)
 			where.id = idInt
+		} else if (product_code) {
+			const product_codeInt = parseInt(product_code)
+			where.product_code = product_codeInt
 		}
 
 		res.send(await prisma.estoque.findMany({
@@ -362,7 +365,6 @@ export async function getStock(req, res) {
 }
 
 export async function postRequest(req, res) {
-	console.log(req.body)
 	const { record } = req.body
 	const { name } = decodeToken(req.headers.authorization)
 

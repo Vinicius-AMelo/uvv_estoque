@@ -6,7 +6,7 @@ export default function DetailsPopup({ showDetailsPopup, record }) {
 	function handleClosePopup() {
 		showDetailsPopup(null)
 	}
-	console.log(record)
+
 	return (
 		<>
 			<div className="popup-details__container">

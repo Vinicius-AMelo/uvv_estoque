@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer"
-import sharp from "sharp"
 
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -178,24 +177,21 @@ export default async function mailsender(record, user) {
 	`
 
 	try {
-		console.log(`${__dirname + "\\assets\\logo_vertical.png"}`)
+
 		await transporter.sendMail({
 			from: '<uvvsender@hotmail.com>',
 			to: "cyroback@gmail.com",
 			// to: process.env.DIEGUITO,
 			subject: "Retirada de equipamento",
-			// text: "Hello world?",
 			html,
 			attachments: [{
 				filename: 'logo_vertical.png',
 				path: `${__dirname + "\\assets\\logo_vertical.png"}`,
-				cid: 'logo' //same cid value as in the html img src
+				cid: 'logo'
 			}]
 		});
-		console.log("sended")
+
 	} catch (error) {
 		console.log(error)
 	}
-
-	// return html
 }
