@@ -157,6 +157,10 @@ export default function RecordsForm() {
 							<input type="number" id="request_code" {...register('request_code')} />
 						</div>
 						<div className="input__container">
+							<label htmlFor="">Motivo da baixa </label>
+							<textarea rows={4} type="number" id="out_reason" {...register('out_reason')} />
+						</div>
+						<div className="input__container">
 							<label htmlFor="">Modelo </label>
 							<textarea rows={4} id="description" disabled {...register('description')} />
 						</div>

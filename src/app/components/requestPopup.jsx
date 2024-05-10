@@ -29,7 +29,8 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 
 	const mutation = useMutation({
 		mutationFn: async (data) => {
-			const { name, description, quantity, product_code, request_code, product_id } = data
+			console.log(data)
+			const { name, description, quantity, product_code, request_code, product_id, out_reason } = data
 			const response = await axios.post(
 				'http://localhost:3001/request',
 				{
@@ -40,6 +41,7 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 						product_code: parseInt(product_code),
 						request_code: parseInt(request_code),
 						product_id: parseInt(product_id),
+						out_reason,
 					},
 				},
 				{
@@ -132,6 +134,10 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 							<div className="input__container">
 								<label htmlFor="">Número do chamado </label>
 								<input type="number" id="request_code" {...register('request_code')} />
+							</div>
+							<div className="input__container">
+								<label htmlFor="">Motivo da baixa </label>
+								<textarea rows={4} id="out_reason" {...register('out_reason')} />
 							</div>
 							<div className="input__container">
 								<label htmlFor="">Modelo </label>

@@ -144,6 +144,10 @@ export default async function mailsender(record, user) {
 									<td><strong>Solicitante:</strong></td>
 									<td>${user}</td>
 								</tr>
+								<tr class="content">
+									<td><strong>Número do chamado:</strong></td>
+									<td>${record.request_code}</td>
+								</tr>
 
 								<tr style="height: 15px;"></tr>
 								<tr style="height: 15px;"></tr>
@@ -155,7 +159,7 @@ export default async function mailsender(record, user) {
 								</tr>
 								<tr>
 									<td rowspan="4" colspan="2" style="height: 80px;">
-										Substituição de monitor defeituoso no LAB 4
+										${record.out_reason}
 									</td>
 								</tr>
 							</table>

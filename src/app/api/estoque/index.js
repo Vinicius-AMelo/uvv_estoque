@@ -248,7 +248,7 @@ export async function getOutRecords(req, res) {
 export async function createOutRecord(req, res) {
 	try {
 		const { id } = decodeToken(req.headers.authorization)
-		const { name, description, product_code, product_id, quantity, request_code } = req.body;
+		const { name, description, product_code, product_id, quantity, request_code, out_reason } = req.body;
 
 		if (product_id == undefined) return res.send({ message: "ID inválido" })
 
@@ -273,6 +273,7 @@ export async function createOutRecord(req, res) {
 						product_code,
 						quantity,
 						request_code,
+						out_reason,
 						user: {
 							connect: {
 								id
@@ -361,6 +362,7 @@ export async function getStock(req, res) {
 }
 
 export async function postRequest(req, res) {
+	console.log(req.body)
 	const { record } = req.body
 	const { name } = decodeToken(req.headers.authorization)
 
