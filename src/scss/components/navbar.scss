@@ -11,6 +11,14 @@
 		justify-content: center;
 	}
 
+	.navbar__logoff {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 24px;
+		cursor: pointer;
+	}
+
 	.navbar__menu {
 		list-style: none;
 		width: 100%;

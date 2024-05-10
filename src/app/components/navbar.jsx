@@ -19,6 +19,11 @@ export default function Navbar() {
 		setRoleValue(role)
 	}, [roleValue])
 
+	function handleLogoff() {
+		localStorage.removeItem('uat_cs1')
+		window.location.reload()
+	}
+
 	return (
 		<nav className="navbar">
 			<div className="navbar__logo">
@@ -49,6 +54,9 @@ export default function Navbar() {
 					)}
 				</li>
 			</ul>
+			<div className="navbar__logoff" onClick={handleLogoff}>
+				<Image className="navbar__logo--image" width={24} height={24} src="/logoff-icon.svg" priority="true" alt="Logo UVV" />
+			</div>
 		</nav>
 	)
 }
