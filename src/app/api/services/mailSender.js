@@ -76,7 +76,11 @@ export default async function mailsender(record, user) {
 					}
 
 					.description__table tr:nth-child(odd) {
-						background-color: #FAFAFA;
+						background-color: #FAFAFA !important;
+					}
+
+					.description__table tr:nth-child(even) {
+						background-color: #dedede !important;
 					}
 
 					.logo_container {
@@ -108,7 +112,7 @@ export default async function mailsender(record, user) {
 			<body>
 				<table>
 					<tr>
-						<th colspan="2" class="logo_container">
+						<th colspan="2" class=" logo_container">
 							<img src="cid:logo" alt="" />
 						</th>
 					</tr>
@@ -122,7 +126,7 @@ export default async function mailsender(record, user) {
 
 					<tr>
 						<td>
-							<table class="description__table">
+							<table class=" description__table">
 
 								<tr class="content">
 									<td><strong>Categoria:</strong></td>
@@ -158,7 +162,7 @@ export default async function mailsender(record, user) {
 						</td>
 					</tr>
 
-					<tr class="button_out">
+					<tr class=" button_out">
 						<td>
 							<a href=http://estoquedti/recordsout?id=${record.product_id}>Realizar baixa</a>
 						</td>
@@ -174,6 +178,7 @@ export default async function mailsender(record, user) {
 		await transporter.sendMail({
 			from: '<uvvsender@hotmail.com>',
 			to: "cyroback@gmail.com",
+			// to: process.env.DIEGUITO,
 			subject: "Retirada de equipamento",
 			// text: "Hello world?",
 			html,

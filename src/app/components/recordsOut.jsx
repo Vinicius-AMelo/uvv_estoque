@@ -132,7 +132,7 @@ export default function RecordsForm() {
 							/>
 						</div>
 						<div className="input__container">
-							<label htmlFor="">Modelo </label>
+							<label htmlFor="">Categoria </label>
 							<input type="text" id="name" disabled {...register('name', { required: true })} />
 						</div>
 						<div className="input__container">
@@ -157,7 +157,7 @@ export default function RecordsForm() {
 							<input type="number" id="request_code" {...register('request_code')} />
 						</div>
 						<div className="input__container">
-							<label htmlFor="">Descrição </label>
+							<label htmlFor="">Modelo </label>
 							<textarea rows={4} id="description" disabled {...register('description')} />
 						</div>
 						<input type="hidden" id="product_id" {...register('product_id')} />

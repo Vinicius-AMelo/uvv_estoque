@@ -62,6 +62,7 @@ export async function validateToken(req, res, next) {
 		res.send({ message: "Falha na validação", error })
 	}
 }
+
 export async function auth(req, res) {
 	try {
 		const { user } = req

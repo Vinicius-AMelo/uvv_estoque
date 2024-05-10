@@ -47,6 +47,7 @@ model RegistroSaidas {
     product_code Int      @default(0)
     quantity     Int      @default(0)
     request_code Int?
+    out_reason   String?  @default("")
     createdAt    DateTime @default(now())
     user         User     @relation(fields: [userId], references: [id])
     userId       Int

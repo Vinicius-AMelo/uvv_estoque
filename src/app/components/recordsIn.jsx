@@ -122,7 +122,7 @@ export default function RecordsIn() {
 						</div>
 						<div className="input__container">
 							<label htmlFor="">
-								Modelo <b style={{ color: 'red' }}>*</b>
+								Categoria <b style={{ color: 'red' }}>*</b>
 							</label>
 							<input type="text" id="name" autoComplete="off" onInput={handleInput} {...register('name', { required: true })} />
 						</div>
@@ -132,7 +132,7 @@ export default function RecordsIn() {
 						</div>
 						<div className="input__container">
 							<label htmlFor="">
-								Descrição <b style={{ color: 'red' }}>*</b>
+								Modelo <b style={{ color: 'red' }}>*</b>
 							</label>
 							<textarea rows={4} id="description" {...register('description', { required: true })} />
 						</div>
