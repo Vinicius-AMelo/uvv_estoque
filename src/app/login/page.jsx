@@ -77,7 +77,8 @@ export default function Login() {
 							})}
 						/>
 						{errors.password && <p>{errors.password.message}</p>}
-						{mutation.data?.message && valueInvalid && <p>Credenciais invalidas</p>}
+						{mutation.data?.message && valueInvalid && mutation.data?.message != 'Falha na validação' && <p>Credenciais invalidas</p>}
+						{mutation.data?.message && valueInvalid && mutation.data?.message == 'Falha na validação' && <p>Falha de login</p>}
 					</div>
 					<button className="submit" type="submit">
 						{!mutation.isPending && 'Entrar'}

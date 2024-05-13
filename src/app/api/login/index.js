@@ -44,7 +44,7 @@ export async function login(req, res) {
 			res.send({ token })
 		});
 	} catch (error) {
-		res.send({ message: "Falha na validação", error: error.message })
+		res.send({ message: "Falha na validação", error })
 	}
 }
 
