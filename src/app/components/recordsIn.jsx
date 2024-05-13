@@ -37,7 +37,7 @@ export default function RecordsIn() {
 					name,
 					description,
 					quantity: checkbox ? 1 : parseInt(quantity),
-					product_code: parseInt(product_code) || 0,
+					product_code: checkbox ? parseInt(product_code) || 0 : 0,
 					product_id: parseInt(product_id) || null,
 				},
 				{

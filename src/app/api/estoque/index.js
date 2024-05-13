@@ -303,6 +303,7 @@ export async function getStock(req, res) {
 			}
 		}
 
+
 		if (type) {
 			where.name = {
 				equals: type,
@@ -354,6 +355,7 @@ export async function getStock(req, res) {
 			const product_codeInt = parseInt(product_code)
 			where.product_code = product_codeInt
 		}
+		console.log(where)
 
 		res.send(await prisma.estoque.findMany({
 			where,
