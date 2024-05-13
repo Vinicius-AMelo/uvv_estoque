@@ -15,7 +15,6 @@ const arr = csv.split(';')
     	}
 
     	arr.map(async (item) => {
-    		// console.log('zaaaa')
     		const record = item.split(', ')
     		// if (apenasNumeros(record[2])) {
     		// 	const obj = {
@@ -31,7 +30,6 @@ const arr = csv.split(';')
     		// 			Authorization: `${token}`,
     		// 		},
     		// 	})
-    		// 	console.log(obj)
     		// } else {
     		// 	const obj = {
     		// 		name: record[0],
@@ -46,11 +44,9 @@ const arr = csv.split(';')
     		// 			Authorization: `${token}`,
     		// 		},
     		// 	})
-    		// 	console.log(obj)
     		// }
 
     		// if (apenasNumeros(record[2])) {
-    		// 	console.log('x')
     		// 	const obj = {
     		// 		name: record[0],
     		// 		description: record[1],
@@ -63,7 +59,7 @@ const arr = csv.split(';')
     		// 			Authorization: `${token}`,
     		// 		},
     		// 	})
-    		// 	console.log(obj)
+
     		// } else {
     		// 	const obj = {
     		// 		name: record[0],
@@ -77,8 +73,8 @@ const arr = csv.split(';')
     		// 			Authorization: `${token}`,
     		// 		},
     		// 	})
-    		// 	console.log(obj)
+
     		// }
-    		// console.log(apenasNumeros(record[2]))
+
     	})
     }, [])
