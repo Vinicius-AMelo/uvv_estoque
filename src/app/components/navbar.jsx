@@ -45,7 +45,7 @@ export default function Navbar() {
 					)}
 				</li>
 				<li className="navbar__menu--item">
-					{roleValue == 'DEFAULT' && <span className={`navbar__menu--item-link disabled`}>entrada no estoque</span>}
+					{roleValue == 'DEFAULT' && <span className={`navbar__menu--item-link disabled`}>baixa no estoque</span>}
 
 					{roleValue == 'SUPER' && (
 						<Link className={`navbar__menu--item-link ${pathname === '/recordsout' ? 'active' : ''}`} href="/recordsout">

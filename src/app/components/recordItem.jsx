@@ -34,7 +34,7 @@ export default function RecordItem({ record, inOut, showRequestPopup, showDetail
 			<span className="records-table__content--body-item record-quantity">
 				{record.quantity}
 				{inOut == 'stock' &&
-					(roleValue == 'DEFAULT' ? (
+					(roleValue == 'SUPER' ? (
 						<Link href={`/recordsout?id=${record.id}`}>
 							<Image className="recordsout_icon" width={24} height={24} alt="Dar baixa" src="/open-box-icon.svg" />
 						</Link>

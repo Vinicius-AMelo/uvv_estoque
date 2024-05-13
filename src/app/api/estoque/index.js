@@ -295,10 +295,12 @@ export async function createOutRecord(req, res) {
 export async function getStock(req, res) {
 	try {
 		const { code, q, type, id, product_code } = req.query;
-		const where = {
-			quantity: {
+		const where = {}
+
+		if (!product_code && !id) {
+			where.quantity = {
 				gt: 0
-			},
+			}
 		}
 
 		if (type) {
