@@ -180,7 +180,7 @@ export default async function mailsender(record, user) {
 
 		await transporter.sendMail({
 			from: '<uvvsender@hotmail.com>',
-			to: "cyroback@gmail.com",
+			to: "vicente.silva@uvv.br",
 			// to: process.env.DIEGUITO,
 			subject: "Retirada de equipamento",
 			html,
