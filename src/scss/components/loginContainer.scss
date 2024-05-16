@@ -89,29 +89,8 @@
 					justify-content: center;
 					cursor: pointer;
 
-					.loading {
-						width: 15px;
-						height: 15px;
-						border: 2px solid #ffffff;
-						display: inline-block;
-						border-radius: 50%;
-						position: relative;
-						animation: loading infinite 2s linear;
-
-						&::after {
-							content: "";
-							display: inline-block;
-							position: absolute;
-							background: #2c2663;
-							width: 7px;
-							height: 3px;
-							top: 0px;
-							left: -5px;
-						}
-					}
 
 				}
-
 
 				.created {
 					font-size: 12px;
@@ -121,10 +100,6 @@
 
 				}
 			}
-
-
-
-
 		}
 
 		.logo {
@@ -150,15 +125,5 @@
 
 			}
 		}
-	}
-}
-
-@keyframes loading {
-	from {
-		transform: rotate(0deg);
-	}
-
-	to {
-		transform: rotate(-360deg);
 	}
 }

@@ -17,13 +17,23 @@ export default function RecordsIn() {
 	const [token, setToken] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
 	const [selected, setSelected] = useState(false)
-	const _nameCount = {}
+	const [categoryValue, setCategoryValue] = useState('')
+	const [autoSuggested, setAutoSuggested] = useState('')
+	const [nameCount, setNameCount] = useState({})
 
 	const query = useQuery({
 		enabled: false,
 		queryKey: ['searchIn'],
 		queryFn: async () => {
 			const response = await axios.get(`http://10.1.1.19:3001/records/stock?${checkboxValue ? 'product_code=' + inputValue : 'id=' + inputValue}`)
+			return response.data
+		},
+	})
+
+	const optionsQuery = useQuery({
+		queryKey: ['searchOptions'],
+		queryFn: async () => {
+			const response = await axios.get(`http://10.1.1.19:3001/records/stock`)
 			return response.data
 		},
 	})
@@ -53,7 +63,9 @@ export default function RecordsIn() {
 			setTimeout(() => {
 				setShowPopup(false)
 			}, 4000)
-			query.refetch()
+			setFormData(null)
+			reset()
+			// query.refetch()
 		},
 	})
 
@@ -86,6 +98,27 @@ export default function RecordsIn() {
 		}
 	}, [query.data])
 
+	useEffect(() => {
+		if (optionsQuery.data != [] && optionsQuery.data != {} && optionsQuery.data != undefined) {
+			optionsQuery.data.map((item) => {
+				const lowerName = item.name.toLowerCase()
+				if (!nameCount[lowerName]) nameCount[lowerName] = true
+			})
+		}
+	}, [optionsQuery.data])
+
+	useEffect(() => {
+		if (categoryValue != '') {
+			const optionsArr = Object.keys(nameCount).filter((option) => {
+				if (option.includes(categoryValue.toLowerCase())) return true
+				return false
+			})
+
+			if (optionsArr.length == 1) setAutoSuggested(optionsArr[0])
+			else setAutoSuggested(null)
+		}
+	}, [optionsQuery.data, nameCount, categoryValue])
+
 	function onSubmit(data) {
 		mutation.mutate(data)
 	}
@@ -96,7 +129,12 @@ export default function RecordsIn() {
 
 	useEffect(() => {
 		if (inputValue != '') query.refetch()
-		else reset()
+		else {
+			setFormData(null)
+			reset()
+			setCategoryValue('')
+			setAutoSuggested(null)
+		}
 	}, [inputValue])
 
 	useEffect(() => {
@@ -134,7 +172,13 @@ export default function RecordsIn() {
 						</div>
 						<div className="input__container">
 							<label htmlFor="">
-								{checkboxValue ? 'Patrimônio' : 'ID'} <b style={{ color: 'red' }}>*</b>
+								{checkboxValue ? (
+									<>
+										Patrimônio <b style={{ color: 'red' }}>*</b>
+									</>
+								) : (
+									'ID'
+								)}
 							</label>
 							<input
 								type="text"
@@ -150,11 +194,28 @@ export default function RecordsIn() {
 							<input
 								type="text"
 								id="name"
+								className="category"
 								autoComplete="off"
 								onInput={handleInput}
+								value={categoryValue}
 								disabled={formData != null}
-								{...register('name', { required: true })}
+								onKeyDown={(event) => {
+									if (event.key == 'Tab' && autoSuggested) {
+										// event.preventDefault()
+										setCategoryValue(autoSuggested)
+									}
+								}}
+								{...register('name', { required: true, onChange: (event) => setCategoryValue(event.target.value) })}
 							/>
+							{autoSuggested && (
+								<div className="suggestion">
+									{autoSuggested.split('').map((char, index) => (
+										<span className={index < categoryValue.length ? 'hide' : ''} key={index}>
+											{char}
+										</span>
+									))}
+								</div>
+							)}
 						</div>
 						<div className="input__container">
 							<label htmlFor="">Quantidade {!checkboxValue && <b style={{ color: 'red' }}>*</b>}</label>
@@ -167,7 +228,10 @@ export default function RecordsIn() {
 							<textarea rows={4} id="description" disabled={formData != null} {...register('description', { required: true })} />
 						</div>
 						<input type="hidden" id="product_id" {...register('product_id')} />
-						<button type="submit">ENVIAR</button>
+						<button type="submit">
+							{!mutation.isPending && 'ENVIAR'}
+							{mutation.isPending && <span className="loading"></span>}
+						</button>
 					</form>
 				</div>
 				<div className="logo">

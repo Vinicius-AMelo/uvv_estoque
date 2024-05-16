@@ -6,12 +6,14 @@ import RecordItem from './recordItem'
 import SearchBar from './searchBar'
 import RequestPopup from './requestPopup'
 import DetailsPopup from './detailsPopup'
+import Popup from './popup'
 
 export default function RecordsTable() {
 	const [formData, setFormData] = useState([])
 	const [inOut, setInOut] = useState('in')
 	const [valueRequestPopup, setValueRequestPopup] = useState(null)
 	const [valueDetailsPopup, setValueDetailsPopup] = useState(null)
+	const [showPopup, setShowPopup] = useState(false)
 	let somaQuantidade = 0
 
 	function stateChange(data) {
@@ -30,6 +32,10 @@ export default function RecordsTable() {
 	function showDetailsPopup(data) {
 		if (data == null) return setValueDetailsPopup(data)
 		setValueDetailsPopup(data)
+	}
+
+	function showMessagePopup(data) {
+		setShowPopup(data)
 	}
 
 	return (
@@ -58,19 +64,18 @@ export default function RecordsTable() {
 						})}
 				</ul>
 				<div className="records-table__footer">
-					{inOut == 'stock' && (
-						<>
-							<div className="records-table__footer--quantity">
-								<b>Itens filtrados:</b> {formData.length}
-							</div>
-							<div className="records-table__footer--quantity-total">
-								<b>Quantidade total dos itens filtrados:</b> {somaQuantidade}
-							</div>
-						</>
-					)}
+					<div className="records-table__footer--quantity">
+						<b>Itens filtrados:</b> {formData.length}
+					</div>
+					<div className="records-table__footer--quantity-total">
+						<b>Quantidade total dos itens filtrados:</b> {somaQuantidade}
+					</div>
 				</div>
 			</div>
-			{inOut == 'stock' && valueRequestPopup != null && <RequestPopup recordId={valueRequestPopup} showRequestPopup={showRequestPopup} />}
+			{inOut == 'stock' && valueRequestPopup != null && (
+				<RequestPopup recordId={valueRequestPopup} showRequestPopup={showRequestPopup} showMessagePopup={showMessagePopup} />
+			)}
+			{showPopup && <Popup message={showPopup.message} color={showPopup.color}></Popup>}
 			{inOut == 'out' && valueDetailsPopup != null && <DetailsPopup record={valueDetailsPopup} showDetailsPopup={showDetailsPopup} />}
 		</>
 	)

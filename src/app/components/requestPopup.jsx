@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import '../../scss/components/recordsForm.scss'
 
-export default function RequestPopup({ recordId, showRequestPopup }) {
+export default function RequestPopup({ recordId, showRequestPopup, showMessagePopup }) {
 	const {
 		register,
 		handleSubmit,
@@ -54,6 +54,10 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 		onSuccess: () => {
 			reset()
 			showRequestPopup(null)
+			showMessagePopup({ message: 'Sucesso! Solicitação enviada.', color: 'green' })
+			setTimeout(() => {
+				showMessagePopup(false)
+			}, 4000)
 		},
 	})
 
@@ -143,7 +147,10 @@ export default function RequestPopup({ recordId, showRequestPopup }) {
 							</div>
 							<input type="hidden" id="product_id" {...register('product_id')} />
 							<div className="buttons">
-								<button type="submit">ENVIAR</button>
+								<button type="submit">
+									{!mutation.isPending && 'ENVIAR'}
+									{mutation.isPending && <span className="loading"></span>}
+								</button>
 								<button type="button" className="cancel__button" onClick={handleClosePopup}>
 									CANCELAR
 								</button>

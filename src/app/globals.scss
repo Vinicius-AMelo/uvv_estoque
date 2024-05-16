@@ -37,3 +37,35 @@
 	color: #2c2663;
 	background-color: #ffd900;
 }
+
+.loading {
+	width: 15px;
+	height: 15px;
+	border: 2px solid #ffffff;
+	display: inline-block;
+	border-radius: 50%;
+	position: relative;
+	animation: loading infinite 2s linear;
+	color: transparent !important;
+
+	&::after {
+		content: "";
+		display: inline-block;
+		position: absolute;
+		background: #2c2663;
+		width: 7px;
+		height: 3px;
+		top: 0px;
+		left: -5px;
+	}
+}
+
+@keyframes loading {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(-360deg);
+	}
+}

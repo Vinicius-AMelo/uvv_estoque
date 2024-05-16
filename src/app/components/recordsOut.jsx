@@ -165,7 +165,10 @@ export default function RecordsForm() {
 							<textarea rows={4} id="description" disabled {...register('description')} />
 						</div>
 						<input type="hidden" id="product_id" {...register('product_id')} />
-						<button type="submit">ENVIAR</button>
+						<button type="submit">
+							{!mutation.isPending && 'ENVIAR'}
+							{mutation.isPending && <span className="loading"></span>}
+						</button>
 					</form>
 				</div>
 				<div className="logo">

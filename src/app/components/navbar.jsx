@@ -49,7 +49,7 @@ export default function Navbar() {
 
 					{roleValue == 'SUPER' && (
 						<Link className={`navbar__menu--item-link ${pathname === '/recordsout' ? 'active' : ''}`} href="/recordsout">
-							baixa no estoque
+							saída no estoque
 						</Link>
 					)}
 				</li>
