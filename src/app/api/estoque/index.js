@@ -265,7 +265,9 @@ export async function createOutRecord(req, res) {
 				id: existingProduct.id
 			},
 			data: {
-				quantity: 0,
+				quantity: {
+					decrement: quantity
+				},
 				registroSaidas: {
 					create: {
 						name,

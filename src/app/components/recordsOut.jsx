@@ -46,7 +46,7 @@ export default function RecordsForm() {
 					name,
 					description,
 					quantity: parseInt(quantity),
-					product_code: parseInt(product_code),
+					product_code: formData?.[0]?.product_code == 0 ? 0 : parseInt(product_code),
 					request_code: parseInt(request_code),
 					product_id: parseInt(product_id),
 					out_reason,
